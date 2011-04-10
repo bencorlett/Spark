@@ -1,28 +1,30 @@
 <?php
 /**
- * Ignite 'Ben Corlett' Fuel Package
+ * Spark Fuel Package By Ben Corlett
  * 
- * The Ignite Fuel Package is an open-source
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
  * fuel package constisting of 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
  * @package    Fuel
- * @subpackage Ignite
+ * @subpackage Spark
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/bc
  */
 
-namespace Ignite;
+namespace Spark;
 
 abstract class Grid_Column_Filter_Abstract extends \Object {
 	
 	/**
 	 * The grid this column belongs to
 	 * 
-	 * @var	Ignite\Grid_Column
+	 * @var	Spark\Grid_Column
 	 */
 	protected $_column;
 	
@@ -54,8 +56,8 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @param	Ignite\Grid_Column
-	 * @return	Ignite\Grid_Column_Filter_Abstract
+	 * @param	Spark\Grid_Column
+	 * @return	Spark\Grid_Column_Filter_Abstract
 	 */
 	public function set_column(\Grid_Column $column)
 	{
@@ -102,7 +104,7 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 	 * 
 	 * @access	public
 	 * @param	string|array	Value
-	 * @return	Ignite\Grid_Column_Filter_Abstract
+	 * @return	Spark\Grid_Column_Filter_Abstract
 	 */
 	public function set_value($value)
 	{
@@ -134,7 +136,7 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 	 * filter
 	 * 
 	 * @access	public
-	 * @return	Ignite\Grid_Column_Filter_Abstract
+	 * @return	Spark\Grid_Column_Filter_Abstract
 	 */
 	public function set_user_value($value = null)
 	{

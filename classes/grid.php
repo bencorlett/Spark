@@ -1,21 +1,23 @@
 <?php
 /**
- * Ignite 'Ben Corlett' Fuel Package
+ * Spark Fuel Package By Ben Corlett
  * 
- * The Ignite Fuel Package is an open-source
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
  * fuel package constisting of 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
  * @package    Fuel
- * @subpackage Ignite
+ * @subpackage Spark
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/bc
  */
 
-namespace Ignite;
+namespace Spark;
 
 class Grid extends \Object {
 	
@@ -46,7 +48,7 @@ class Grid extends \Object {
 	/**
 	 * The driver that is used
 	 * 
-	 * @var	Ignite\Grid_Driver_Abstract
+	 * @var	Spark\Grid_Driver_Abstract
 	 */
 	protected $_driver;
 	
@@ -85,7 +87,7 @@ class Grid extends \Object {
 	 * 
 	 * @access	public
 	 * @param	mixed
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	public function __construct($identifier, $model = null)
 	{
@@ -107,7 +109,7 @@ class Grid extends \Object {
 	 * @access	public
 	 * @param	string	Identifier
 	 * @param	array	Attributes
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	public function add_column($column, array $attributes)
 	{
@@ -157,7 +159,7 @@ class Grid extends \Object {
 	 * Prepares the grid for rendering
 	 * 
 	 * @access	protected
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	protected function _prepare_grid()
 	{
@@ -174,7 +176,7 @@ class Grid extends \Object {
 	 * Prepares the columns for rendering
 	 * 
 	 * @access	protected
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	protected function _prepare_columns()
 	{
@@ -187,7 +189,7 @@ class Grid extends \Object {
 	 * Prepares the massactions for rendering
 	 * 
 	 * @access	protected
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	protected function _prepare_massactions()
 	{
@@ -200,7 +202,7 @@ class Grid extends \Object {
 	 * Prepares the model for rendering
 	 * 
 	 * @access	protected
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	protected function _prepare_model()
 	{
@@ -400,7 +402,7 @@ class Grid extends \Object {
 	 * 
 	 * @access	public
 	 * @param	mixed	Model
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	public function set_model($model)
 	{

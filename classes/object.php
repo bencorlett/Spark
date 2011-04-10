@@ -1,21 +1,23 @@
 <?php
 /**
- * Ignite 'Ben Corlett' Fuel Package
+ * Spark Fuel Package By Ben Corlett
  * 
- * The Ignite Fuel Package is an open-source
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
  * fuel package constisting of 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
  * @package    Fuel
- * @subpackage Ignite
+ * @subpackage Spark
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/bc
  */
 
-namespace Ignite;
+namespace Spark;
 
 class Object {
 	
@@ -54,7 +56,7 @@ class Object {
 	 * 
 	 * @access	public
 	 * @param	mixed
-	 * @return	Ignite\Object
+	 * @return	Spark\Object
 	 */
 	public function __construct()
 	{
@@ -109,7 +111,7 @@ class Object {
 	 * 
 	 * @access	public
 	 * @param	mixed
-	 * @return	Ignite\Object
+	 * @return	Spark\Object
 	 */
 	public static function factory()
 	{
@@ -146,7 +148,7 @@ class Object {
 	 * 
 	 * @access	public
 	 * @param	string		Identifier
-	 * @return	Ignite\Object
+	 * @return	Spark\Object
 	 */
 	public function set_identifier($identifier)
 	{
@@ -176,7 +178,7 @@ class Object {
 	 * 
 	 * @access	public
 	 * @param	array		Data
-	 * @return	Ignite\Object
+	 * @return	Spark\Object
 	 */
 	public function add_data(array $data)
 	{
@@ -207,7 +209,7 @@ class Object {
 	 * @access	public
 	 * @param	string|array	Key
 	 * @param	mixed			Value
-	 * @return	Ignite\Object
+	 * @return	Spark\Object
 	 */
 	public function set_data($key, $value = null)
 	{
@@ -261,7 +263,7 @@ class Object {
 	 * 
 	 * @access	public
 	 * @param	string|null	Key
-	 * @return	Ignite\Object
+	 * @return	Spark\Object
 	 */
 	public function unset_data($key = null)
 	{

@@ -1,21 +1,23 @@
 <?php
 /**
- * Ignite 'Ben Corlett' Fuel Package
+ * Spark Fuel Package By Ben Corlett
  * 
- * The Ignite Fuel Package is an open-source
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
  * fuel package constisting of 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
  * @package    Fuel
- * @subpackage Ignite
+ * @subpackage Spark
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/bc
  */
 
-namespace Ignite;
+namespace Spark;
 
 class Exception extends \Fuel\Core\Fuel_Exception {
 	
@@ -26,7 +28,7 @@ class Exception extends \Fuel\Core\Fuel_Exception {
 	 * 
 	 * @access	public
 	 * @param	mixed
-	 * @return	Ignite\Exception
+	 * @return	Spark\Exception
 	 */
 	public function __construct()
 	{

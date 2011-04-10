@@ -1,28 +1,30 @@
 <?php
 /**
- * Ignite 'Ben Corlett' Fuel Package
+ * Spark Fuel Package By Ben Corlett
  * 
- * The Ignite Fuel Package is an open-source
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
  * fuel package constisting of 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
  * @package    Fuel
- * @subpackage Ignite
+ * @subpackage Spark
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/bc
  */
 
-namespace Ignite;
+namespace Spark;
 
 abstract class Grid_Driver_Abstract extends \Object {
 	
 	/**
 	 * The grid this column belongs to
 	 * 
-	 * @var	Ignite\Grid
+	 * @var	Spark\Grid
 	 */
 	protected $_grid;
 	
@@ -33,8 +35,8 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @param	Ignite\Grid
-	 * @return	Ignite\Grid_Driver_Abstract
+	 * @param	Spark\Grid
+	 * @return	Spark\Grid_Driver_Abstract
 	 */
 	public function set_grid(\Grid $grid)
 	{
@@ -50,7 +52,7 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	public function get_grid()
 	{
@@ -86,7 +88,7 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * on the model
 	 * 
 	 * This must return an array
-	 * of Ignite\Object instances
+	 * of Spark\Object instances
 	 * where the data is the data
 	 * from the row
 	 * 
@@ -103,7 +105,7 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * 
 	 * @access	public
 	 * @param	mixed	Row
-	 * @param	Ignite\Grid_Column
+	 * @param	Spark\Grid_Column
 	 * @return	string	Cell Html
 	 */
 	public function get_cell_for_row_and_column($row, $column)

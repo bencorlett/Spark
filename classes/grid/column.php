@@ -1,21 +1,23 @@
 <?php
 /**
- * Ignite 'Ben Corlett' Fuel Package
+ * Spark Fuel Package By Ben Corlett
  * 
- * The Ignite Fuel Package is an open-source
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
  * fuel package constisting of 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
  * @package    Fuel
- * @subpackage Ignite
+ * @subpackage Spark
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/bc
  */
 
-namespace Ignite;
+namespace Spark;
 
 class Grid_Column extends \Object {
 	
@@ -36,21 +38,21 @@ class Grid_Column extends \Object {
 	/**
 	 * The grid this column belongs to
 	 * 
-	 * @var	Ignite\Grid
+	 * @var	Spark\Grid
 	 */
 	protected $_grid;
 	
 	/**
 	 * The renderer object
 	 * 
-	 * @var	Ignite\Grid_Column_Renderer_Abstract
+	 * @var	Spark\Grid_Column_Renderer_Abstract
 	 */
 	protected $_renderer;
 	
 	/**
 	 * The filter object
 	 * 
-	 * @var	Ignite\Grid_Column_Filter_Abstract
+	 * @var	Spark\Grid_Column_Filter_Abstract
 	 */
 	protected $_filter;
 	
@@ -101,8 +103,8 @@ class Grid_Column extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @param	Ignite\Grid
-	 * @return	Ignite\Grid_Column
+	 * @param	Spark\Grid
+	 * @return	Spark\Grid_Column
 	 */
 	public function set_grid(\Grid $grid)
 	{
@@ -118,7 +120,7 @@ class Grid_Column extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @return	Ignite\Grid
+	 * @return	Spark\Grid
 	 */
 	public function get_grid()
 	{
@@ -132,8 +134,8 @@ class Grid_Column extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @param	Ignite\Grid_Column_Renderer_Abstract
-	 * @return	Ignite\Grid_Column
+	 * @param	Spark\Grid_Column_Renderer_Abstract
+	 * @return	Spark\Grid_Column
 	 */
 	public function set_renderer(\Grid_Column_Renderer_Abstract $renderer)
 	{
@@ -171,7 +173,7 @@ class Grid_Column extends \Object {
 		
 		switch (get_class($this->get_renderer()))
 		{
-			case 'Ignite\\Grid_Column_Renderer_Text':
+			case 'Spark\\Grid_Column_Renderer_Text':
 				$class = '\\Grid_Column_Filter_Text';
 				break;
 		}
@@ -186,8 +188,8 @@ class Grid_Column extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @param	Ignite\Grid_Column_Filter_Abstract
-	 * @return	Ignite\Grid_Column
+	 * @param	Spark\Grid_Column_Filter_Abstract
+	 * @return	Spark\Grid_Column
 	 */
 	public function set_filter(\Grid_Column_Filter_Abstract $filter)
 	{
