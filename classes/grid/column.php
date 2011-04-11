@@ -79,14 +79,27 @@ class Grid_Column extends \Object {
 			$this->set_data('renderer', $this->_default_renderer_class);
 		}
 		
-		// If it does exist but the class doesn't, revert to default
+		// If it does exist but the class doesn't, try find a possible renderer then revert to default
 		else if ($this->has_data('renderer') and ! class_exists($this->get_data('renderer')))
 		{
-			$this->set_renderer($this->_default_renderer);
+			// Guess a possible renderer if the person was lazy
+			$possible_renderer = sprintf('\\Grid_Column_Renderer_%s', ucwords($this->get_data('renderer')));
+			
+			// If the possible renderer exists
+			if (class_exists($possible_renderer))
+			{
+				$this->set_data('renderer', $possible_renderer);
+			}
+			else
+			{
+				$this->set_data('renderer', $this->_default_renderer_class);
+			}
 		}
 		
-		// Set the renderer
+		// Get the renderer we've found
 		$renderer = $this->get_data('renderer');
+		
+		// Set the renderer
 		$this->set_renderer($renderer::factory())
 			 ->unset_data('renderer');
 		
@@ -169,13 +182,15 @@ class Grid_Column extends \Object {
 	 */
 	protected function _get_filter_class()
 	{
+		// Filter class will start with default
 		$class = $this->_default_filter_class;
 		
-		switch (get_class($this->get_renderer()))
+		// Possible filter class based on renderer
+		$possible_filter_class = str_replace('Renderer', 'Filter', get_class($this->get_renderer()));
+		
+		if (class_exists($possible_filter_class))
 		{
-			case 'Spark\\Grid_Column_Renderer_Text':
-				$class = '\\Grid_Column_Filter_Text';
-				break;
+			return $possible_filter_class;
 		}
 		
 		return $class;
