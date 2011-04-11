@@ -287,6 +287,29 @@ class Object {
 	}
 	
 	/**
+	 * Has Data
+	 * 
+	 * Determines if the model has
+	 * data for the given key
+	 * 
+	 * If key is empty it will determine
+	 * if any data is set
+	 * 
+	 * @access	public
+	 * @param	string|null	Key
+	 * @return	bool		Has data
+	 */
+	public function has_data($key = null)
+	{
+		if (is_null($key))
+		{
+			return (bool) $this->_data;
+		}
+		
+		return (bool) isset($this->_data[$key]);
+	}
+	
+	/**
 	 * Get Data
 	 * 
 	 * Gets data from the object
