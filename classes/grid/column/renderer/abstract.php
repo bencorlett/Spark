@@ -5,7 +5,7 @@
  * Spark - Set your fuel on fire!
  * 
  * The Spark Fuel Package is an open-source
- * fuel package constisting of 'widgets'
+ * fuel package consisting of several 'widgets'
  * engineered to make developing
  * administration systems easier and quicker.
  * 
