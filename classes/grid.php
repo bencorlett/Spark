@@ -36,6 +36,13 @@ class Grid extends \Object {
 	protected $_model;
 	
 	/**
+	 * Does the grid use ajax?
+	 *
+	 * @var	bool
+	 */
+	protected $_use_ajax = true;
+	
+	/**
 	 * Available Grid Drivers
 	 * 
 	 * @var	array
@@ -168,6 +175,10 @@ class Grid extends \Object {
 		
 		if (\Input::is_ajax())
 		{
+			// We want to strip the entire response body
+			// and replace it with our view
+			\Request::active()->controller_instance->response->body = null;
+			
 			return $grid;
 		}
 		
@@ -534,5 +545,41 @@ class Grid extends \Object {
 	public function get_massactions()
 	{
 		return $this->_massactions;
+	}
+	
+	/**
+	 * Needs Filters
+	 *
+	 * Determine if the grid
+	 * needs filters
+	 * 
+	 * @access	public
+	 * @return	bool	Needs Filters
+	 */
+	public function needs_filters()
+	{
+		return true;
+	}
+	
+	/**
+	 * Needs Select
+	 * 
+	 * Determine if the grid
+	 * needs to show the select
+	 * functionality
+	 * 
+	 * @access	public
+	 * @return	bool	Needs Select
+	 */
+	public function needs_select()
+	{
+		$needs = false;
+		
+		if (count($this->get_massactions()))
+		{
+			$needs = true;
+		}
+		
+		return $needs;
 	}
 }
