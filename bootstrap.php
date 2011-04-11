@@ -31,6 +31,7 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Driver_Abstract'						=> __DIR__ . '/classes/grid/driver/abstract.php',
 	'Spark\\Grid_Driver_KohanaOrm'						=> __DIR__ . '/classes/grid/driver/kohanaorm.php',
 	'Spark\\Grid_Driver_Orm'							=> __DIR__ . '/classes/grid/driver/orm.php',
+	'Spark\\Grid_Massaction'							=> __DIR__ . '/classes/grid/massaction.php',
 	
 	// Exception
 	'Spark\\Exception'									=> __DIR__ . '/classes/exception.php',

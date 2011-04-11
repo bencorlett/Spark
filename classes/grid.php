@@ -81,6 +81,13 @@ class Grid extends \Object {
 	protected $_default_filters = array();
 	
 	/**
+	 * Array of grid massactins
+	 * 
+	 * @var	array
+	 */
+	protected $_massactions = array();
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -91,11 +98,6 @@ class Grid extends \Object {
 	 */
 	public function __construct($identifier, $model = null)
 	{
-		if ($_POST)
-		{
-			// print_r($_POST);
-		}
-		
 		// Set the identifier and the model
 		$this->set_identifier(\Str::lower(\Str::alphanumeric($identifier, '_')))
 			 ->set_model($model);
@@ -119,6 +121,29 @@ class Grid extends \Object {
 			$this->_columns[$column] = \Grid_Column::factory($attributes)
 												   ->set_identifier($column)
 												   ->set_grid($this);
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Add Massaction
+	 * 
+	 * Adds a massaction to the grid
+	 * 
+	 * @access	public
+	 * @param	string	Identifier
+	 * @param	array	Attributes
+	 * @return	Spark\Grid
+	 */
+	public function add_massaction($massaction, array $attributes)
+	{
+		// Only add the column if it doesn't exist
+		if ( ! isset($this->_massactions[$massaction]))
+		{
+			$this->_massactions[$massaction] = \Grid_Massaction::factory($attributes)
+															   ->set_identifier($massaction)
+															   ->set_grid($this);
 		}
 		
 		return $this;
@@ -462,7 +487,7 @@ class Grid extends \Object {
 	 * property
 	 * 
 	 * @access	public
-	 * @return	array	Column
+	 * @return	array	Columns
 	 */
 	public function get_columns()
 	{
@@ -495,5 +520,19 @@ class Grid extends \Object {
 	public function get_rows()
 	{
 		return $this->get_driver()->get_rows();
+	}
+	
+	/**
+	 * Get Massactions
+	 * 
+	 * Gets the massactiosn
+	 * object property
+	 * 
+	 * @access	public
+	 * @return	array	Massactions
+	 */
+	public function get_massactions()
+	{
+		return $this->_massactions;
 	}
 }
