@@ -33,20 +33,20 @@ $(document).ready(function()
 					// Form based on their name / value
 					$("#grid-<?=$grid?> > table > thead > tr.filters > th > input.filter").each(function()
 					{
-						$("#grid-<?=$grid?>-form").append('<input type="hidden" name="' + $(this).attr('name') + '" value="' + $(this).val() + '" />');
+						$("#grid-<?=$grid?>-ajax-form").append('<input type="hidden" name="' + $(this).attr('name') + '" value="' + $(this).val() + '" />');
 					});
 
-					$("#grid-<?=$grid?>-form").submit();
+					$("#grid-<?=$grid?>-ajax-form").submit();
 			}
 		});
 	<?php endif ?>
 	
 	// When the user clicks on a column header
-	$("#grid-<?=$grid?> > table > thead > tr.labels > th > span").click(function()
+	$("#grid-<?=$grid?> > table > thead > tr.labels > th > span, #grid-<?=$grid?> > table > tfoot > tr.labels > th > span").click(function()
 	{
-		$("#grid-<?=$grid?>-form").append('<input type="hidden" name="grid[<?=$grid?>][sort]" value="' + $(this).attr('column') + '" />');
+		$("#grid-<?=$grid?>-ajax-form").append('<input type="hidden" name="grid[<?=$grid?>][sort]" value="' + $(this).attr('column') + '" />');
 		
-		$("#grid-<?=$grid?>-form").submit();
+		$("#grid-<?=$grid?>-ajax-form").submit();
 	});
 	
 	// When the user clicks select all
@@ -66,9 +66,25 @@ $(document).ready(function()
 			$(this).removeAttr('checked');
 		});
 	});
+	
+	// When the uer applies a massaction
+	$("#grid-<?=$grid?>-massactions-submit").click(function()
+	{
+		// If there are no rows checked
+		if ($("#grid-<?=$grid?> > table > tbody > tr > td > input.select:checked").length == 0)
+		{
+			alert('There are no rows checked!');
+			return false;
+		}
+		
+		$("#grid-<?=$grid?> > table > tbody > tr > td > input.select:checked").each(function()
+		{
+			$("#grid-<?=$grid?>-ajax-form").append('<input type="hidden" name="ids[]" value="' + $(this).attr('row_id') + '" />');
+		});
+	});
 });
 </script>
-<table class="<?=$grid->get_identifier()?>">
+<table class="<?=$grid->get_identifier()?>" cellpadding="0" cellspacing="0">
 	<thead>
 		<?php if ($grid->needs_select()): ?>
 			<tr class="actions">
@@ -76,11 +92,11 @@ $(document).ready(function()
 					<table class="full-width">
 						<tbody>
 							<tr>
-								<td>
-									<?=\Form::button(null, 'Select All', array('id' => sprintf('grid-%s-select-all', $grid)))?>
-									<?=\Form::button(null, 'Unselect All', array('id' => sprintf('grid-%s-unselect-all', $grid)))?>
+								<td align="left" class="select">
+									<?=\Form::button(null, 'Select All', array('class' => 'small orange button', 'id' => sprintf('grid-%s-select-all', $grid)))?>
+									<?=\Form::button(null, 'Unselect All', array('class' => 'small gray button', 'id' => sprintf('grid-%s-unselect-all', $grid)))?>
 								</td>
-								<td align="right">
+								<td align="right" class="massactions">
 									<?php
 
 									// Array for select
@@ -93,13 +109,13 @@ $(document).ready(function()
 									}
 
 									// Make a label
-									echo \Form::label('With Selected', sprintf('grid-%s-massactions-select', $grid));
+									echo \Form::label('With Selected ', sprintf('grid-%s-massactions-select', $grid));
 
 									// Make a select
 									echo \Form::select('massactions[select]', null, $select, array('id' => sprintf('grid-%s-massactions-select', $grid)));
 
 									// And a submit
-									echo \Form::button(null, 'Submit', array('id' => sprintf('grid-%s-massactions-submit', $grid)));
+									echo \Form::button(null, 'Submit', array('class' => 'small white button', 'id' => sprintf('grid-%s-massactions-submit', $grid)));
 
 									?>
 								</td>
@@ -149,11 +165,11 @@ $(document).ready(function()
 	</thead>
 	<tbody>
 		<?php foreach ($grid->get_rows() as $row_id => $row): ?>
-			<tr>
+			<tr class="cells">
 				<?php if ($grid->needs_select()): ?>
-					<th>
-						<?=\Form::checkbox(sprintf('ids[%u]', $row->get_id()), true, array('class' => sprintf('select', $grid)))?>
-					</th>
+					<td align="center">
+						<?=\Form::checkbox(sprintf('ids[%u]', $row_id), true, array('row_id' => $row_id, 'class' => sprintf('select', $grid)))?>
+					</td>
 				<?php endif ?>
 				<?php foreach ($grid->get_columns() as $column): ?>
 					<td>

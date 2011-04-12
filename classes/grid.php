@@ -168,25 +168,31 @@ class Grid extends \Object {
 	 */
 	public function render()
 	{
+		// Prepare the grid
 		$this->_prepare_grid();
 		
-		$grid = \View::factory('grid/grid')
-					 ->set('grid', $this)
-					 ->set('driver', $this->_driver);
+		// Get table
+		$table = \View::factory('grid/table')
+					  ->set('grid', $this);
 		
+		// If the request is AJAX, overwrite output so that
+		// the grid is the only output (as the contents of the
+		// output are what replaces the grid HTML)
 		if (\Input::is_ajax())
 		{
 			// We want to strip the entire response body
 			// and replace it with our view
 			\Request::active()->controller_instance->response->body = null;
 			
-			return $grid;
+			return $table;
 		}
 		
+		// If we're not using ajax, create the container
 		$container = \View::factory('grid/container')
 						  ->set('grid', $this)
-						  ->set('table', $grid);
+						  ->set('table', $table);
 		
+		// Return the container
 		return $container;
 	}
 	
