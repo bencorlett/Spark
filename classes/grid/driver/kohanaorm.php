@@ -81,7 +81,7 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 			}
 			else
 			{
-				echo 'Range! Value must have a from and a to';
+				// The user has a 'from' and 'to'
 			}
 		}
 	}
