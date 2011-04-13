@@ -22,68 +22,10 @@ namespace Spark;
 <script>
 $(document).ready(function()
 {
-	<?php if ($grid->needs_filters()): ?>
-		// When the user is entering a filter and presses enter
-		$("#grid-<?=$grid?> > table > thead > tr.filters > th > input.filter").keypress(function(e)
-		{
-			switch (e.keyCode)
-			{
-				case 13:
-					// Loop through filters and create
-					// Form based on their name / value
-					$("#grid-<?=$grid?> > table > thead > tr.filters > th > input.filter").each(function()
-					{
-						$("#grid-<?=$grid?>-ajax-form").append('<input type="hidden" name="' + $(this).attr('name') + '" value="' + $(this).val() + '" />');
-					});
-
-					$("#grid-<?=$grid?>-ajax-form").submit();
-			}
-		});
-	<?php endif ?>
-	
-	// When the user clicks on a column header
-	$("#grid-<?=$grid?> > table > thead > tr.labels > th > span, #grid-<?=$grid?> > table > tfoot > tr.labels > th > span").click(function()
-	{
-		$("#grid-<?=$grid?>-ajax-form").append('<input type="hidden" name="grid[<?=$grid?>][sort]" value="' + $(this).attr('column') + '" />');
-		
-		$("#grid-<?=$grid?>-ajax-form").submit();
-	});
-	
-	// When the user clicks select all
-	$("#grid-<?=$grid?>-select-all").click(function()
-	{
-		$("#grid-<?=$grid?> table > tbody > tr > td > input.select").each(function()
-		{
-			$(this).attr('checked', true);
-		});
-	});
-	
-	// When the user clicks select all
-	$("#grid-<?=$grid?>-unselect-all").click(function()
-	{
-		$("#grid-<?=$grid?> table > tbody > tr > td > input.select").each(function()
-		{
-			$(this).removeAttr('checked');
-		});
-	});
-	
-	// When the uer applies a massaction
-	$("#grid-<?=$grid?>-massactions-submit").click(function()
-	{
-		// If there are no rows checked
-		if ($("#grid-<?=$grid?> > table > tbody > tr > td > input.select:checked").length == 0)
-		{
-			alert('There are no rows checked!');
-			return false;
-		}
-		
-		$("#grid-<?=$grid?> > table > tbody > tr > td > input.select:checked").each(function()
-		{
-			$("#grid-<?=$grid?>-ajax-form").append('<input type="hidden" name="ids[]" value="' + $(this).attr('row_id') + '" />');
-		});
-	});
+	$("#grid-<?=$grid?>").sparkGrid();
 });
 </script>
+<?=microtime()?>
 <table class="<?=$grid->get_identifier()?>" cellpadding="0" cellspacing="0">
 	<thead>
 		<?php if ($grid->needs_select()): ?>
@@ -105,7 +47,7 @@ $(document).ready(function()
 									// Loop through massactions and add them
 									foreach ($grid->get_massactions() as $massaction)
 									{
-										$select[$massaction->get_action()] = $massaction->get_label();
+										$select[\Uri::create($massaction->get_action())] = $massaction->get_label();
 									}
 
 									// Make a label

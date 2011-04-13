@@ -24,25 +24,11 @@ namespace Spark;
 <?=\Asset::css('grid.css')?>
 <?=\Asset::js('jquery-1.5.1.min.js')?>
 <?=\Asset::js('jquery.form-2.69.js')?>
-<?=\Asset::Js('grid.js')?>
-
+<?=\Asset::js('grid.js')?>
 <grid id="grid-<?=$grid?>">
 	<?=(isset($table)) ? $table : false?>
 </grid>
-<script>
-$(document).ready(function()
-{
-	// Make the form an AJAX form
-	$("#grid-<?=$grid?>-ajax-form").ajaxForm({
-		target	: '#grid-<?=$grid?>',
-		success	: function()
-		{
-			$("#grid-<?=$grid?>-ajax-form").empty();
-		}
-	});
-});
-</script>
-<?=\Form::open(array('id' => sprintf('grid-%s-massactions-form', $grid)))?>
+<?=\Form::open(array('id' => sprintf('grid-%s-massactions-form', $grid), 'style' => 'display: none;'))?>
 <?=\Form::close()?>
-<?=\Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid)))?>
+<?=\Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid), 'style' => 'display: block;'))?>
 <?=\Form::close()?>
