@@ -180,11 +180,18 @@ class Grid extends \Object {
 		// output are what replaces the grid HTML)
 		if (\Input::is_ajax())
 		{
-			// We want to strip the entire response body
-			// and replace it with our view
-			\Request::active()->controller_instance->response->body = null;
+			// // We want to strip the entire response body
+			// // and replace it with our view
+			$response = new \Response($table, 200);
 			
-			return $table;
+			// Send the response
+			$response->send(true);
+			
+			// Write the session data now
+			\Session::write();
+			
+			// Exit and do no more
+			exit;
 		}
 		
 		// If we're not using ajax, create the container
