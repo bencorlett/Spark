@@ -18,7 +18,7 @@
 
 /* ==== Structural ============================== */
 
-grid { display: block; }
+grid { display: block; position: relative; }
 
 grid > table { border-collapse: separate; width: 100%; border-radius: 10px; color: #202020; }
 grid > table > thead > tr:first-child > th:first-child { border-top-left-radius: 10px; }
@@ -29,6 +29,20 @@ grid > table > tfoot > tr:last-child > th:last-child { border-bottom-right-radiu
 grid > table > thead > tr > th,
 grid > table > tfoot > tr > th,
 grid > table > tbody > tr > td { padding: 5px 8px; }
+
+/* ============================================== */
+
+
+
+
+
+
+
+
+
+/* ==== Actions ================================= */
+
+grid > div.overlay { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url(../img/loading.gif) 50% 50% no-repeat, rgba(0, 0, 0, 0.5); border-radius: 10px; }
 
 /* ============================================== */
 

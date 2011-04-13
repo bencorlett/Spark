@@ -29,8 +29,14 @@
 		// Make ajax form
 		$(selector + '-ajax-form').ajaxForm({
 			target			: selector,
-			success			: function()
-			{
+			beforeSubmit	: function() {
+				
+				// Show the overlay
+				$(selector + '-overlay').show();
+			},
+			success			: function() {
+				
+				// Empty the form, we might use it again
 				$(selector + '-ajax-form').empty();
 			}
 		});

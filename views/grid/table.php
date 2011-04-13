@@ -25,7 +25,8 @@ $(document).ready(function()
 	$("#grid-<?=$grid?>").sparkGrid();
 });
 </script>
-<?=microtime()?>
+<div id="grid-<?=$grid?>-overlay" class="overlay">
+</div>
 <table class="<?=$grid->get_identifier()?>" cellpadding="0" cellspacing="0">
 	<thead>
 		<?php if ($grid->needs_select()): ?>
