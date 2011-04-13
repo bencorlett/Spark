@@ -30,5 +30,5 @@ namespace Spark;
 </grid>
 <?=\Form::open(array('id' => sprintf('grid-%s-massactions-form', $grid), 'style' => 'display: none;'))?>
 <?=\Form::close()?>
-<?=\Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid), 'style' => 'display: block;'))?>
+<?=\Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid), 'style' => 'display: none;'))?>
 <?=\Form::close()?>
