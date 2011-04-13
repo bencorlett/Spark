@@ -178,7 +178,7 @@ class Grid extends \Object {
 		// If the request is AJAX, overwrite output so that
 		// the grid is the only output (as the contents of the
 		// output are what replaces the grid HTML)
-		if (\Input::is_ajax())
+		if (\Input::is_ajax() && $this->_post_is_for_this())
 		{
 			// // We want to strip the entire response body
 			// // and replace it with our view
@@ -602,5 +602,29 @@ class Grid extends \Object {
 		}
 		
 		return $needs;
+	}
+	
+	/**
+	 * Post is for this
+	 * 
+	 * Determines if the post
+	 * that has come through from
+	 * the browser was meant for this
+	 * grid or not.
+	 * 
+	 * @access	protected
+	 * @return	bool	Post is for this
+	 */
+	protected function _post_is_for_this()
+	{
+		if (($grid = \Input::post('grid')) !== null)
+		{
+			if (isset($grid[$this->get_identifier()]))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
