@@ -14,7 +14,7 @@
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
- * @link       http://www.github.com/bencorlett/bc
+ * @link       http://www.github.com/bencorlett/spark
  */
 
 Autoloader::add_core_namespace('Spark');
