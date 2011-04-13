@@ -31,7 +31,7 @@ $(document).ready(function()
 	<thead>
 		<?php if ($grid->needs_select()): ?>
 			<tr class="actions">
-				<th colspan="<?=$grid->get_column_count(1)?>">
+				<th colspan="<?=$grid->get_column_count(($grid->needs_select()) ? 1 : 0)?>">
 					<table class="full-width">
 						<tbody>
 							<tr>
@@ -107,7 +107,18 @@ $(document).ready(function()
 		<?php endif ?>
 	</thead>
 	<tbody>
+		<?php $i = 0 ?>
 		<?php foreach ($grid->get_rows() as $row_id => $row): ?>
+			<?php
+			
+			// Weird bug - somehow there can still
+			// be rows even though this foreach
+			// loop might never run (if there are no
+			// results) We'll use a counter here to determine
+			// how rows we've actually displayed.
+			$i++;
+			
+			?>
 			<tr class="cells">
 				<?php if ($grid->needs_select()): ?>
 					<td align="center">
@@ -121,6 +132,15 @@ $(document).ready(function()
 				<?php endforeach ?>
 			</tr>
 		<?php endforeach ?>
+		<?php if ($i == 0): ?>
+			<tr class="no-rows">
+				<td colspan="<?=$grid->get_column_count(($grid->needs_select()) ? 1 : 0)?>" align="center">
+					<em>
+						No rows to display.
+					</em>
+				</td>
+			</tr>
+		<?php endif ?>
 	</tbody>
 	<tfoot>
 		<tr class="labels">

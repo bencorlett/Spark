@@ -122,4 +122,7 @@ grid > table > tbody > tr.cells:last-child > td { border-bottom: none; }
 grid > table > tbody > tr.cells:nth-child(odd) > td { background: #fff9f3; }
 grid > table > tbody > tr.cells:hover > td { background: #faecde; }
 
+/* No Rows */
+grid > table > tbody > tr.no-rows > td { background: #fff; border: 1px solid #ffa540; border-width: 0 1px; padding: 10px 0; }
+
 /* ============================================== */
