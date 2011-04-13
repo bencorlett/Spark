@@ -82,6 +82,10 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 			else
 			{
 				// The user has a 'from' and 'to'
+				if (isset($filter_value['from']) and isset($filter_value['to']))
+				{
+					$this->get_grid()->get_model()->where($column->get_index(), 'BETWEEN', array($filter_value['from'], $filter_value['to']));
+				}
 			}
 		}
 	}

@@ -18,5 +18,20 @@
  */
 
 namespace Spark;
-?>
-<?=\Form::input(sprintf('grid[%s][filters][%s][value]', $filter->get_column()->get_grid(), $filter->get_column()), $filter->get_user_value(), array('class' => 'filter text'))?>
+
+class Grid_Column_Renderer_Date extends \Grid_Column_Renderer_Abstract {
+	
+	/**
+	 * Render
+	 * 
+	 * Renders the value
+	 * 
+	 * @access	public
+	 * @param	string	Value
+	 * @return	string	Rendered value
+	 */
+	public function render($value = null)
+	{
+		return \Date::factory(strtotime($value))->format('eu');
+	}
+}

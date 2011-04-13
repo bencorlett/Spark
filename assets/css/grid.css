@@ -94,13 +94,18 @@ grid > table > tfoot > tr.labels > th:first-child { border-width: 1px; }
 
 /* ==== Filters ================================= */
 
-grid > table > thead > tr.filters > th { background: #3ba3d0; border: 1px solid #0772a1; border-width: 0 1px 1px 0; }
+grid > table > thead > tr.filters > th { background: #3ba3d0; border: 1px solid #0772a1; border-width: 0 1px 1px 0; font-weight: normal; color: #fff; }
 grid > table > thead > tr.filters > th:first-child { border-width: 0 1px 1px; }
 
 /* Inputs */
-grid > table > thead > tr.filters > th > input { border: 1px solid #0772a1; padding: 2px; border-radius: 4px; outline: none; }
-grid > table > thead > tr.filters > th > input::-moz-focus-inner { border: none; }
-grid > table > thead > tr.filters > th > input:focus { border: 1px solid #024a68; }
+grid > table > thead > tr.filters > th input { border: 1px solid #0772a1; padding: 2px; border-radius: 4px; outline: none; }
+grid > table > thead > tr.filters > th input::-moz-focus-inner { border: none; }
+grid > table > thead > tr.filters > th input:focus { border: 1px solid #024a68; }
+
+/* Date */
+grid > table > thead > tr.filters > th > table.filter.date { width: 100%; }
+grid > table > thead > tr.filters > th > table.filter.date > tbody > tr > td.label { width: 35%; }
+grid > table > thead > tr.filters > th > table.filter.date > tbody > tr > td.input > input { width: 80px; text-align: center; }
 
 /* ============================================== */
 

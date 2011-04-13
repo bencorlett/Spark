@@ -42,14 +42,14 @@
 		});
 		
 		// When the user is entering a filter and presses enter
-		$(selector + ' > table > thead > tr.filters > th > input.filter').keypress(function(e)
+		$(selector + ' > table > thead > tr.filters > th input.filter').keypress(function(e)
 		{
 			switch (e.keyCode)
 			{
 				case 13:
 					// Loop through filters and create
 					// Form based on their name / value
-					$(selector + ' > table > thead > tr.filters > th > input.filter').each(function()
+					$(selector + ' > table > thead > tr.filters > th input.filter').each(function()
 					{
 						$(selector + '-ajax-form').append('<input type="hidden" name="' + $(this).attr('name') + '" value="' + $(this).val() + '" />');
 					});
@@ -61,7 +61,7 @@
 		// When the user clicks on a column header or footer
 		$(selector + ' > table > thead > tr.labels > th > span, ' + selector + ' > table > tfoot > tr.labels > th > span').click(function()
 		{
-			$(selector + '-ajax-form').append('<input type="text" name="grid[' + grid_id + '][sort]" value="' + $(this).attr('column') + '" />');
+			$(selector + '-ajax-form').append('<input type="hidden" name="grid[' + grid_id + '][sort]" value="' + $(this).attr('column') + '" />');
 
 			$(selector + '-ajax-form').submit();
 		});

@@ -22,7 +22,9 @@ namespace Spark;
 <?=\Asset::css('core.css')?>
 <?=\Asset::css('buttons.css')?>
 <?=\Asset::css('grid.css')?>
+<?=\Asset::css('jquery.ui-1.8.11.css')?>
 <?=\Asset::js('jquery-1.5.1.min.js')?>
+<?=\Asset::js('jquery.ui-1.8.11.js')?>
 <?=\Asset::js('jquery.form-2.69.js')?>
 <?=\Asset::js('grid.js')?>
 <grid id="grid-<?=$grid?>">
