@@ -75,7 +75,7 @@ $(document).ready(function()
 				</th>
 			<?php endif ?>
 			<?php foreach ($grid->get_columns() as $column): ?>
-				<th>
+				<th <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?>>
 					<span column="<?=$column?>">
 						<?=$column->get_label()?>
 						
@@ -99,7 +99,7 @@ $(document).ready(function()
 					</th>
 				<?php endif ?>
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<th>
+					<th <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?>>
 						<?=$column->get_filter()->get_filter_html()?>
 					</th>
 				<?php endforeach ?>
@@ -126,7 +126,7 @@ $(document).ready(function()
 					</td>
 				<?php endif ?>
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<td>
+					<td <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?> <?=($column->get_align()) ? sprintf('align=\'%s\'', $column->get_align()) : null?>>
 						<?=$column->get_cell_for_row($row)?>
 					</td>
 				<?php endforeach ?>
@@ -150,7 +150,7 @@ $(document).ready(function()
 				</th>
 			<?php endif ?>
 			<?php foreach ($grid->get_columns() as $column): ?>
-				<th>
+				<th <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?>>
 					<span column="<?=$column?>">
 						<?=$column->get_label()?>
 						
