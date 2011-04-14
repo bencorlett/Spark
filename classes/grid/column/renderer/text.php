@@ -21,17 +21,4 @@ namespace Spark;
 
 class Grid_Column_Renderer_Text extends \Grid_Column_Renderer_Abstract {
 	
-	/**
-	 * Render
-	 * 
-	 * Renders the value
-	 * 
-	 * @access	public
-	 * @param	string	Value
-	 * @return	string	Rendered value
-	 */
-	public function render($value = null)
-	{
-		return '_' . $value . '_';
-	}
 }

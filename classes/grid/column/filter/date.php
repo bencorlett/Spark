@@ -44,11 +44,11 @@ class Grid_Column_Filter_Date extends \Grid_Column_Filter_Abstract {
 			 ->set_user_to($value['to']);
 		
 		// Set the actual value
-		if (isset($value['from']))
+		if (isset($value['from']) and $value['from'])
 		{
 			$this->_value['from']	= \Date::create_from_string($value['from'], 'eu')->format('mysql');
 		}
-		if (isset($value['to']))
+		if (isset($value['to']) and $value['to'])
 		{
 			$this->_value['to']		= \Date::create_from_string($value['to'], 'eu')->format('mysql');
 		}

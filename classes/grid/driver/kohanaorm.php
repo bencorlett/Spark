@@ -47,6 +47,7 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 		// containing data
 		foreach ($rows as $row)
 		{
+			// Get the row id
 			$row_id = (string) $row;
 			
 			$return[$row_id] = \Object::factory($row->as_array());
