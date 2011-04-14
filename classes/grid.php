@@ -180,8 +180,8 @@ class Grid extends \Object {
 		// output are what replaces the grid HTML)
 		if (\Input::is_ajax() && $this->_post_is_for_this())
 		{
-			// // We want to strip the entire response body
-			// // and replace it with our view
+			// We want to strip the entire response body
+			// and replace it with our view
 			$response = new \Response($table, 200);
 			
 			// Send the response
