@@ -21,6 +21,18 @@ Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
+	// BackFace
+	'Spark\\BackFace'									=> __DIR__ . '/classes/backface.php',
+	
+	// Breadcrumbs
+	'Spark\\Breadcrumbs'								=> __DIR__ . '/classes/breadcrumbs.php',
+	
+	// Exception
+	'Spark\\Exception'									=> __DIR__ . '/classes/exception.php',
+	
+	// Fuel
+	'Spark\\Fuel'										=> __DIR__ . '/classes/fuel.php',
+	
 	// Grid
 	'Spark\\Grid'										=> __DIR__ . '/classes/grid.php',
 	'Spark\\Grid_Column'								=> __DIR__ . '/classes/grid/column.php',
@@ -35,11 +47,11 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Driver_Orm'							=> __DIR__ . '/classes/grid/driver/orm.php',
 	'Spark\\Grid_Massaction'							=> __DIR__ . '/classes/grid/massaction.php',
 	
-	// Exception
-	'Spark\\Exception'									=> __DIR__ . '/classes/exception.php',
+	// Notifications
+	'Spark\\Notifications'								=> __DIR__ . '/classes/notifications.php',
 	
 	// Object
-	'Spark\\Object'									=> __DIR__ . '/classes/object.php',
+	'Spark\\Object'										=> __DIR__ . '/classes/object.php',
 	
 	// Str
 	'Spark\\Str'										=> __DIR__ . '/classes/str.php',
