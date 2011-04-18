@@ -21,6 +21,14 @@ Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
+	// Agent
+	// Until everyone's made up their
+	// mind on the agent class I'm
+	// putting it here as it's possibly one
+	// of the most useful classes out
+	'Fuel\\Core\\Agent'									=> COREPATH . '/classes/agent.php',
+	'Spark\\Agent'										=> __DIR__ . '/classes/agent.php',
+	
 	// BackFace
 	'Spark\\BackFace'									=> __DIR__ . '/classes/backface.php',
 	

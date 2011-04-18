@@ -161,7 +161,7 @@ class Grid extends \Object {
 	 * Render
 	 * 
 	 * Renders the grid object
-	 * as a HTML table
+	 * as a Html table
 	 * 
 	 * @access	public
 	 * @return	string	Html Table
