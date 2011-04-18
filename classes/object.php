@@ -22,6 +22,13 @@ namespace Spark;
 class Object {
 	
 	/**
+	 * Object instance for Singleton access
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected static $_instance = null;
+	
+	/**
 	 * Object attributes
 	 * 
 	 * @var	array
@@ -125,6 +132,42 @@ class Object {
 		
 		// Return the reflection class
 		return $class_instance;
+	}
+	
+	/**
+	 * Instance
+	 * 
+	 * Get the instance of the
+	 * class using the Singleton
+	 * pattern
+	 * 
+	 * @access	public
+	 * @param	mixed
+	 * @return	Spark\Object
+	 */
+	public static function instance()
+	{
+		// You can't get an instance
+		// of this class, but rather
+		// of all the child classes
+		// that inherit this class
+		if (get_called_class() === __CLASS__)
+		{
+			throw new Exception('static::%s() can only be called on a child class of %s, and not this class itself', __FUNCTION__, __CLASS__);
+		}
+		
+		if (is_null(static::$_instance))
+		{
+			// Create a reflection class from the called class
+			$reflection_class = new \ReflectionClass(get_called_class());
+
+			// Create a new instance of the reflection class and
+			// parse the arguments given to this function to the
+			// new instance of that class
+			self::$_instance = $reflection_class->newInstanceArgs(func_get_args());
+		}
+		
+		return self::$_instance;
 	}
 	
 	/**
