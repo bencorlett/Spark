@@ -37,20 +37,22 @@ class Grid_Column_Filter_Date extends \Grid_Column_Filter_Abstract {
 	 * @param	string|array	Value
 	 * @return	Spark\Grid_Column_Filter_Abstract
 	 */
-	public function set_value($value)
+	public function set_values($values)
 	{
-		// Set the user value
-		$this->set_user_from($value['from'])
-			 ->set_user_to($value['to']);
-		
-		// Set the actual value
-		if (isset($value['from']) and $value['from'])
+		if (is_array($values))
 		{
-			$this->_value['from']	= \Date::create_from_string($value['from'], 'eu')->format('mysql');
+			$values = \Object::factory($values);
 		}
-		if (isset($value['to']) and $value['to'])
+		
+		// Set the frontend values
+		$this->set_frontend_values(clone $values);
+		
+		if ($values->get_from() and $values->get_to())
 		{
-			$this->_value['to']		= \Date::create_from_string($value['to'], 'eu')->format('mysql');
+			$values->set_from(\Date::create_from_string($values->get_from(), 'eu')->format('mysql'))
+				   ->set_to(\Date::create_from_string($values->get_to(), 'eu')->format('mysql'));
+			
+			$this->_values = $values;
 		}
 		
 		return $this;

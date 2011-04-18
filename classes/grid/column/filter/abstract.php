@@ -36,18 +36,18 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 	protected $_view_name;
 	
 	/**
-	 * The user value of the filter
+	 * The frontend value of the filter
 	 * 
 	 * @var	string
 	 */
-	protected $_user_value;
+	protected $_frontend_values;
 	
 	/**
 	 * The value of the filter
 	 * 
 	 * @var	string
 	 */
-	protected $_value;
+	protected $_values;
 	
 	/**
 	 * Set Column
@@ -98,62 +98,79 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 	}
 	
 	/**
-	 * Set Value
+	 * Set Values
 	 * 
-	 * Sets the value of the filter
+	 * Sets the values of the filter
 	 * 
 	 * @access	public
-	 * @param	string|array	Value
+	 * @param	array|Spark\Object	Values
 	 * @return	Spark\Grid_Column_Filter_Abstract
 	 */
-	public function set_value($value)
+	public function set_values($values)
 	{
-		if (isset($value['value']))
+		if (is_array($values))
 		{
-			$this->_value = $value['value'];
+			$values = \Object::factory($values);
 		}
+		
+		if ( ! $values->get_value())
+		{
+			return $this;
+		}
+		
+		// Set the frontend values
+		$this->set_frontend_values(clone $values);
+		
+		// Set the values
+		$this->_values = $values;
 		
 		return $this;
 	}
 	
 	/**
-	 * Get Value
+	 * Get Values
 	 * 
-	 * Gets the value of the filter
+	 * Gets the values of the filter
 	 * 
 	 * @access	public
-	 * @return	string	Value
+	 * @param	array|Spark\Object	Values
 	 */
-	public function get_value()
+	public function get_values()
 	{
-		return $this->_value;
+		return $this->_values;
 	}
 	
 	/**
-	 * Set User Value
+	 * Set Frontend Values
 	 * 
-	 * Sets the user value of the
+	 * Sets the frontend values of the
 	 * filter
 	 * 
 	 * @access	public
+	 * @param	array|Spark\Object	Values
 	 * @return	Spark\Grid_Column_Filter_Abstract
 	 */
-	public function set_user_value($value = null)
+	public function set_frontend_values($values = null)
 	{
-		$this->_user_value = $value;
+		if (is_array($values))
+		{
+			$values = \Object::factory($values);
+		}
+		
+		$this->_frontend_values = $values;
 	}
 	
 	/**
-	 * Get User Value
+	 * Get Frontend Values
 	 * 
-	 * Gets the user value of the
+	 * Gets the frontend values of the
 	 * filter
 	 * 
 	 * @access	public
-	 * @return	string	User value
+	 * @param	array|Spark\Object	Values
 	 */
-	public function get_user_value()
+	public function get_frontend_values()
 	{
-		return $this->_user_value;
+		return $this->_frontend_values;
 	}
 }

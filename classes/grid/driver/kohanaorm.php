@@ -50,7 +50,7 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 			// Get the row id
 			$row_id = (string) $row;
 			
-			$return[$row_id] = \Object::factory($row->as_array());
+			$return[$row_id] = $row;
 		}
 		
 		// Return the object
@@ -70,23 +70,23 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 	{
 		foreach ($this->get_grid()->get_columns() as $column)
 		{
-			$filter_value = $column->get_filter()->get_value();
-			
-			if (is_string($filter_value))
+			if ( ! ($values = $column->get_filter()->get_values()))
 			{
-				if ($filter_value)
-				{
-					// Manipulate the model
-					$this->get_grid()->get_model()->where($column->get_index(), 'LIKE', '%' . $filter_value . '%');
-				}
+				continue;
 			}
-			else
+			
+			// If there just a value
+			if ($values->get_value())
 			{
-				// The user has a 'from' and 'to'
-				if (isset($filter_value['from']) and isset($filter_value['to']))
-				{
-					$this->get_grid()->get_model()->where($column->get_index(), 'BETWEEN', array($filter_value['from'], $filter_value['to']));
-				}
+				// Manipulate the model
+				$this->get_grid()->get_model()->where($this->_get_sql_column_name($column), 'LIKE', '%' . $values->get_value() . '%');
+			}
+			
+			// If there is a range
+			else if ($values->get_from() and $values->get_to())
+			{
+				// Manipulate the model
+				$this->get_grid()->get_model()->where($this->_get_sql_column_name($column), 'BETWEEN', array($values->get_from(), $values->get_to()));
 			}
 		}
 	}
@@ -101,14 +101,97 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 	 */
 	public function apply_sort_to_model($column, $direction = 'asc')
 	{
+		// Get the columns
 		$columns = $this->get_grid()->get_columns();
 		
+		// Check for a column
 		if (isset($columns[$column]))
 		{
+			// Get the column
 			$column = $columns[$column];
 			
-			// Manipulate the model
-			$this->get_grid()->get_model()->order_by($column->get_index(), $direction);
+			// Sort
+			$this->get_grid()->get_model()->order_by($this->_get_sql_column_name($column), $direction);
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Cell For Row
+	 * 
+	 * Gets the cell for the
+	 * row
+	 * 
+	 * @access	public
+	 * @param	mixed	Row
+	 * @param	Spark\Grid_Column
+	 * @return	string	Cell Html
+	 */
+	public function get_cell_for_row_and_column($row, $column)
+	{
+		// If we aren't dealing with relationships
+		if (strpos($column->get_index(), ':') === false)
+		{
+			$method = sprintf('get_%s', $column->get_index());
+			return $row->$method();
+		}
+		
+		// Create new row
+		$rels = explode(':', $column->get_index());
+		
+		// Counter
+		$i = 0;
+		
+		// Loop throug relationships
+		foreach ($rels as $rel)
+		{
+			// Loop through relationships
+			if (++$i < count($rels))
+			{
+				$row = $row->$rel;
+			}
+			
+			// On the last relationship, be sure to
+			// call the magic getter method, this way
+			// if the person overwrites it in their
+			// model we use their overwritten method
+			else
+			{
+				$method = sprintf('get_%s', $rel);
+				$row = $row->$method();
+			}
+		}
+		
+		// Return the row
+		return $row;
+	}
+	
+	/**
+	 * Get SQL Column Name
+	 * 
+	 * Gets the SQL query compatible
+	 * column name
+	 * 
+	 * @access	public
+	 * @param	string	Spark\Grid_Column
+	 * @return	string	Name
+	 */
+	protected function _get_sql_column_name($column)
+	{
+		// Get table name
+		$table_name = $this->get_grid()->get_model()->get_table_name();
+		
+		// Out of the main model
+		if ( ! strpos($column->get_index(), ':'))
+		{
+			return $table_name . '.' . $column->get_index();
+		}
+		else // out of a relationship - don't need table name as ORM does selects a table AS a relationship - so we just use that relationship
+		{
+			$parts = explode(':', $column->get_index());
+
+			return $parts[0] . '.' . $parts[1];
 		}
 	}
 }

@@ -45,7 +45,7 @@ $(document).ready(function()
 			</td>
 			<td align="left" class="input">
 				<?=\Form::input(sprintf('grid[%s][filters][%s][from]', $filter->get_column()->get_grid(), $filter->get_column()),
-								$filter->get_user_from(),
+								($filter->get_frontend_values()) ? $filter->get_frontend_values()->get_from() : null,
 								array(
 									'class' => 'filter date from',
 									'id'	=> $from_id,
@@ -58,7 +58,7 @@ $(document).ready(function()
 			</td>
 			<td align="left" class="input">
 				<?=\Form::input(sprintf('grid[%s][filters][%s][to]', $filter->get_column()->get_grid(), $filter->get_column()),
-								$filter->get_user_to(),
+								($filter->get_frontend_values()) ? $filter->get_frontend_values()->get_to() : null,
 								array(
 									'class' => 'filter date to',
 									'id'	=> $to_id,

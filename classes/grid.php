@@ -336,7 +336,7 @@ class Grid extends \Object {
 		{
 			if (isset($filters[(string) $column]))
 			{
-				$column->get_filter()->set_value($filters[(string) $column]);
+				$column->get_filter()->set_values($filters[(string) $column]);
 			}
 		}
 		
