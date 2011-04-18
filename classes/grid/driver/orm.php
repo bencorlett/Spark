@@ -45,15 +45,15 @@ class Grid_Driver_Orm extends \Grid_Driver_Abstract {
 		
 		foreach ($rows as $row_id => $row)
 		{
-			// Row data
-			$row_data = array();
+			// // Row data
+			// $row_data = array();
+			// 
+			// foreach ($row->properties() as $property_name => $property)
+			// {
+			// 	$row_data[$property_name] = $row->$property_name;
+			// }
 			
-			foreach ($row->properties() as $property_name => $property)
-			{
-				$row_data[$property_name] = $row->$property_name;
-			}
-			
-			$return[$row_id] = \Object::factory($row_data);
+			$return[$row_id] = $row;
 		}
 		
 		return $return;
@@ -109,5 +109,28 @@ class Grid_Driver_Orm extends \Grid_Driver_Abstract {
 			// Manipulate the model
 			$this->get_grid()->get_model()->order_by($column->get_index(), $direction);
 		}
+	}
+	
+	/**
+	 * Get Cell For Row
+	 * 
+	 * Gets the cell for the
+	 * row
+	 * 
+	 * @access	public
+	 * @param	mixed	Row
+	 * @param	Spark\Grid_Column
+	 * @return	string	Cell Html
+	 */
+	public function get_cell_for_row_and_column($row, $column)
+	{
+		// If we aren't dealing with relationships
+		if (strpos($column->get_index(), ':') === false)
+		{
+			$property = $column->get_index();
+			return $row->$property;
+		}
+		
+		return sprintf('%s doesn\'t support joins yet', __CLASS__);
 	}
 }
