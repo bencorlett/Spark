@@ -108,9 +108,5 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * @param	Spark\Grid_Column
 	 * @return	string	Cell Html
 	 */
-	public function get_cell_for_row_and_column($row, $column)
-	{
-		$method = sprintf('get_%s', $column->get_index());
-		return $row->$method();
-	}
+	abstract public function get_cell_for_row_and_column($row, $column);
 }
