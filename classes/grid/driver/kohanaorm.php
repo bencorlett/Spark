@@ -180,7 +180,7 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 	protected function _get_sql_column_name($column)
 	{
 		// Get table name
-		$table_name = $this->get_grid()->get_model()->get_table_name();
+		$table_name = $this->get_grid()->get_model()->table_name();
 		
 		// Out of the main model
 		if ( ! strpos($column->get_index(), ':'))
