@@ -164,10 +164,10 @@ class Object {
 			// Create a new instance of the reflection class and
 			// parse the arguments given to this function to the
 			// new instance of that class
-			self::$_instance = $reflection_class->newInstanceArgs(func_get_args());
+			static::$_instance = $reflection_class->newInstanceArgs(func_get_args());
 		}
 		
-		return self::$_instance;
+		return static::$_instance;
 	}
 	
 	/**
