@@ -533,7 +533,7 @@ class Object {
 			case 'set':
 				return $this->set_data($key, isset($arguments[0]) ? $arguments[0] : null);
 				
-			case 'unset':
+			case 'uns':
 				return $this->unset_data($key);
 				
 			case 'has':

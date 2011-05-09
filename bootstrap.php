@@ -38,9 +38,6 @@ Autoloader::add_classes(array(
 	// Exception
 	'Spark\\Exception'									=> __DIR__ . '/classes/exception.php',
 	
-	// Fuel
-	'Spark\\Fuel'										=> __DIR__ . '/classes/fuel.php',
-	
 	// Grid
 	'Spark\\Grid'										=> __DIR__ . '/classes/grid.php',
 	'Spark\\Grid_Column'								=> __DIR__ . '/classes/grid/column.php',
@@ -60,6 +57,9 @@ Autoloader::add_classes(array(
 	
 	// Object
 	'Spark\\Object'										=> __DIR__ . '/classes/object.php',
+	
+	// Spark
+	'Spark\\Spark'										=> __DIR__ . '/classes/spark.php',
 	
 	// Str
 	'Spark\\Str'										=> __DIR__ . '/classes/str.php',
