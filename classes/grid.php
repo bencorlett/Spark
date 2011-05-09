@@ -96,6 +96,20 @@ class Grid extends \Object {
 	protected $_massactions = array();
 	
 	/**
+	 * Add button
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected $_add_button;
+	
+	/**
+	 * Row action
+	 * 
+	 * @var	string
+	 */
+	protected $_row_action;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -104,8 +118,12 @@ class Grid extends \Object {
 	 * @param	mixed
 	 * @return	Spark\Grid
 	 */
-	public function __construct($identifier, $model = null)
+	public function __construct($identifier, $model)
 	{
+		if ( ! is_string($identifier)) throw new Exception('The identifier \'%s\' provided to %s() must be a valid string', $identifier, __METHOD__);
+		
+		if ( ! is_object($model)) throw new Exception('You must provide a model to %s()', __METHOD__);
+		
 		// Set the identifier and the model
 		$this->set_identifier(\Str::lower(\Str::alphanumeric($identifier, '_')))
 			 ->set_model($model);
@@ -158,7 +176,43 @@ class Grid extends \Object {
 	}
 	
 	/**
-	 * Render
+	 * Set Add Button
+	 * 
+	 * Sets the add button
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @param	array	Attributes
+	 * @return	Spark\Grid
+	 */
+	public function set_add_button(array $attributes)
+	{
+		// Set the add button property
+		$this->_add_button = Object::factory($attributes);
+		
+		return $this;
+	}
+	
+	/**
+	 * Set Row Action
+	 * 
+	 * Sets the action for when
+	 * the user clicks on a row
+	 * 
+	 * @access	public
+	 * @param	string	Action
+	 * @return	Spark\Grid
+	 */
+	public function set_row_action($action)
+	{
+		// Set the row action property
+		$this->_row_action = $action;
+		
+		return $this;
+	}
+	
+	/**
+	 * Build
 	 * 
 	 * Renders the grid object
 	 * as a Html table
@@ -166,7 +220,7 @@ class Grid extends \Object {
 	 * @access	public
 	 * @return	string	Html Table
 	 */
-	public function render()
+	public function build()
 	{
 		// Prepare the grid
 		$this->_prepare_grid();
@@ -626,5 +680,33 @@ class Grid extends \Object {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Get Add Button
+	 * 
+	 * Gets the add button class
+	 * property
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function get_add_button()
+	{
+		return $this->_add_button;
+	}
+	
+	/**
+	 * Get Row Action
+	 * 
+	 * Gets the row action class
+	 * property
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function get_row_action()
+	{
+		return $this->_row_action;
 	}
 }

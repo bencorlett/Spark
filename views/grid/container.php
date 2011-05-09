@@ -26,6 +26,11 @@ namespace Spark;
 <?=\Asset::js('jquery.ui-1.8.11.js')?>
 <?=\Asset::js('spark/jquery.form-2.69.js')?>
 <?=\Asset::js('spark/grid/grid.js')?>
+<div class="buttons" style="margin: 0 0 10px; text-align: right;">
+	<?php if (($button = $grid->get_add_button()) != null): ?>
+		<?=\Html::anchor($button->get_action(), $button->get_label(), array('class' => 'small button'))?>
+	<?php endif ?>
+</div>
 <grid id="grid-<?=$grid?>">
 	<?=(isset($table)) ? $table : false?>
 </grid>
