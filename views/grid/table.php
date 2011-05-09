@@ -126,7 +126,7 @@ $(document).ready(function()
 					</td>
 				<?php endif ?>
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<td <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?> <?=($column->get_align()) ? sprintf('align=\'%s\'', $column->get_align()) : null?>>
+					<td <?=($column->get_width()) ? sprintf('width="%u"', $column->get_width()) : null?> <?=($column->get_align()) ? sprintf('align="%s"', $column->get_align()) : null?> <?=($grid->get_driver()->build_row_action($row)) ? sprintf('onclick="window.location.href=\'%s\'"', $grid->get_driver()->build_row_action($row)) : null?>>
 						<?=$column->get_cell_for_row($row)?>
 					</td>
 				<?php endforeach ?>

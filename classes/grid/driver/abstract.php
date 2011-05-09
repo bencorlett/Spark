@@ -109,4 +109,18 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * @return	string	Cell Html
 	 */
 	abstract public function get_cell_for_row_and_column($row, $column);
+	
+	/**
+	 * Build Row Action
+	 * 
+	 * Builds the row action by
+	 * parsing property names according
+	 * to the active row. The action
+	 * is stored in the grid object
+	 * 
+	 * @access	public
+	 * @param	mixed	Row
+	 * @return	string	Action
+	 */
+	abstract public function build_row_action($row);
 }

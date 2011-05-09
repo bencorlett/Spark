@@ -133,4 +133,40 @@ class Grid_Driver_Orm extends \Grid_Driver_Abstract {
 		
 		return sprintf('%s doesn\'t support joins yet', __CLASS__);
 	}
+	
+	/**
+	 * Build Row Action
+	 * 
+	 * Builds the row action by
+	 * parsing property names according
+	 * to the active row. The action
+	 * is stored in the grid object
+	 * 
+	 * @access	public
+	 * @param	mixed	Row
+	 * @return	string	Action
+	 */
+	public function build_row_action($row)
+	{
+		if (($action = $this->get_grid()->get_row_action()) == null) return null;
+		
+		// Get the values
+		preg_match('/\{\w+\}/', $action, $matches);
+		
+		// Loop through matches and get property values
+		foreach ($matches as $match)
+		{
+			// Get property
+			$property	= str_replace(array('{', '}'), array(null, null), $match);
+			
+			// Get value
+			$value		= $row->$property;
+			
+			// Replace in string
+			$action		= str_replace($match, $value, $action);
+		}
+		
+		// Return the action
+		return \Uri::create($action);
+	}
 }
