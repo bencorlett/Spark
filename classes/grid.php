@@ -110,6 +110,28 @@ class Grid extends \Object {
 	protected $_row_action;
 	
 	/**
+	 * Uses filters flag
+	 * 
+	 * @var	bool
+	 */
+	protected $_uses_filters = true;
+	
+	/**
+	 * Uses bottom labels flag
+	 * 
+	 * @var	bool
+	 */
+	protected $_uses_bottom_labels = true;
+	
+	/**
+	 * The default view used
+	 * for the grid assets
+	 * 
+	 * @var	string
+	 */
+	protected $_assets_view = 'grid/assets';
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -207,6 +229,40 @@ class Grid extends \Object {
 	{
 		// Set the row action property
 		$this->_row_action = $action;
+		
+		return $this;
+	}
+	
+	/**
+	 * Set Uses Filters
+	 * 
+	 * Sets the uses filters
+	 * class property
+	 * 
+	 * @access	public
+	 * @param	bool	Uses filters
+	 * @return	Spark\Grid
+	 */
+	public function set_uses_filters($uses_filters)
+	{
+		$this->_uses_filters = (bool) $uses_filters;
+		
+		return $this;
+	}
+	
+	/**
+	 * Set Uses Bottom Labels
+	 * 
+	 * Sets the uses bottom
+	 * labels class property
+	 * 
+	 * @access	public
+	 * @param	bool	Uses bottom labels
+	 * @return	Spark\Grid
+	 */
+	public function set_uses_bottom_labels($uses_bottom_labels)
+	{
+		$this->_uses_bottom_labels = (bool) $uses_bottom_labels;
 		
 		return $this;
 	}
@@ -623,20 +679,6 @@ class Grid extends \Object {
 	}
 	
 	/**
-	 * Needs Filters
-	 *
-	 * Determine if the grid
-	 * needs filters
-	 * 
-	 * @access	public
-	 * @return	bool	Needs Filters
-	 */
-	public function needs_filters()
-	{
-		return true;
-	}
-	
-	/**
 	 * Needs Select
 	 * 
 	 * Determine if the grid
@@ -708,5 +750,50 @@ class Grid extends \Object {
 	public function get_row_action()
 	{
 		return $this->_row_action;
+	}
+	
+	/**
+	 * Get Uses Filters
+	 * 
+	 * Gets the uses filters
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	bool	Uses filters
+	 */
+	public function get_uses_filters()
+	{
+		return $this->_uses_filters;
+	}
+	
+	/**
+	 * Get Uses Bottom Labels
+	 * 
+	 * Gets the uses bottom
+	 * labels class property
+	 * 
+	 * @access	public
+	 * @return	bool	Uses bottom label
+	 */
+	public function get_uses_bottom_labels()
+	{
+		return $this->_uses_bottom_labels;
+	}
+	
+	/**
+	 * Get Assets
+	 * 
+	 * Gets the assets
+	 * by loading the view
+	 * declared in the class
+	 * or overridden by the user
+	 * when constructing the grid
+	 * 
+	 * @access	public
+	 * @return	string	Asset html
+	 */
+	public function get_assets()
+	{
+		return \View::factory($this->_assets_view);
 	}
 }

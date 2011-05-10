@@ -19,21 +19,15 @@
 
 namespace Spark;
 ?>
-<?=\Asset::css('spark/buttons.css')?>
-<?=\Asset::css('spark/grid/grid.css')?>
-<?=\Asset::css('jquery.ui-1.8.11.css')?>
-<?=\Asset::js('jquery-1.5.1.min.js')?>
-<?=\Asset::js('jquery.ui-1.8.11.js')?>
-<?=\Asset::js('spark/jquery.form-2.69.js')?>
-<?=\Asset::js('spark/grid/grid.js')?>
+<?=$grid->get_assets()?>
 <div class="buttons" style="margin: 0 0 10px; text-align: right;">
 	<?php if (($button = $grid->get_add_button()) != null): ?>
 		<?=\Html::anchor($button->get_action(), $button->get_label(), array('class' => 'small button'))?>
 	<?php endif ?>
 </div>
-<grid id="grid-<?=$grid?>">
+<div class="grid" id="grid-<?=$grid?>">
 	<?=(isset($table)) ? $table : false?>
-</grid>
+</div>
 <?=\Form::open(array('id' => sprintf('grid-%s-massactions-form', $grid), 'style' => 'display: none;'))?>
 <?=\Form::close()?>
 <?=\Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid), 'style' => 'display: none;'))?>
