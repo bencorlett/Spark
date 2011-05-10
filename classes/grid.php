@@ -781,6 +781,23 @@ class Grid extends \Object {
 	}
 	
 	/**
+	 * Set Assets View
+	 * 
+	 * Sets the assets
+	 * view class property
+	 * 
+	 * @access	public
+	 * @param	string	View name
+	 * @return	Spark\Grid
+	 */
+	public function set_assets_view($view_name)
+	{
+		$this->_assets_view = (string) $view_name;
+		
+		return $this;
+	}
+	
+	/**
 	 * Get Assets
 	 * 
 	 * Gets the assets
