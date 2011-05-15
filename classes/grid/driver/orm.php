@@ -150,21 +150,7 @@ class Grid_Driver_Orm extends \Grid_Driver_Abstract {
 	{
 		if (($action = $this->get_grid()->get_row_action()) == null) return null;
 		
-		// Get the values
-		preg_match('/\{\w+\}/', $action, $matches);
 		
-		// Loop through matches and get property values
-		foreach ($matches as $match)
-		{
-			// Get property
-			$property	= str_replace(array('{', '}'), array(null, null), $match);
-			
-			// Get value
-			$value		= $row->$property;
-			
-			// Replace in string
-			$action		= str_replace($match, $value, $action);
-		}
 		
 		// Return the action
 		return \Uri::create($action);

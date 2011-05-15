@@ -123,4 +123,17 @@ abstract class Grid_Driver_Abstract extends \Object {
 	 * @return	string	Action
 	 */
 	abstract public function build_row_action($row);
+	
+	/**
+	 * Parse Value for Row
+	 * 
+	 * Parses a value for a row and a
+	 * column
+	 * 
+	 * @access	public
+	 * @param	string	Value
+	 * @param	mixed	Row
+	 * @return	string	Value
+	 */
+	abstract public function parse_value_for_row($value, $row);
 }

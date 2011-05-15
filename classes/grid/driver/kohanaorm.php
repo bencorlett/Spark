@@ -183,24 +183,7 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 	{
 		if (($action = $this->get_grid()->get_row_action()) == null) return null;
 		
-		// Get the values
-		preg_match('/\{\w+\}/', $action, $matches);
-		
-		// Loop through matches and get property values
-		foreach ($matches as $match)
-		{
-			// Get property
-			$property	= str_replace(array('{', '}'), array(null, null), $match);
-			
-			// Get method
-			$method		= sprintf('get_%s', $property);
-			
-			// Get value
-			$value		= $row->$method();
-			
-			// Replace in string
-			$action		= str_replace($match, $value, $action);
-		}
+		$action = $this->parse_value_for_row($action, $row);
 		
 		// Return the action
 		return \Uri::create($action);
@@ -232,5 +215,40 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 
 			return $parts[0] . '.' . $parts[1];
 		}
+	}
+	
+	/**
+	 * Parse Value for Row
+	 * 
+	 * Parses a value for a row and a
+	 * column
+	 * 
+	 * @access	public
+	 * @param	string	Value
+	 * @param	mixed	Row
+	 * @return	string	Value
+	 */
+	public function parse_value_for_row($value, $row)
+	{
+		// Get the values
+		preg_match('/\{\w+\}/', $value, $matches);
+		
+		// Loop through matches and get property values
+		foreach ($matches as $match)
+		{
+			// Get property
+			$property	= str_replace(array('{', '}'), array(null, null), $match);
+			
+			// Get method
+			$method		= sprintf('get_%s', $property);
+			
+			// Get value
+			$raw		= $row->$method();
+			
+			// Replace in string
+			$value		= str_replace($match, $raw, $value);
+		}
+		
+		return $value;
 	}
 }

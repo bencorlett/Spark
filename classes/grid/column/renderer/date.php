@@ -22,7 +22,7 @@ namespace Spark;
 class Grid_Column_Renderer_Date extends \Grid_Column_Renderer_Abstract {
 	
 	/**
-	 * Render
+	 * Render Cell for Row and Column
 	 * 
 	 * Renders the value
 	 * 
@@ -30,7 +30,7 @@ class Grid_Column_Renderer_Date extends \Grid_Column_Renderer_Abstract {
 	 * @param	string	Value
 	 * @return	string	Rendered value
 	 */
-	public function render($value = null)
+	public function render_cell_for_row_and_column($value, $row, $column)
 	{
 		return \Date::factory(strtotime($value))->format('eu');
 	}
