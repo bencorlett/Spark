@@ -16,7 +16,6 @@
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/spark
  */
-
 namespace Spark;
 
 class Grid extends \Object {
