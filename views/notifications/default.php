@@ -29,6 +29,9 @@ $(function()
 		{
 			$(this).remove();
 		});
+		
+		// Don't slide to the top of the screen
+		return false;
 	});
 }, jQuery);
 </script>
