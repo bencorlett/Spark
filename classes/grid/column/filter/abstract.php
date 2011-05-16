@@ -16,7 +16,6 @@
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://www.github.com/bencorlett/spark
  */
-
 namespace Spark;
 
 abstract class Grid_Column_Filter_Abstract extends \Object {
