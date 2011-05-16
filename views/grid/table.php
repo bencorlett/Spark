@@ -90,7 +90,7 @@ $(document).ready(function()
 				</th>
 			<?php endforeach ?>
 		</tr>
-		<?php if ($grid->needs_filters()): ?>
+		<?php if ($grid->get_uses_filters()): ?>
 			<tr class="filters">
 				<?php if ($grid->needs_select()): ?>
 					<th>
@@ -105,7 +105,7 @@ $(document).ready(function()
 			</tr>
 		<?php endif ?>
 	</thead>
-	<tbody>
+	<tbody class="<?=($grid->get_uses_bottom_labels()) ?: 'bottom'?>">
 		<?php $i = 0 ?>
 		<?php foreach ($grid->get_rows() as $row_id => $row): ?>
 			<?php
@@ -120,12 +120,13 @@ $(document).ready(function()
 			?>
 			<tr class="cells">
 				<?php if ($grid->needs_select()): ?>
-					<td align="center">
+					<td align="center" class="first">
 						<?=\Form::checkbox(sprintf('ids[%u]', $row_id), true, array('row_id' => $row_id, 'class' => sprintf('select', $grid)))?>
 					</td>
 				<?php endif ?>
+				<?php $x = 0 ?>
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<td <?=($column->get_width()) ? sprintf('width="%u"', $column->get_width()) : null?> <?=($column->get_align()) ? sprintf('align="%s"', $column->get_align()) : null?> <?=($grid->get_driver()->build_row_action($row)) ? sprintf('onclick="window.location.href=\'%s\'"', $grid->get_driver()->build_row_action($row)) : null?>>
+					<td <?=($column->get_width()) ? sprintf('width="%u"', $column->get_width()) : null?> <?=($column->get_align()) ? sprintf('align="%s"', $column->get_align()) : null?> <?=($grid->get_driver()->build_row_action($row)) ? sprintf('onclick="window.location.href=\'%s\'"', $grid->get_driver()->build_row_action($row)) : null?> class="<?=($grid->needs_select()) ?: 'first'?> <?=($x++ == $grid->get_column_count(-1)) ? 'last' : null?>">
 						<?=$column->get_cell_for_row($row)?>
 					</td>
 				<?php endforeach ?>
@@ -141,29 +142,31 @@ $(document).ready(function()
 			</tr>
 		<?php endif ?>
 	</tbody>
-	<tfoot>
-		<tr class="labels">
-			<?php if ($grid->needs_select()): ?>
-				<th>
-					
-				</th>
-			<?php endif ?>
-			<?php foreach ($grid->get_columns() as $column): ?>
-				<th <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?>>
-					<span column="<?=$column?>">
-						<?=$column->get_label()?>
-						
-						<?php $sort = $grid->get_sort() ?>
-						<?php if ($sort['column'] == $column): ?>
-							<?php if ($sort['direction'] == 'asc'): ?>
-								&uarr;
-							<?php else: ?>
-								&darr;
+	<?php if ($grid->get_uses_bottom_labels()): ?>
+		<tfoot>
+			<tr class="labels">
+				<?php if ($grid->needs_select()): ?>
+					<th>
+
+					</th>
+				<?php endif ?>
+				<?php foreach ($grid->get_columns() as $column): ?>
+					<th <?=($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null?>>
+						<span column="<?=$column?>">
+							<?=$column->get_label()?>
+
+							<?php $sort = $grid->get_sort() ?>
+							<?php if ($sort['column'] == $column): ?>
+								<?php if ($sort['direction'] == 'asc'): ?>
+									&uarr;
+								<?php else: ?>
+									&darr;
+								<?php endif ?>
 							<?php endif ?>
-						<?php endif ?>
-					</span>
-				</th>
-			<?php endforeach ?>
-		</tr>
-	</tfoot>
+						</span>
+					</th>
+				<?php endforeach ?>
+			</tr>
+		</tfoot>
+	<?php endif ?>
 </table>

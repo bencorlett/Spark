@@ -18,7 +18,7 @@
  */
 namespace Spark;
 
-class Fuel extends \Fuel\Core\Fuel {
+class Spark extends Object {
 	
 	/**
 	 * Items in the registry
