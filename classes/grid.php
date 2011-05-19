@@ -146,7 +146,7 @@ class Grid extends \Object {
 		if ( ! is_object($model)) throw new Exception('You must provide a model to %s()', __METHOD__);
 		
 		// Set the identifier and the model
-		$this->set_identifier(\Str::lower(\Str::alphanumeric($identifier, '_')))
+		$this->set_identifier(strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $identifier)))
 			 ->set_model($model);
 	}
 	
@@ -282,7 +282,7 @@ class Grid extends \Object {
 		
 		// Get table
 		$table = \View::factory('grid/table')
-					  ->set('grid', $this);
+					  ->set('grid', $this, false);
 		
 		// If the request is AJAX, overwrite output so that
 		// the grid is the only output (as the contents of the
@@ -305,8 +305,8 @@ class Grid extends \Object {
 		
 		// If we're not using ajax, create the container
 		$container = \View::factory('grid/container')
-						  ->set('grid', $this)
-						  ->set('table', $table);
+						  ->set('grid', $this, false)
+						  ->set('table', $table, false);
 		
 		// Return the container
 		return $container;
@@ -409,7 +409,7 @@ class Grid extends \Object {
 		$session[$this->get_identifier()]['filters'] = $filters;
 		
 		// Set the session
-		\Session::set('grid', $session);
+		\Session::set('grid', $session, false);
 	}
 	
 	/**
