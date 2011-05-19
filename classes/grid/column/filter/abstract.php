@@ -91,7 +91,7 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 	public function get_filter_html()
 	{
 		$view = \View::factory($this->_view_name)
-					 ->set('filter', $this);
+					 ->set('filter', $this, false);
 		
 		return $view;
 	}

@@ -27,11 +27,11 @@ $to_id		= sprintf('grid-%s-filters-%s-to',  $filter->get_column()->get_grid(), $
 <script>
 $(document).ready(function()
 {
-	$("#<?=$from_id?>").datepicker({
+	$("#<?php echo $from_id; ?>").datepicker({
 		dateFormat	: 'dd/mm/yy'
 	});
 	
-	$("#<?=$to_id?>").datepicker({
+	$("#<?php echo $to_id; ?>").datepicker({
 		dateFormat	: 'dd/mm/yy'
 	});
 });
@@ -40,28 +40,30 @@ $(document).ready(function()
 	<tbody>
 		<tr>
 			<td align="right" class="label">
-				<?=\Form::label('From', $from_id)?>
+				<?php echo \Form::label('From', $from_id); ?>
 			</td>
 			<td align="left" class="input">
-				<?=\Form::input(sprintf('grid[%s][filters][%s][from]', $filter->get_column()->get_grid(), $filter->get_column()),
+				<?php echo \Form::input(sprintf('grid[%s][filters][%s][from]', $filter->get_column()->get_grid(), $filter->get_column()),
 								($filter->get_frontend_values()) ? $filter->get_frontend_values()->get_from() : null,
 								array(
 									'class' => 'filter date from',
 									'id'	=> $from_id,
-								))?>
+								)); 
+				?>
 			</td>
 		</tr>
 		<tr>
 			<td align="right" class="label">
-				<?=\Form::label('To', $to_id)?>
+				<?php echo \Form::label('To', $to_id); ?>
 			</td>
 			<td align="left" class="input">
-				<?=\Form::input(sprintf('grid[%s][filters][%s][to]', $filter->get_column()->get_grid(), $filter->get_column()),
+				<?php echo \Form::input(sprintf('grid[%s][filters][%s][to]', $filter->get_column()->get_grid(), $filter->get_column()),
 								($filter->get_frontend_values()) ? $filter->get_frontend_values()->get_to() : null,
 								array(
 									'class' => 'filter date to',
 									'id'	=> $to_id,
-								))?>
+								));
+				?>
 			</td>
 		</tr>
 	</tbody>
