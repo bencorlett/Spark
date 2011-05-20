@@ -18,7 +18,7 @@
  */
 namespace Spark;
 ?>
-<?php $i = 0 ?>
+<?php $i = 0; ?>
 <script>
 $(function()
 {
@@ -38,10 +38,10 @@ $(function()
 <ul class="notifications" id="notifications">
 	<?php foreach ($notifications as $group => $list): ?>
 		<?php foreach ($list as $notification): ?>
-			<li class="<?=$group?> <?=(++$i == $count) ? 'last' : null?>">
-				<?=$notification?>
+			<li class="<?php echo $group; ?> <?php echo (++$i == $count) ? 'last' : null; ?>">
+				<?php echo $notification; ?>
 				<a href="#" class="close">Close</a>
 			</li>
-		<?php endforeach ?>
-	<?php endforeach ?>
+		<?php endforeach; ?>
+	<?php endforeach; ?>
 </ul>
