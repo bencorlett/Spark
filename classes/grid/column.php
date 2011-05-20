@@ -89,12 +89,27 @@ class Grid_Column extends \Object {
 		}
 		
 		// If it does exist but the class doesn't, try find a possible renderer then revert to default
-		else if ($this->has_data('renderer') and ( ! class_exists($this->get_data('renderer')) or in_array($this->has_data('renderer'), $this->_ignored_classes)))
+		else if ($this->has_data('renderer') and ! class_exists($this->get_data('renderer')))
 		{
 			// Guess a possible renderer if the person was lazy
 			$possible_renderer = sprintf('\\Grid_Column_Renderer_%s', ucwords($this->get_data('renderer')));
 			
-			logger(\Fuel::L_ERROR, 'possible renderer: ' . $possible_renderer);
+			// If the possible renderer exists
+			if (class_exists($possible_renderer))
+			{
+				$this->set_data('renderer', $possible_renderer);
+			}
+			else
+			{
+				$this->set_data('renderer', $this->_default_renderer_class);
+			}
+		}
+		
+		// If the class exists but it's an ignored class
+		else if ($this->has_data('renderer') and class_exists($this->get_data('renderer')) and in_array($this->get_data('renderer'), $this->_ignored_classes))
+		{
+			// Guess a possible renderer if the person was lazy
+			$possible_renderer = sprintf('\\Grid_Column_Renderer_%s', ucwords($this->get_data('renderer')));
 			
 			// If the possible renderer exists
 			if (class_exists($possible_renderer))
@@ -109,7 +124,7 @@ class Grid_Column extends \Object {
 		
 		// Get the renderer we've found
 		$renderer = $this->get_data('renderer');
-		logger(\Fuel::L_DEBUG, 'renderer: '. $renderer, __METHOD__);
+		
 		// Set the renderer
 		$this->set_renderer($renderer::factory())
 			 ->unset_data('renderer');
