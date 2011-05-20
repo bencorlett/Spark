@@ -110,17 +110,16 @@ class BackFace extends \Object {
 	}
 	
 	/**
-	 * Render
+	 * Build
 	 * 
-	 * Renders the BackFace object
+	 * Builds the BackFace object
 	 * as Html
 	 * 
 	 * @access	public
-	 * @return	string	Html Table
+	 * @return	string	Html
 	 */
-	public function render()
+	public function build()
 	{
-		
 		// Safari has nice 3d transitions
 		// so it will be done natively in
 		// CSS

@@ -102,29 +102,29 @@ class Breadcrumbs extends \Object {
 	}
 	
 	/**
-	 * Render
+	 * Build
 	 * 
-	 * Renders the Breadcrumbs
+	 * Builds the Breadcrumbs
 	 * object as Html
 	 * 
 	 * @access	public
 	 * @return	string	Html
 	 */
-	public static function render()
+	public static function build()
 	{
-		return static::instance()->_render();
+		return static::instance()->_build();
 	}
 	
 	/**
-	 * Render
+	 * Builds
 	 * 
-	 * Renders the Breadcrumbs
+	 * Builds the Breadcrumbs
 	 * object as Html
 	 * 
 	 * @access	protected
 	 * @return	string	Html
 	 */
-	protected function _render()
+	protected function _build()
 	{
 		$view = \View::factory('breadcrumbs/default')
 					 ->set('breadcrumbs', $this->get_breadcrumbs());
