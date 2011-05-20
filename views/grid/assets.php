@@ -19,10 +19,10 @@
 
 namespace Spark;
 ?>
-<?=\Asset::css('spark/buttons.css')?>
-<?=\Asset::css('spark/grid/grid.css')?>
-<?=\Asset::css('jquery.ui-1.8.11.css')?>
-<?=\Asset::js('jquery-1.5.1.min.js')?>
-<?=\Asset::js('jquery.ui-1.8.11.js')?>
-<?=\Asset::js('spark/jquery.form-2.69.js')?>
-<?=\Asset::js('spark/grid/grid.js')?>
+<?php echo \Asset::css('spark/buttons.css'); ?>
+<?php echo \Asset::css('spark/grid/grid.css'); ?>
+<?php echo \Asset::css('jquery.ui-1.8.11.css'); ?>
+<?php echo \Asset::js('jquery-1.5.1.min.js'); ?>
+<?php echo \Asset::js('jquery.ui-1.8.11.js'); ?>
+<?php echo \Asset::js('spark/jquery.form-2.69.js'); ?>
+<?php echo \Asset::js('spark/grid/grid.js'); ?>
