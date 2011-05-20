@@ -63,6 +63,16 @@ class Grid_Column extends \Object {
 	protected $_type;
 	
 	/**
+	 * Bunch of classes that are in fuel that will
+	 * be picked up by other classes (such as date)
+	 * 
+	 * @var	array
+	 */
+	protected $_ignored_classes = array(
+		'date',
+	);
+	
+	/**
 	 * Construct
 	 * 
 	 * Internal constructor
@@ -72,14 +82,6 @@ class Grid_Column extends \Object {
 	 */
 	protected function _construct()
 	{
-		// Bunch of classes that
-		// are in fuel that will
-		// be picked up by other
-		// classes (such as date)
-		$ignored_classes = array(
-			'date',
-		);
-		
 		// If the renderer doesn't exist create it
 		if ( ! $this->has_data('renderer'))
 		{
@@ -87,7 +89,7 @@ class Grid_Column extends \Object {
 		}
 		
 		// If it does exist but the class doesn't, try find a possible renderer then revert to default
-		else if ($this->has_data('renderer') and ( ! class_exists($this->get_data('renderer')) or in_array($this->has_data('renderer'), $ignored_classes)))
+		else if ($this->has_data('renderer') and ( ! class_exists($this->get_data('renderer')) or in_array($this->has_data('renderer'), $this->_ignored_classes)))
 		{
 			// Guess a possible renderer if the person was lazy
 			$possible_renderer = sprintf('\\Grid_Column_Renderer_%s', ucwords($this->get_data('renderer')));
