@@ -18,4 +18,4 @@
  */
 namespace Spark;
 ?>
-<?php echo \Form::input(sprintf('grid[%s][filters][%s][value]', $filter->get_column()->get_grid(), $filter->get_column()), ($filter->get_frontend_values()) ? $filter->get_frontend_values()->get_value() : null, array('class' => 'filter text')); ?>
+<?php echo \Form::input(sprintf('grid[%s][filters][%s][value]', $filter->get_column()->get_grid(), $filter->get_column()), ($filter->get_frontend_values()) ? $filter->get_frontend_values()->get_value() : null, array('class' => 'filter text', 'style' => ($filter->get_column()->get_width()) ? sprintf('width: %dpx;', ($filter->get_column()->get_width() - 10)) : null)); ?>
