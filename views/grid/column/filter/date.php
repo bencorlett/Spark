@@ -48,6 +48,7 @@ $(document).ready(function()
 								array(
 									'class' => 'filter date from',
 									'id'	=> $from_id,
+									'style' => ($filter->get_column()->get_width()) ? sprintf('width: %dpx;', ($filter->get_column()->get_width() - 45)) : null,
 								)); 
 				?>
 			</td>
@@ -62,6 +63,7 @@ $(document).ready(function()
 								array(
 									'class' => 'filter date to',
 									'id'	=> $to_id,
+									'style' => ($filter->get_column()->get_width()) ? sprintf('width: %dpx;', ($filter->get_column()->get_width() - 45)) : null,
 								));
 				?>
 			</td>
