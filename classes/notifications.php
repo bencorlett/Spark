@@ -80,7 +80,7 @@ class Notifications extends \Object {
 	public static function add($type, $message)
 	{
 		// Set the notification
-		static::instance()->_notifications[$type][] = (string) $message;
+		static::instance()->_notifications[$type][] = (string) htmlentities($message);
 		static::instance()->write();
 	}
 	
