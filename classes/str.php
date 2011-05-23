@@ -34,6 +34,6 @@ class Str extends \Fuel\Core\Str {
 	 */
 	public static function alphanumeric($string, $separator = null)
 	{
-		return preg_replace('#\W#', $separator, $string);
+		return preg_replace('/[^a-zA-Z0-9\s]/', $separator, $string);
 	}
 }
