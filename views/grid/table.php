@@ -118,7 +118,7 @@ $(document).ready(function()
 			$i++;
 			
 			?>
-			<tr class="cells">
+			<tr class="cells <?=($i % 2 == 0) ? 'even' : 'odd'?>">
 				<?php if ($grid->needs_select()): ?>
 					<td align="center" class="first">
 					<?php echo \Form::checkbox(sprintf('ids[%u]', $row_id), true, array('row_id' => $row_id, 'class' => sprintf('select', $grid))); ?>
