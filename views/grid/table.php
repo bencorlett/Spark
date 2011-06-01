@@ -17,6 +17,9 @@
  * @link       http://www.github.com/bencorlett/spark
  */
 namespace Spark;
+
+// Get rows now
+$rows = $grid->get_rows();
 ?>
 <script>
 $(document).ready(function()
@@ -26,6 +29,19 @@ $(document).ready(function()
 </script>
 <div id="grid-<?php echo $grid; ?>-overlay" class="overlay">
 </div>
+<?php if ($grid->get_uses_pagination()): ?>
+	Page
+	<?php if ($grid->get_pagination_page() > 1): ?>
+		<span id="grid-<?php echo $grid; ?>-pagination-previous">Previous</span>
+	<?php endif; ?>
+	<?php echo \Form::input(null, $grid->get_pagination_page(), array('style' => sprintf('width: %upx; text-align: center;', (strlen($grid->get_pagination_pages_count()) * 10)), 'maxlength' => strlen($grid->get_pagination_pages_count()), 'id' => sprintf('grid-%s-pagination-value', $grid), 'original-value' => $grid->get_pagination_page())); ?>
+	<?php if ($grid->get_pagination_page() < $grid->get_pagination_pages_count()): ?>
+		<span id="grid-<?php echo $grid; ?>-pagination-next">Next</span>
+	<?php endif ?>
+	of
+	<?php echo $grid->get_pagination_pages_count(); ?>
+	- Total <?php echo $grid->get_total_row_count(); ?> record<?php echo ($grid->get_total_row_count() != 1) ? 's' : null?> found
+<?php endif; ?>
 <table class="<?php echo $grid->get_identifier(); ?>" cellpadding="0" cellspacing="0">
 	<thead>
 		<?php if ($grid->needs_select()): ?>
@@ -107,7 +123,7 @@ $(document).ready(function()
 	</thead>
 	<tbody class="<?php echo ($grid->get_uses_bottom_labels()) ?: 'bottom'; ?>">
 		<?php $i = 0; ?>
-		<?php foreach ($grid->get_rows() as $row_id => $row): ?>
+		<?php foreach ($rows as $row_id => $row): ?>
 			<?php
 			
 			// Weird bug - somehow there can still

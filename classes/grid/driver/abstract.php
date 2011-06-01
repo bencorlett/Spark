@@ -81,6 +81,16 @@ abstract class Grid_Driver_Abstract extends \Object {
 	abstract public function apply_sort_to_model($column, $direction = 'asc');
 	
 	/**
+	 * Apply Pagination to Model
+	 * 
+	 * Applies the pagination to
+	 * the model object
+	 * 
+	 * @access	public
+	 */
+	abstract public function apply_pagination_to_model();
+	
+	/**
 	 * Get Rows
 	 * 
 	 * Gets the rows based

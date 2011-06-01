@@ -109,6 +109,21 @@
 				$(selector + '-massactions-form').submit();
 			}, 30);
 		});
+		
+		// Pagination
+		$(selector + '-pagination-previous').click(function()
+		{
+			$(selector + '-ajax-form').append('<input type="text" name="grid[' + grid_id + '][pagination]" value="' + (parseInt($(selector + '-pagination-value').attr('original-value')) - 1) + '" />');
+
+			$(selector + '-ajax-form').submit();
+		});
+		
+		$(selector + '-pagination-next').click(function()
+		{
+			$(selector + '-ajax-form').append('<input type="text" name="grid[' + grid_id + '][pagination]" value="' + (parseInt($(selector + '-pagination-value').attr('original-value')) + 1) + '" />');
+
+			$(selector + '-ajax-form').submit();
+		});
 	}
 	
 })(jQuery);

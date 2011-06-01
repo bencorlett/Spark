@@ -69,10 +69,7 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 	{
 		foreach ($this->get_grid()->get_columns() as $column)
 		{
-			if ( ! ($values = $column->get_filter()->get_values()))
-			{
-				continue;
-			}
+			if ( ! ($values = $column->get_filter()->get_values())) continue;
 			
 			// If there just a value
 			if ($values->get_value())
@@ -114,6 +111,28 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 		}
 		
 		return $this;
+	}
+	
+	/**
+	 * Apply Pagination to Model
+	 * 
+	 * Applies the pagination to
+	 * the model object
+	 * 
+	 * @access	public
+	 */
+	public function apply_pagination_to_model()
+	{
+		// For pagination purposes
+		// we need to know the total
+		// row count
+		$clone = clone($this->get_grid()->get_model());
+		$count = $clone->count_all();
+		$this->get_grid()->set_total_row_count($count);
+		unset($clone);
+		
+		// Add pagination if it's needed
+		if ($this->get_grid()->get_uses_pagination()) $this->get_grid()->get_model()->limit($this->get_grid()->get_pagination_size())->offset($this->get_grid()->get_pagination_size() * ($this->get_grid()->get_pagination_page() - 1));
 	}
 	
 	/**

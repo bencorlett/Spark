@@ -28,6 +28,13 @@ class Grid extends \Object {
 	protected $_columns = array();
 	
 	/**
+	 * Array of grid rows
+	 * 
+	 * @var	array
+	 */
+	protected $_rows = array();
+	
+	/**
 	 * The model the grid uses
 	 * 
 	 * @var	mixed
@@ -129,6 +136,48 @@ class Grid extends \Object {
 	 * @var	string
 	 */
 	protected $_assets_view = 'grid/assets';
+	
+	/**
+	 * Uses pagination flag
+	 * 
+	 * @var	bool
+	 */
+	protected $_uses_pagination = false;
+	
+	/**
+	 * Pagination size
+	 * 
+	 * @var	int
+	 */
+	protected $_pagination_size = 10;
+	
+	/**
+	 * Pagination page
+	 * 
+	 * @var	string
+	 */
+	protected $_pagination_page;
+	
+	/**
+	 * Paginated row count
+	 * 
+	 * @var	int
+	 */
+	protected $_paginated_row_count;
+	
+	/**
+	 * Total row count
+	 * 
+	 * @var	int
+	 */
+	protected $_total_row_count;
+	
+	/**
+	 * Pagination pages count
+	 * 
+	 * @var	int
+	 */
+	protected $_pagination_pages_count;
 	
 	/**
 	 * Construct
@@ -367,6 +416,7 @@ class Grid extends \Object {
 	{
 		$this->_prepare_filters();
 		$this->_prepare_sort();
+		$this->_prepare_pagination();
 		
 		return $this;
 	}
@@ -453,7 +503,7 @@ class Grid extends \Object {
 	}
 	
 	/**
-	 * Prepare sort
+	 * Prepare Sort
 	 * 
 	 * Prepares the sort order
 	 * for the grid
@@ -464,10 +514,7 @@ class Grid extends \Object {
 	{
 		if (($grid = \Input::post('grid')) !== null)
 		{
-			if (isset($grid[$this->get_identifier()]['sort']))
-			{
-				$this->_set_sort($grid[$this->get_identifier()]['sort']);
-			}
+			if (isset($grid[$this->get_identifier()]['sort'])) $this->_set_sort($grid[$this->get_identifier()]['sort']);
 		}
 		
 		$this->_apply_sort_to_model();
@@ -551,6 +598,57 @@ class Grid extends \Object {
 			// Apply the sort
 			$this->get_driver()->apply_sort_to_model($sort['column'], $sort['direction']);
 		}
+	}
+	
+	/**
+	 * Prepare Pagination
+	 * 
+	 * Prepares Pagination
+	 * for the grid
+	 * 
+	 * @access	protected
+	 */
+	protected function _prepare_pagination()
+	{
+		if (($grid = \Input::post('grid')) !== null)
+		{
+			if (isset($grid[$this->get_identifier()]['pagination'])) $this->_set_pagination($grid[$this->get_identifier()]['pagination']);
+		}
+		
+		$this->_apply_pagination_to_model();
+	}
+	
+	/**
+	 * Set Sort
+	 * 
+	 * Sets the grid sort
+	 * in the session
+	 * 
+	 * @access	protected
+	 * @param	array	Column
+	 */
+	protected function _set_pagination($pagination)
+	{
+		// Get the session
+		$session = \Session::get('grid');
+		
+		// Set the pagination page
+		$session[$this->get_identifier()]['pagination'] = $pagination;
+		
+		\Session::set('grid', $session);
+	}
+	
+	/**
+	 * Apply Pagination to Model
+	 * 
+	 * Applys pagination to the
+	 * model
+	 * 
+	 * @access	protected
+	 */
+	protected function _apply_pagination_to_model()
+	{
+		$this->get_driver()->apply_pagination_to_model();
 	}
 	
 	/**
@@ -660,7 +758,10 @@ class Grid extends \Object {
 	 */
 	public function get_rows()
 	{
-		return $this->get_driver()->get_rows();
+		// Cache the rows
+		if ( ! $this->_rows) $this->_rows = $this->get_driver()->get_rows();
+		
+		return $this->_rows;
 	}
 	
 	/**
@@ -811,5 +912,169 @@ class Grid extends \Object {
 	public function get_assets()
 	{
 		return \View::factory($this->_assets_view);
+	}
+	
+	/**
+	 * Set Uses Pagination
+	 * 
+	 * Sets the uses pagination
+	 * class property
+	 * 
+	 * @access	public
+	 * @param	bool	Uses pagination
+	 * @return	Spark\Grid
+	 */
+	public function set_uses_pagination($uses_pagination = true)
+	{
+		$this->_uses_pagination = (bool) $uses_pagination;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Uses Pagination
+	 * 
+	 * Gets the uses pagination
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	bool
+	 */
+	public function get_uses_pagination()
+	{
+		return $this->_uses_pagination;
+	}
+	
+	/**
+	 * Set Pagination Size
+	 * 
+	 * Sets the pagination size
+	 * class property
+	 * 
+	 * @access	public
+	 * @param	int		Size
+	 * @return	Spark\Grid
+	 */
+	public function set_pagination_size($size = 10)
+	{
+		$this->_pagination_size = $size;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Pagination Size
+	 * 
+	 * Gets the pagination size
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	int		Pagination size
+	 */
+	public function get_pagination_size()
+	{
+		return $this->_pagination_size;
+	}
+	
+	/**
+	 * Set Pagination Row Count
+	 * 
+	 * Sets the paginated row
+	 * count class property
+	 * 
+	 * @access	public
+	 * @param	int		Count
+	 * @return	Spark\Grid
+	 */
+	public function set_paginated_row_count($count)
+	{
+		$this->_paginated_row_count = $count;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Pagination Row Count
+	 * 
+	 * Gets the paginated row
+	 * count class property
+	 * 
+	 * @access	public
+	 * @return	int		Count
+	 */
+	public function get_paginated_row_count()
+	{
+		return $this->_paginated_row_count;
+	}
+	
+	/**
+	 * Set Total Row Count
+	 * 
+	 * Sets the total row
+	 * count class property
+	 * 
+	 * @access	public
+	 * @param	int		Count
+	 * @return	Spark\Grid
+	 */
+	public function set_total_row_count($count)
+	{
+		$this->_total_row_count = $count;
+		
+		// Also set the number
+		// of pages
+		$this->_pagination_pages_count = ceil($count / $this->get_pagination_size());
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Total Row Count
+	 * 
+	 * Gets the total row
+	 * count class property
+	 * 
+	 * @access	public
+	 * @return	int		Count
+	 */
+	public function get_total_row_count()
+	{
+		return $this->_total_row_count;
+	}
+	
+	/**
+	 * Get Pagination Pages Count
+	 * 
+	 * Gets the pagination pages
+	 * count class property
+	 * 
+	 * @access	public
+	 * @return	int		Count
+	 */
+	public function get_pagination_pages_count()
+	{
+		return $this->_pagination_pages_count;
+	}
+	
+	/**
+	 * Get Pagination Page
+	 * 
+	 * Gets the pagination page
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	int		Page
+	 */
+	public function get_pagination_page()
+	{
+		if ( ! $this->_pagination_page)
+		{
+			// Get the session
+			$session = \Session::get('grid');
+
+			$this->_pagination_page = (isset($session[$this->get_identifier()]['pagination'])) ? $session[$this->get_identifier()]['pagination'] : 1;
+		}
+		
+		return $this->_pagination_page;
 	}
 }
