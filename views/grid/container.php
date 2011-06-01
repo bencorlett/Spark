@@ -29,5 +29,5 @@ namespace Spark;
 </div>
 <?php echo \Form::open(array('id' => sprintf('grid-%s-massactions-form', $grid), 'style' => 'display: none;')); ?>
 <?php echo \Form::close(); ?>
-<?php echo \Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid), 'style' => 'adisplay: none;')); ?>
+<?php echo \Form::open(array('id' => sprintf('grid-%s-ajax-form', $grid), 'style' => 'display: none;')); ?>
 <?php echo \Form::close(); ?>

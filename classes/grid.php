@@ -149,7 +149,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	int
 	 */
-	protected $_pagination_size = 10;
+	protected $_pagination_size = 25;
 	
 	/**
 	 * Pagination page

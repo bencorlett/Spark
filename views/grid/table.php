@@ -34,7 +34,7 @@ $(document).ready(function()
 	<?php if ($grid->get_pagination_page() > 1): ?>
 		<span id="grid-<?php echo $grid; ?>-pagination-previous">Previous</span>
 	<?php endif; ?>
-	<?php echo \Form::input(null, $grid->get_pagination_page(), array('style' => sprintf('width: %upx; text-align: center;', (strlen($grid->get_pagination_pages_count()) * 10)), 'maxlength' => strlen($grid->get_pagination_pages_count()), 'id' => sprintf('grid-%s-pagination-value', $grid), 'original-value' => $grid->get_pagination_page())); ?>
+	<?php echo \Form::input(null, $grid->get_pagination_page(), array('style' => sprintf('width: %upx; text-align: center;', (strlen($grid->get_pagination_pages_count()) * 10)), 'maxlength' => strlen($grid->get_pagination_pages_count()), 'id' => sprintf('grid-%s-pagination-value', $grid), 'original-value' => $grid->get_pagination_page(), 'minimum-value' => 1, 'maximum-value' => $grid->get_pagination_pages_count())); ?>
 	<?php if ($grid->get_pagination_page() < $grid->get_pagination_pages_count()): ?>
 		<span id="grid-<?php echo $grid; ?>-pagination-next">Next</span>
 	<?php endif ?>

@@ -113,16 +113,29 @@
 		// Pagination
 		$(selector + '-pagination-previous').click(function()
 		{
-			$(selector + '-ajax-form').append('<input type="text" name="grid[' + grid_id + '][pagination]" value="' + (parseInt($(selector + '-pagination-value').attr('original-value')) - 1) + '" />');
+			$(selector + '-ajax-form').append('<input type="hidden" name="grid[' + grid_id + '][pagination]" value="' + (parseInt($(selector + '-pagination-value').attr('original-value')) - 1) + '" />');
 
 			$(selector + '-ajax-form').submit();
 		});
 		
 		$(selector + '-pagination-next').click(function()
 		{
-			$(selector + '-ajax-form').append('<input type="text" name="grid[' + grid_id + '][pagination]" value="' + (parseInt($(selector + '-pagination-value').attr('original-value')) + 1) + '" />');
+			$(selector + '-ajax-form').append('<input type="hidden" name="grid[' + grid_id + '][pagination]" value="' + (parseInt($(selector + '-pagination-value').attr('original-value')) + 1) + '" />');
 
 			$(selector + '-ajax-form').submit();
+		});
+		
+		$(selector + '-pagination-value').keypress(function(e)
+		{
+			switch (e.keyCode)
+			{
+				case 13:
+					if (parseInt($(this).val()) > $(this).attr('maximum-value')) $(this).val($(this).attr('maximum-value'));
+					if (parseInt($(this).val()) < $(this).attr('minimum-value')) $(this).val($(this).attr('minimum-value'));
+					$(selector + '-ajax-form').append('<input type="hidden" name="grid[' + grid_id + '][pagination]" value="' + $(this).val() + '" />');
+					$(selector + '-ajax-form').submit();
+					break;
+			}
 		});
 	}
 	
