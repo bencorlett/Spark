@@ -30,17 +30,15 @@ $(document).ready(function()
 <div id="grid-<?php echo $grid; ?>-overlay" class="overlay">
 </div>
 <?php if ($grid->get_uses_pagination()): ?>
-	Page
-	<?php if ($grid->get_pagination_page() > 1): ?>
-		<span id="grid-<?php echo $grid; ?>-pagination-previous">Previous</span>
-	<?php endif; ?>
-	<?php echo \Form::input(null, $grid->get_pagination_page(), array('style' => sprintf('width: %upx; text-align: center;', (strlen($grid->get_pagination_pages_count()) * 10)), 'maxlength' => strlen($grid->get_pagination_pages_count()), 'id' => sprintf('grid-%s-pagination-value', $grid), 'original-value' => $grid->get_pagination_page(), 'minimum-value' => 1, 'maximum-value' => $grid->get_pagination_pages_count())); ?>
-	<?php if ($grid->get_pagination_page() < $grid->get_pagination_pages_count()): ?>
-		<span id="grid-<?php echo $grid; ?>-pagination-next">Next</span>
-	<?php endif ?>
-	of
-	<?php echo $grid->get_pagination_pages_count(); ?>
-	- Total <?php echo $grid->get_total_row_count(); ?> record<?php echo ($grid->get_total_row_count() != 1) ? 's' : null?> found
+	<div class="pagination">
+		<span class="page">Page</span>
+		<span id="grid-<?php echo $grid; ?>-pagination-previous" class="previous link <?=($grid->get_pagination_page() > 1) ? 'enabled' : 'disabled'?>">Previous</span>
+		<?php echo \Form::input(null, $grid->get_pagination_page(), array('style' => sprintf('width: %upx; text-align: center;', (strlen($grid->get_pagination_pages_count()) * 10)), 'maxlength' => strlen($grid->get_pagination_pages_count()), 'id' => sprintf('grid-%s-pagination-value', $grid), 'class' => 'value', 'original-value' => $grid->get_pagination_page(), 'minimum-value' => 1, 'maximum-value' => $grid->get_pagination_pages_count())); ?>
+		<span id="grid-<?php echo $grid; ?>-pagination-next" class="next link <?=($grid->get_pagination_page() < $grid->get_pagination_pages_count()) ? 'enabled' : 'disabled'?>">Next</span>
+		<span class="of">of</span>
+		<span class="pages"><?php echo $grid->get_pagination_pages_count(); ?></span>
+		<span class="total">- total <?php echo $grid->get_total_row_count(); ?> record<?php echo ($grid->get_total_row_count() != 1) ? 's' : null?> found</span>
+	</div>
 <?php endif; ?>
 <table class="<?php echo $grid->get_identifier(); ?>" cellpadding="0" cellspacing="0">
 	<thead>
@@ -83,7 +81,7 @@ $(document).ready(function()
 				</th>
 			</tr>
 		<?php endif; ?>
-		<tr class="labels">
+		<tr class="labels <?=($grid->get_uses_filters()) ? 'has-filters' : 'no-filters'?>">
 			<?php if ($grid->needs_select()): ?>
 				<th>
 
