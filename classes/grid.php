@@ -371,9 +371,10 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_grid()
 	{
-		$this->_prepare_columns();
-		$this->_prepare_massactions();
-		$this->_prepare_model();
+		// Prepare grid
+		$this->_prepare_columns()
+			 ->_prepare_massactions()
+			 ->_prepare_model();
 		
 		return $this;
 	}
