@@ -920,13 +920,26 @@ class Grid extends \Object {
 	 * Sets the uses pagination
 	 * class property
 	 * 
+	 * For example:
+	 * 
+	 * 		// Set uses pagination
+	 * 		$grid->set_uses_pagination(true);
+	 * 
+	 * 		// Set pagination size at same
+	 * 		// time
+	 * 		$grid->set_uses_pagination(25);
+	 * 
 	 * @access	public
 	 * @param	bool	Uses pagination
 	 * @return	Spark\Grid
 	 */
-	public function set_uses_pagination($uses_pagination = true)
+	public function set_uses_pagination($pagination = true)
 	{
-		$this->_uses_pagination = (bool) $uses_pagination;
+		// Set the property
+		$this->_uses_pagination = (bool) $pagination;
+		
+		// Set size
+		if (is_int($pagination)) $this->set_pagination_size($pagination);
 		
 		return $this;
 	}
