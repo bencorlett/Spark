@@ -78,7 +78,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	string
 	 */
-	protected $_default_sort = false;
+	protected $_default_sort = 'id';
 	
 	/**
 	 * The default sort direction
@@ -574,7 +574,7 @@ class Grid extends \Object {
 		// Get the session
 		$session = \Session::get('grid');
 		
-		return (isset($session[$this->get_identifier()]['sort'])) ? $session[$this->get_identifier()]['sort'] : null;
+		return (isset($session[$this->get_identifier()]['sort'])) ? $session[$this->get_identifier()]['sort'] : array('column' => $this->get_default_sort(), 'direction' => $this->get_default_sort_direction());
 	}
 	
 	/**
@@ -1090,5 +1090,77 @@ class Grid extends \Object {
 		}
 		
 		return $this->_pagination_page;
+	}
+	
+	/**
+	 * Set Default Sort
+	 * 
+	 * Sets the default sort
+	 * for the grid
+	 * 
+	 * Note:	You must provide
+	 *			the column alias
+	 * 			to the sort that
+	 * 			you used to configure
+	 * 			the grid
+	 * 
+	 * @access	public
+	 * @param	string	Column
+	 * @param	string	Direction
+	 */
+	public function set_default_sort($column, $direction = null)
+	{
+		$this->_default_sort = $column;
+		
+		return $this->set_default_sort_direction($direction);
+	}
+	
+	/**
+	 * Set Default Sort Direction
+	 * 
+	 * Sets the default sort direction
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @param	string	Sort direction
+	 * @return	Spark\Grid
+	 */
+	public function set_default_sort_direction($direction = null)
+	{
+		// Directions
+		$directions = array('asc', 'desc');
+		
+		// Set the class property
+		if ( ! is_null($direction) and in_array($direction, $directions)) $this->_default_sort_direction = $direction;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Default Sort
+	 * 
+	 * Gets the default sort
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @return	string	Sort
+	 */
+	public function get_default_sort()
+	{
+		return $this->_default_sort;
+	}
+	
+	/**
+	 * Get Default Sort Direction
+	 * 
+	 * Gets the default sort direction
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @return	string	Sort direction
+	 */
+	public function get_default_sort_direction()
+	{
+		return $this->_default_sort_direction;
 	}
 }
