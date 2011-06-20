@@ -91,3 +91,5 @@ class Spark extends Object {
 		return self::$_registry[$key];
 	}
 }
+
+/* End of file classes/spark.php */

@@ -589,3 +589,5 @@ class Object {
 		return ($this->get_identifier()) ? $this->get_identifier() : get_called_class();
 	}
 }
+
+/* End of file classes/object.php */

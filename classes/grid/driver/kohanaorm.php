@@ -270,3 +270,5 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 		return $value;
 	}
 }
+
+/* End of file classes/grid/driver/kohanaorm.php */

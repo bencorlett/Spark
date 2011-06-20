@@ -173,3 +173,5 @@ abstract class Grid_Column_Filter_Abstract extends \Object {
 		return $this->_frontend_values;
 	}
 }
+
+/* End of file classes/grid/column/filter/abstract.php */

@@ -27,3 +27,5 @@ class Grid_Column_Filter_Text extends \Grid_Column_Filter_Abstract {
 	 */
 	protected $_view_name = 'grid/column/filter/text';
 }
+
+/* End of file classes/grid/column/filter/text.php */

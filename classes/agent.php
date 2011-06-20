@@ -553,3 +553,5 @@ class Agent extends \Fuel\Core\Agent {
 		return (in_array(strtolower($charset), static::charsets(), true)) ? true : false;
 	}
 }
+
+/* End of file classes/agent.php */

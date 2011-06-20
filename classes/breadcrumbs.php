@@ -132,3 +132,5 @@ class Breadcrumbs extends \Object {
 		return $view;
 	}
 }
+
+/* End of file classes/breadcrumbs.php */

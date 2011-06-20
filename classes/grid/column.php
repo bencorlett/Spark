@@ -290,3 +290,5 @@ class Grid_Column extends \Object {
 		return $this->get_renderer()->render_cell_for_row_and_column($this->get_grid()->get_driver()->get_cell_for_row_and_column($row, $this), $row, $this);
 	}
 }
+
+/* End of file classes/grid/column.php */

@@ -21,3 +21,5 @@ namespace Spark;
 class Grid_Column_Renderer_Text extends \Grid_Column_Renderer_Abstract {
 	
 }
+
+/* End of file classes/grid/column/renderer/text.php */

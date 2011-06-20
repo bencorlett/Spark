@@ -57,3 +57,5 @@ class Grid_Column_Filter_Date extends \Grid_Column_Filter_Abstract {
 		return $this;
 	}
 }
+
+/* End of file classes/grid/column/filter/date.php */

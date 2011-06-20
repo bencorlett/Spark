@@ -153,3 +153,5 @@ class BackFace extends \Object {
 		return $this->render();
 	}
 }
+
+/* End of file classes/backface.php */

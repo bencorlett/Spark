@@ -192,3 +192,5 @@ class Notifications extends \Object {
 		throw new Exception('Call to undefined method %s::%s()', get_called_class(), $method);
 	}
 }
+
+/* End of file classes/notifications.php */

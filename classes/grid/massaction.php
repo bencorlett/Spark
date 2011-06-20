@@ -58,3 +58,5 @@ class Grid_Massaction extends \Object {
 		return $this->_grid;
 	}
 }
+
+/* End of file classes/grid/massaction.php */

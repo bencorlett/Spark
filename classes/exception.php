@@ -35,3 +35,5 @@ class Exception extends \Fuel\Core\Fuel_Exception {
 		parent::__construct(call_user_func_array('sprintf', func_get_args()));
 	}
 }
+
+/* End of file classes/exception.php */

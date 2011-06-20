@@ -43,3 +43,5 @@ class Str extends \Fuel\Core\Str {
 		return $string;
 	}
 }
+
+/* End of file classes/str.php */

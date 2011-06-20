@@ -1166,3 +1166,5 @@ class Grid extends \Object {
 		return $this->_default_sort_direction;
 	}
 }
+
+/* End of file classes/grid.php */

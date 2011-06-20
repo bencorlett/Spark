@@ -34,3 +34,5 @@ abstract class Grid_Column_Renderer_Abstract extends \Object {
 		return $value;
 	}
 }
+
+/* End of file classes/grid/column/renderer/abstract.php */

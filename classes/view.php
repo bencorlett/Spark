@@ -46,3 +46,5 @@ class View extends \Fuel\Core\View {
 		throw new Exception('Call to undefined method %s::%s()', get_called_class(), $method);
 	}
 }
+
+/* End of file classes/view.php */

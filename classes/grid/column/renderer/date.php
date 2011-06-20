@@ -34,3 +34,5 @@ class Grid_Column_Renderer_Date extends \Grid_Column_Renderer_Abstract {
 		return \Date::factory(strtotime($value))->format('eu');
 	}
 }
+
+/* End of file classes/grid/column/renderer/date.php */
