@@ -32,8 +32,14 @@ class Str extends \Fuel\Core\Str {
 	 * @param	string	Separator
 	 * @return	string	Alphanumeric string
 	 */
-	public static function alphanumeric($string, $separator = null)
+	public static function alphanumeric($string, $separator = null, $change_case = true)
 	{
-		return preg_replace('/[^a-zA-Z0-9\s]/', $separator, $string);
+		// Remove everything but alphanumeric characters
+		$string = preg_replace('/[^a-zA-Z0-9\s]/', $separator, $string);
+		
+		// If we need to change the case
+		if ($change_case === true) $string = \Str::lower($string);
+		
+		return $string;
 	}
 }

@@ -195,8 +195,10 @@ class Grid extends \Object {
 		if ( ! is_object($model)) throw new Exception('You must provide a model to %s()', __METHOD__);
 		
 		// Set the identifier and the model
-		$this->set_identifier(strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $identifier)))
+		$this->set_identifier(\Str::alphanumeric($identifier))
 			 ->set_model($model);
+		
+		return parent::__construct();
 	}
 	
 	/**
