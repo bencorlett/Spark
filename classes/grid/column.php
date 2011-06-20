@@ -136,6 +136,28 @@ class Grid_Column extends \Object {
 	}
 	
 	/**
+	 * Set Identifier
+	 * 
+	 * Sets the identifier of the class
+	 * 
+	 * @access	public
+	 * @param	string		Identifier
+	 * @return	Spark\Grid_Column
+	 */
+	public function set_identifier($identifier)
+	{
+		// Call to parent
+		parent::set_identifier($identifier);
+		
+		// Let the person lazily set
+		// the index and label
+		if ( ! $this->has_data('index')) $this->set_data('index', \Str::alphanumeric($identifier, '-'));
+		if ( ! $this->has_data('label')) $this->set_data('label', \Str::ucwords(str_replace('_', ' ', $this->get_data('index'))));
+		
+		return $this;
+	}
+	
+	/**
 	 * Set Grid
 	 * 
 	 * Sets the grid object

@@ -211,7 +211,7 @@ class Grid extends \Object {
 	 * @param	array	Attributes
 	 * @return	Spark\Grid
 	 */
-	public function add_column($column, array $attributes)
+	public function add_column($column, array $attributes = array())
 	{
 		// Only add the column if it doesn't exist
 		if ( ! isset($this->_columns[$column]))
