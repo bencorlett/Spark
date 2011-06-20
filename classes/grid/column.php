@@ -152,7 +152,7 @@ class Grid_Column extends \Object {
 		// Let the person lazily set
 		// the index and label
 		if ( ! $this->has_data('index')) $this->set_data('index', \Str::alphanumeric($identifier, '-'));
-		if ( ! $this->has_data('label')) $this->set_data('label', \Str::ucwords(str_replace('_', ' ', $this->get_data('index'))));
+		if ( ! $this->has_data('label')) $this->set_data('label', \Str::ucwords(str_replace('_', ' ', $identifier)));
 		
 		return $this;
 	}
