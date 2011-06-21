@@ -180,6 +180,14 @@ class Grid extends \Object {
 	protected $_pagination_pages_count;
 	
 	/**
+	 * Additonal CSS class that the
+	 * container element has
+	 * 
+	 * @var	string
+	 */
+	protected $_additional_css_class;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -1164,6 +1172,37 @@ class Grid extends \Object {
 	public function get_default_sort_direction()
 	{
 		return $this->_default_sort_direction;
+	}
+	
+	/**
+	 * Set Additional CSS Class
+	 * 
+	 * Sets the "additional CSS
+	 * class" class property
+	 * 
+	 * @access	public
+	 * @param	int		Additional CSS class
+	 * @return	Spark\Grid
+	 */
+	public function set_additional_css_class($class)
+	{
+		$this->_additional_css_class = $class;
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Additional CSS Class
+	 * 
+	 * Gets the "additional CSS
+	 * class" class property
+	 * 
+	 * @access	public
+	 * @return	int		Additional CSS class
+	 */
+	public function get_paginated_row_count()
+	{
+		return $this->_additional_css_class;
 	}
 }
 

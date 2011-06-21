@@ -18,7 +18,7 @@
  */
 namespace Spark;
 ?>
-<div class="grid-container">
+<div class="grid-container <?php echo $grid->get_additional_css_class()?>">
 	<?php echo \View::factory('grid/assets'); ?>
 	<div class="buttons">
 		<?php if (($button = $grid->get_add_button()) != null): ?>
