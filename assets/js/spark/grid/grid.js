@@ -59,7 +59,7 @@
 		});
 		
 		// When the user clicks on a column header or footer
-		$(selector + ' > table > thead > tr.labels > th > span, ' + selector + ' > table > tfoot > tr.labels > th > span').click(function()
+		$(selector + ' > table > thead > tr.labels > th > span.sortable, ' + selector + ' > table > tfoot > tr.labels > th > span.sortable').click(function()
 		{
 			$(selector + '-ajax-form').append('<input type="hidden" name="grid[' + grid_id + '][sort]" value="' + $(this).attr('column') + '" />');
 

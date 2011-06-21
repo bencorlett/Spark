@@ -73,6 +73,13 @@ class Grid_Column extends \Object {
 	);
 	
 	/**
+	 * Whether this column is sortable or not
+	 * 
+	 * @var	bool
+	 */
+	protected $_sortable = true;
+	
+	/**
 	 * Construct
 	 * 
 	 * Internal constructor
@@ -82,6 +89,10 @@ class Grid_Column extends \Object {
 	 */
 	protected function _construct()
 	{
+		// Determine if the user wants
+		// this column to be sortable or not
+		if ($this->has_data('sortable')) $this->_sortable = (bool) $this->get_data('sortable');
+		
 		// If the renderer doesn't exist create it
 		if ( ! $this->has_data('renderer'))
 		{
@@ -288,6 +299,20 @@ class Grid_Column extends \Object {
 	public function get_cell_for_row($row)
 	{
 		return $this->get_renderer()->render_cell_for_row_and_column($this->get_grid()->get_driver()->get_cell_for_row_and_column($row, $this), $row, $this);
+	}
+	
+	/**
+	 * Is Sortable
+	 * 
+	 * Returns if the column
+	 * is sortable or not
+	 * 
+	 * @access	public
+	 * @return	bool	Is sortable
+	 */
+	public function is_sortable()
+	{
+		return $this->_sortable;
 	}
 }
 

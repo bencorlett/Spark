@@ -89,7 +89,7 @@ $(document).ready(function()
 			<?php endif; ?>
 			<?php foreach ($grid->get_columns() as $column): ?>
 				<th <?php echo ($column->get_width()) ? sprintf('width=\'%u\'', $column->get_width()) : null; ?>>
-					<span column="<?php echo $column; ?>">
+					<span column="<?php echo $column; ?>" class="<?php echo ($column->is_sortable()) ? 'sortable' : null?>">
 						<?php echo $column->get_label(); ?>
 						
 						<?php $sort = $grid->get_sort(); ?>
