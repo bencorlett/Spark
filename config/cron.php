@@ -20,9 +20,9 @@ return array(
 	
 	// The addresses for when something goes
 	// wrong in the cron systme
-	'from_address'		=> 'mail@example.com',
-	'from_name'			=> null,
-	'to_address'		=> 'mail@example.com',
+	'from_address'		=> 'mail@counciljobs.com',
+	'from_name'			=> 'Council Jobs',
+	'to_address'		=> 'ben@tjstechnology.com.au',
 	
 	// How many times a cron job can unsuccessfully
 	// run before it is discarded and an email is sent

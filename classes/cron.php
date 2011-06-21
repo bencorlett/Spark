@@ -28,13 +28,6 @@ class Cron extends \Kohana\Orm {
 	protected $_table_name = 'cron';
 	
 	/**
-	 * Default timezone
-	 * 
-	 * @var	string
-	 */
-	protected $_default_timezone;
-	
-	/**
 	 * Schedule times
 	 * 
 	 * @var	array
@@ -188,20 +181,6 @@ class Cron extends \Kohana\Orm {
 		return parent::__call($method, $arguments);
 	}
 	
-	public function get_timezone_offset($remote_tz, $origin_tz = null) {
-	    if($origin_tz === null) {
-	        if(!is_string($origin_tz = date_default_timezone_get())) {
-	            return false; // A UTC timestamp was returned -- bail out!
-	        }
-	    }
-	    $origin_dtz = new \DateTimeZone($origin_tz);
-	    $remote_dtz = new \DateTimeZone($remote_tz);
-	    $origin_dt = new \DateTime("now", $origin_dtz);
-	    $remote_dt = new \DateTime("now", $remote_dtz);
-	    $offset = $origin_dtz->getOffset($origin_dt) - $remote_dtz->getOffset($remote_dt);
-	    return $offset;
-	}
-	
 	/**
 	 * Determine Schedule Time
 	 * 
@@ -218,9 +197,6 @@ class Cron extends \Kohana\Orm {
 	 */
 	protected function _determine_schedule_time($time, $target_timezone = null)
 	{
-		// Set default timezone
-		if ( ! $this->_default_timezone) $this->_default_timezone = date_default_timezone_get();
-		
 		// Return different mysql datetimes
 		// based on the time requested
 		switch ($time)
@@ -282,7 +258,7 @@ class Cron extends \Kohana\Orm {
 				// Get time to offset
 				$timezone = date_create(date('Y/m/d'), timezone_open('Australia/Sydney'));
 				$offset = $timezone->getOffset();
-				$time_to_offset = 86400 - abs($this->get_timezone_offset($target_timezone, $this->_default_timezone));
+				$time_to_offset = 86400 - \Date::time($target_timezone)->get_timezone_offset();
 				
 				// Return the mysql timestamp for midnight in Australia / Sydney
 				return \Date::factory(\Date::factory(strtotime(date('Y/m/d') . '+' . $time_to_offset . ' seconds'))->get_timestamp())->format('mysql');

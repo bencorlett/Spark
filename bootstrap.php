@@ -38,6 +38,9 @@ Autoloader::add_classes(array(
 	// Cron
 	'Spark\\Cron'										=> __DIR__ . '/classes/cron.php',
 	
+	// Date
+	'Spark\\Date'										=> __DIR__ . '/classes/date.php',
+	
 	// Exception
 	'Spark\\Exception'									=> __DIR__ . '/classes/exception.php',
 	
