@@ -1200,7 +1200,7 @@ class Grid extends \Object {
 	 * @access	public
 	 * @return	int		Additional CSS class
 	 */
-	public function get_paginated_row_count()
+	public function get_additional_css_class()
 	{
 		return $this->_additional_css_class;
 	}
