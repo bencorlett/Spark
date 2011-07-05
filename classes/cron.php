@@ -326,6 +326,28 @@ class Cron extends \Kohana\Orm {
 		// Determine if the model is loaded
 		return (bool) $static->loaded();
 	}
+	
+	/**
+	 * Garbage Collection
+	 * 
+	 * Removes all old entries from
+	 * the cron table
+	 * 
+	 * @access	public
+	 * @param	int		Count of recent
+	 * 					records to keep
+	 * @return	bool	Success
+	 */
+	public static function garbage_collection($to_keep = 50)
+	{
+		// Work out the id of the last cron to keep
+		$jobs = array_reverse(static::factory()->order_by('id', 'desc')->limit($to_keep)->find_all()->as_array());
+		
+		// Delete older cron jobs
+		foreach (static::factory()->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
+		
+		return true;
+	}
 }
 
 /* End of file classes/cron.php */
