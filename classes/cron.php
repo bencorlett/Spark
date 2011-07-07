@@ -110,7 +110,7 @@ class Cron extends \Kohana\Orm {
 			if ($job->get_attempts() >= \Config::get('cron.threshold'))
 			{
 				// Send error email
-				static::send_error_email($e);
+				static::send_error_email(new Exception('The maximum number of attempts have been used for Cron Job #%s', $job));
 				
 				// Skip this cron job
 				continue;
@@ -150,7 +150,7 @@ class Cron extends \Kohana\Orm {
 	 * @access	public
 	 * @param	Exception
 	 */
-	public static function send_error_email($e)
+	public static function send_error_email(\Exception $e)
 	{
 		// Send an email
 		$email = \Email::factory()
@@ -344,7 +344,7 @@ class Cron extends \Kohana\Orm {
 		$jobs = array_reverse(static::factory()->order_by('id', 'desc')->limit($to_keep)->find_all()->as_array());
 		
 		// Delete older cron jobs
-		foreach (static::factory()->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
+		if (count($jobs))foreach (static::factory()->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
 		
 		return true;
 	}
