@@ -54,9 +54,8 @@ class Grid extends \Object {
 	 * @var	array
 	 */
 	protected $_drivers = array(
-		'Kohana\\Orm'			=> 'Grid_Driver_KohanaOrm',
-		'Orm\\Model'			=> 'Grid_Driver_Orm',
-		'Orm\\Query'			=> 'Grid_Driver_Orm',
+		'kohana_orm'	=> 'Grid_Driver_KohanaOrm',
+		'orm'			=> 'Grid_Driver_Orm',
 	);
 	
 	/**
@@ -706,22 +705,10 @@ class Grid extends \Object {
 	{
 		if ( ! $this->_driver)
 		{
-			// Check to see we have a driver available
-			if (isset($this->_drivers[get_parent_class($this->get_model())]))
-			{
-				// Assign the driver
-				$driver = $this->_drivers[get_parent_class($this->get_model())];
-			}
-			else if (isset($this->_drivers[get_class($this->get_model())]))
-			{
-				// Assign the driver
-				$driver = $this->_drivers[get_class($this->get_model())];
-			}
-			else
-			{
-				// Throw an exception
-				throw new Exception('There are no drivers available for a model that is a class of \'%s\'', get_class($this->get_model()));
-			}
+			// Determine driver
+			if ($this->get_model() instanceof \Kohana\Orm) $driver = $this->_drivers['kohana_orm'];
+			else if (($this->get_model() instanceof \Orm\Model) or ($this->get_model() instanceof \Orm\Query)) $driver = $this->_drivers['orm'];
+			else throw new Exception('There are no drivers available for a model that is a class of \'%s\'', get_class($this->get_model()));
 			
 			$this->_driver = $driver::factory()
 									->set_grid($this);
