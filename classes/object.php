@@ -513,6 +513,7 @@ class Object {
 	 * Magic method used as a
 	 * getter / setter wrapper
 	 * 
+	 * @access	public
 	 * @param	string	Method
 	 * @param	array	Arguments
 	 * @return	mixed
