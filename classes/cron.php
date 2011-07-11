@@ -106,19 +106,19 @@ class Cron extends \Kohana\Orm {
 		// mark the job as completed
 		foreach ($jobs as $job)
 		{
+			// Up the attempts
+			$job->set_attempts($job->get_attempts() + 1)
+				->save();
+			
 			// Check attempts count
-			if ($job->get_attempts() >= \Config::get('cron.threshold'))
+			if ($job->get_attempts() > \Config::get('cron.threshold'))
 			{
 				// Send error email
-				static::send_error_email($e);
+				static::send_error_email(new Exception('The maximum number of attempts have been used for Cron Job #%s', $job));
 				
 				// Skip this cron job
 				continue;
 			}
-			
-			// Up the attempts
-			$job->set_attempts($job->get_attempts() + 1)
-				->save();
 			
 			// Catch any exceptions
 			// because we don't want
@@ -150,7 +150,7 @@ class Cron extends \Kohana\Orm {
 	 * @access	public
 	 * @param	Exception
 	 */
-	public static function send_error_email($e)
+	public static function send_error_email(\Exception $e)
 	{
 		// Send an email
 		$email = \Email::factory()
@@ -341,10 +341,10 @@ class Cron extends \Kohana\Orm {
 	public static function garbage_collection($to_keep = 50)
 	{
 		// Work out the id of the last cron to keep
-		$jobs = array_reverse(static::factory()->order_by('id', 'desc')->limit($to_keep)->find_all()->as_array());
+		$jobs = array_reverse(static::factory()->order_by('id', 'desc')->where('completed', '=', 1)->limit($to_keep)->find_all()->as_array());
 		
 		// Delete older cron jobs
-		foreach (static::factory()->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
+		if (count($jobs))foreach (static::factory()->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
 		
 		return true;
 	}
