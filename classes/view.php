@@ -40,7 +40,7 @@ class View extends \Fuel\Core\View {
 		switch (substr($method, 0, 3))
 		{
 			case 'set':
-				return $this->set($key, isset($arguments[0]) ? $arguments[0] : null);
+				return $this->set($key, isset($arguments[0]) ? $arguments[0] : null, isset($arguments[1]) ? $arguments[1] : null);
 		}
 		
 		throw new Exception('Call to undefined method %s::%s()', get_called_class(), $method);
