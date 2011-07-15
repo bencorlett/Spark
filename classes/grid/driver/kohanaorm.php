@@ -164,21 +164,8 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 		// Loop throug relationships
 		foreach ($rels as $rel)
 		{
-			// Loop through relationships
-			if (++$i < count($rels))
-			{
-				$row = $row->$rel;
-			}
-			
-			// On the last relationship, be sure to
-			// call the magic getter method, this way
-			// if the person overwrites it in their
-			// model we use their overwritten method
-			else
-			{
-				$method = sprintf('get_%s', $rel);
-				$row = $row->$method();
-			}
+			$method = sprintf('get_%s', $rel);
+			$row->$method();
 		}
 		
 		// Return the row
@@ -248,23 +235,56 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 	 */
 	public function parse_value_for_row($value, $row)
 	{
-		// Get the values
-		preg_match('/\{\w+\}/', $value, $matches);
+		// // Get the values
+		// preg_match_all('/{[\w:]+}/', $value, $matches);
+		// echo '<pre>';print_r($matches);echo '</pre>';
+		
+		// Explode the value
+		$exploded_values = explode('/', $value);
+		
 		
 		// Loop through matches and get property values
-		foreach ($matches as $match)
+		foreach ($exploded_values as $exploded_value)
 		{
-			// Get property
-			$property	= str_replace(array('{', '}'), array(null, null), $match);
+			preg_match('/{[\w:]+}/', $exploded_value, $matches);
 			
-			// Get method
-			$method		= sprintf('get_%s', $property);
-			
-			// Get value
-			$raw		= $row->$method();
-			
-			// Replace in string
-			$value		= str_replace($match, $raw, $value);
+			foreach ($matches as $match)
+			{
+				// Get property
+				$property	= str_replace(array('{', '}'), array(null, null), $match);
+
+				// If we aren't dealing with relationships
+				if (strpos($property, ':') === false)
+				{
+					$method = sprintf('get_%s', $property);
+
+					// Get value
+					$raw		= $row->$method();
+
+					// Replace in string
+					$value		= str_replace($match, $raw, $value);
+				}
+				else
+				{
+					// Create new row
+					$rels = explode(':', $property);
+
+					// Counter
+					$i = 0;
+
+					// Loop throug relationships
+					foreach ($rels as $rel)
+					{
+						$method = sprintf('get_%s', $rel);
+						// Loop through relationships
+						if (++$i < count($rels)) $row = $row->$method();
+						else $raw = $row->$method();
+					}
+
+					// Replace in string
+					$value	= str_replace($match, $raw, $value);
+				}
+			}
 		}
 		
 		return $value;

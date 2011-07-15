@@ -113,8 +113,8 @@ class Notifications extends \Object {
 		if ( ! static::instance()->_get_notifications()) return null;
 		
 		return \View::factory(static::$_view_name)
-					->set('notifications', static::instance()->_get_notifications(true))
-					->set('count', static::instance()->_get_total_count());
+					->set('count', static::instance()->_get_total_count())
+					->set('notifications', static::instance()->_get_notifications(true));
 	}
 	
 	/**
