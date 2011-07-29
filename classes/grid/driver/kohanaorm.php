@@ -165,8 +165,9 @@ class Grid_Driver_KohanaOrm extends \Grid_Driver_Abstract {
 		foreach ($rels as $rel)
 		{
 			$method = sprintf('get_%s', $rel);
-			$row->$method();
+			$row = $row->$method();
 		}
+		
 		
 		// Return the row
 		return $row;

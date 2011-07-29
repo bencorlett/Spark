@@ -255,13 +255,8 @@ class Cron extends \Kohana\Orm {
 			// At midnight OUR time
 			case 'midnight':
 				
-				// Get time to offset
-				$timezone = date_create(date('Y/m/d'), timezone_open('Australia/Sydney'));
-				$offset = $timezone->getOffset();
-				$time_to_offset = 86400 - \Date::time($target_timezone)->get_timezone_offset();
-				
 				// Return the mysql timestamp for midnight in Australia / Sydney
-				return \Date::factory(\Date::factory(strtotime(date('Y/m/d') . '+' . $time_to_offset . ' seconds'))->get_timestamp())->format('mysql');
+				return \Date::factory(\Date::factory(strtotime(date('Y/m/d') . '+' . (86400 - \Date::time($target_timezone)->get_timezone_offset()) . ' seconds'))->get_timestamp())->format('mysql');
 		}
 		
 		// Return false
