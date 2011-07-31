@@ -28,6 +28,13 @@ class Tabs extends \Object {
 	protected $_tabs = array();
 	
 	/**
+	 * A random ID for this set of tabs
+	 * 
+	 * @var	int
+	 */
+	protected $_rand_id;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -38,6 +45,9 @@ class Tabs extends \Object {
 	 */
 	public function __construct(array $tabs)
 	{
+		// Set the random id
+		$this->_rand_id = mt_rand(0, 1000000);
+		
 		foreach ($tabs as $key => $attributes)
 		{
 			// Set some fallbacks
@@ -47,20 +57,13 @@ class Tabs extends \Object {
 			$tab = \Object::factory($attributes)
 						  ->set_identifier((string) $key);
 			
+			$tab->set_css_id($tab->get_identifier() . '-' . $this->_rand_id)
+			    ->set_css_class('tab-' . $this->_rand_id);
 			
-			$tab->set_css_id($tab->get_identifier() . mt_rand(0, 10000));
 			
 			// If we're dealing with a string and the person hasn't said
 			// they're not giving the path of a view
 			if (is_string($tab->get_content()) and $tab->get_view_path() !== false) $tab->set_content(\View::factory($tab->get_content()));
-			// elseif (($tab->get_content() instanceof \View) or (is_string($tab->get_content() and $tab->get_view_path() === false)))
-			// {
-			// 	// Do nothing
-			// }
-			// else
-			// {
-			// 	continue;
-			// }
 			
 			// Add to tabs
 			$this->_tabs[] = $tab;
@@ -78,6 +81,7 @@ class Tabs extends \Object {
 	public function build()
 	{
 		return \View::factory('tabs/default')
-					->set_tabs($this->_tabs, false);
+					->set_tabs($this->_tabs, false)
+					->set_rand_id($this->_rand_id);
 	}
 }

@@ -21,25 +21,25 @@ namespace Spark;
 <script>
 $(function()
 {
-	$("div.tabs > ul > li").click(function()
+	$("#tabs-<?=$rand_id?> > ul > li").click(function()
 	{
-		$("div.tabs > ul > li").removeClass('active');
+		$("#tabs-<?=$rand_id?> > ul > li").removeClass('active');
 		$(this).addClass('active');
 		
 		var target_id = $(this).attr('target-id');
 		
-		$("div.tabs > div.inner").hide(0, function()
+		$("#tabs-<?=$rand_id?> > div.inner").hide(0, function()
 		{
 			$("div#" + target_id).show();
-		})
+		});
 	});
 });
 </script>
-<div class="tabs">
+<div class="tabs" id="tabs-<?=$rand_id?>">
 	<ul>
 		<?php $i = 0 ?>
 		<?php foreach ($tabs as $tab): ?>
-			<li class="<?=$tab?><?=$i++ == 0 ? ' active' : null?>" target-id="<?=$tab->get_css_id()?>">
+			<li id="<?=$tab->get_css_id()?>-link" class="<?=$tab?><?=$i++ == 0 ? ' active' : null?>" target-id="<?=$tab->get_css_id()?>">
 				<?=$tab->get_label()?>
 			</li>
 		<?php endforeach ?>
@@ -47,7 +47,7 @@ $(function()
 	
 	<?php $i = 0 ?>
 	<?php foreach ($tabs as $tab): ?>
-		<div class="inner" id="<?=$tab->get_css_id()?>" style="display: <?=$i++ == 0 ? 'block' : 'none'?>; min-height:<?=count($tabs) * 37?>px;">
+		<div class="inner" id="<?=$tab->get_css_id()?>" tab="<?=$tab->get_css_id()?>-link" style="display: <?=$i++ == 0 ? 'block' : 'none'?>; min-height:<?=count($tabs) * 37?>px;">
 			<?=$tab->get_content()?>
 		</div>
 	<?php endforeach ?>
