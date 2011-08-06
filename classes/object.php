@@ -35,6 +35,13 @@ class Object implements \ArrayAccess {
 	protected $_data = array();
 	
 	/**
+	 * Object original data
+	 * 
+	 * @var	array
+	 */
+	protected $_original_data = array();
+	
+	/**
 	 * Flag to determine if the object
 	 * has had data changes since it
 	 * was initialised
@@ -307,8 +314,78 @@ class Object implements \ArrayAccess {
 	 */
 	public function get_data($key = null, $default = null)
 	{
+		return $this->_get_data($key, $default);
+	}
+	
+	/**
+	 * Get Original Data
+	 * 
+	 * Gets original data from the object
+	 * 
+	 * If key is empty it wil return
+	 * all of the data as an array.
+	 * The key will accept using a '.'
+	 * to separate depths within an array
+	 * (Like Fuel's config class).
+	 * 
+	 * For example:
+	 * 
+	 * 		$this->get_data('a.b.c');
+	 * 
+	 * Will look for $this->_data['a']['b']['c'].
+	 * 
+	 * The second parameter is the default value
+	 * to return if the specified value isn't set
+	 * 
+	 * If the key is provided return the
+	 * value of the attribute specified
+	 * by the key.
+	 * 
+	 * @access	public
+	 * @param	string|null	Key
+	 * @param	mixed		Default
+	 * @return	mixed		Data
+	 */
+	public function get_original_data($key = null, $default = null)
+	{
+		return $this->_get_data($key, $default, 'original_data');
+	}
+	
+	/**
+	 * Get Data
+	 * 
+	 * Gets data from the object
+	 * 
+	 * If key is empty it wil return
+	 * all of the data as an array.
+	 * The key will accept using a '.'
+	 * to separate depths within an array
+	 * (Like Fuel's config class).
+	 * 
+	 * For example:
+	 * 
+	 * 		$this->get_data('a.b.c');
+	 * 
+	 * Will look for $this->_data['a']['b']['c'].
+	 * 
+	 * The second parameter is the default value
+	 * to return if the specified value isn't set
+	 * 
+	 * If the key is provided return the
+	 * value of the attribute specified
+	 * by the key.
+	 * 
+	 * @access	protected
+	 * @param	string|null	Key
+	 * @param	mixed		Default
+	 * @param	string		Source
+	 * @return	mixed		Data
+	 */
+	protected function _get_data($key = null, $default = null, $source = 'data')
+	{
+		
 		// If no key provided, return all
-		if ($key === null) return $this->_data;
+		if ($key === null) return $this->{'_' . $source};
 		
 		// If the user has used dot
 		// notation to access array depth
@@ -316,7 +393,7 @@ class Object implements \ArrayAccess {
 		{
 			// Extract keys and data
 			$key_array = explode('.', $key);
-			$data = $this->_data;
+			$data = $this->{'_' . $source};
 			
 			// Loop through keys and try to match to data
 			foreach ($key_array as $index => $key)
@@ -345,7 +422,96 @@ class Object implements \ArrayAccess {
 		}
 		
 		// Return the default data
-		return isset($this->_data[$key]) ? $this->_data[$key] : $default;
+		return isset($this->{'_' . $source}[$key]) ? $this->{'_' . $source}[$key] : $default;
+	}
+	
+	/**
+	 * Make Recursive
+	 * 
+	 * Makes the data in a spark
+	 * object a recursive set of
+	 * spark objects
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function make_recursive()
+	{
+		// Loop through data and convert
+		// to objects
+		foreach ($this->_data as $key => $value)
+		{
+			if (is_array($value))
+			{
+				$this->_data[$key] = \Object::factory($value)
+											->make_recursive();
+			}
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Call
+	 * 
+	 * Magic method used as a
+	 * getter / setter wrapper
+	 * 
+	 * @access	public
+	 * @param	string	Method
+	 * @param	array	Arguments
+	 * @return	mixed
+	 */
+	public function __call($method, array $arguments)
+	{
+		// Get the key
+		$key = substr($method, 4);
+		
+		// Bunch of more setters and getters
+		switch (substr($method, 0, 3))
+		{
+			case 'get':
+				return $this->get_data($key, isset($arguments[0]) ? $arguments[0] : null);
+				
+			case 'set':
+				return $this->set_data($key, isset($arguments[0]) ? $arguments[0] : null);
+				
+			case 'uns':
+				return $this->unset_data($key);
+				
+			case 'has':
+				return isset($this->_data[$key]);
+		}
+		
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_called_class(), $method));
+	}
+	
+	/**
+	 * Call Static
+	 * 
+	 * Magic method used to create
+	 * an instance of the object
+	 * 
+	 * @access	public
+	 * @param	string	Method
+	 * @param	array	Arguments
+	 * @return	mixed
+	 */
+	public static function __callStatic($method, array $arguments)
+	{
+		switch (substr($method, 12))
+		{
+			case 'post':
+				return static::factory($_POST)
+							 ->make_recursive();
+			
+			case 'get':
+				
+				return static::factory($_GET)
+							 ->make_recursive();
+		}
+		
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_called_class(), $method));
 	}
 	
 	/**

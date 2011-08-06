@@ -21,5 +21,12 @@ Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
-	'Spark\\Object'								=> __DIR__.'/classes/object.php',
+	// Exception
+	'Spark\\Exception'							=> __DIR__ . '/classes/exception.php',
+	
+	// Object
+	'Spark\\Object'								=> __DIR__ . '/classes/object.php',
+	
+	// Str
+	'Spark\\Str'								=> __DIR__ . '/classes/str.php',
 ));
