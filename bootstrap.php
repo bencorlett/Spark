@@ -25,7 +25,10 @@ Autoloader::add_classes(array(
 	'Spark\\Exception'							=> __DIR__ . '/classes/exception.php',
 	
 	// Grid
-	'Spark\Grid'								=> __DIR__ . '/classes/grid.php',
+	'Spark\\Grid'								=> __DIR__ . '/classes/grid.php',
+	'Spark\\Grid_Component'						=> __DIR__ . '/classes/grid/component.php',
+	'Spark\\Grid_Driver_Abstract'				=> __DIR__ . '/classes/grid/driver/abstract.php',
+	'Spark\\Grid_Driver_Orm'					=> __DIR__ . '/classes/grid/driver/orm.php',
 	
 	// Object
 	'Spark\\Object'								=> __DIR__ . '/classes/object.php',

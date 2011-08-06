@@ -512,7 +512,7 @@ class Object implements \ArrayAccess {
 							 ->make_recursive();
 		}
 		
-		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_called_class(), $method));
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_class($this), $method));
 	}
 	
 	/**

@@ -53,7 +53,7 @@ class Grid extends \Object {
 	 * 
 	 * @access	public
 	 * @param	mixed
-	 * @return	Spark\Object
+	 * @return	Spark\Grid
 	 */
 	public function __construct($identifier = null, $model = null)
 	{
@@ -62,5 +62,26 @@ class Grid extends \Object {
 		
 		// Check we've got a model
 		if ( ! is_object($model)) throw new Exception('You must provide a model when initialising the grid');
+		
+		$this->set_identifier($identifier);
+	}
+	
+	/**
+	 * Set Identifier
+	 * 
+	 * Sets the identifier for the
+	 * object
+	 * 
+	 * @access	public
+	 * @param	string	Identifier
+	 * @return	Spark\Grid
+	 */
+	public function set_identifier($identifier)
+	{
+		// Make sure the identifier is CSS and jQuery
+		// friendly, as they both use the identifier
+		// extensively
+		$identifier = str_replace('--', '-', \Str::lower(\Str::alphanumeric($identifier, '-')));
+		return parent::set_identifier($identifier);
 	}
 }
