@@ -21,5 +21,5 @@ Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
-	'Spark\\Grid'										=> __DIR__ . '/classes/grid.php',
+	'Spark\\Object'								=> __DIR__.'classes/object.php',
 ));
