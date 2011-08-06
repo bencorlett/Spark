@@ -1,7 +1,0 @@
-/* Structural */
-wrapper { display: block; }
-
-
-/* Core */
-body { background: #202020; font: 14px/1.55 HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #ccc; }
-wrapper { width: 860px; margin: 0 auto; background: #333; border-radius: 10px; padding: 20px; }
