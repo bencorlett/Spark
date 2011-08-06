@@ -11,18 +11,21 @@
  * 
  * @package    Fuel
  * @subpackage Spark
+ * @version    1.0
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
  * @link       http://spark.bencorlett.com
  */
-
 Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
 	// Exception
 	'Spark\\Exception'							=> __DIR__ . '/classes/exception.php',
+	
+	// Grid
+	'Spark\Grid'								=> __DIR__ . '/classes/grid.php',
 	
 	// Object
 	'Spark\\Object'								=> __DIR__ . '/classes/object.php',
