@@ -21,4 +21,17 @@ namespace Spark;
 
 class Grid_Button extends \Object {
 	
+	/**
+	 * To String
+	 * 
+	 * Represents the object
+	 * as a string
+	 * 
+	 * @access	public
+	 * @return	string
+	 */
+	public function __toString()
+	{
+		return (string) $this->build();
+	}
 }

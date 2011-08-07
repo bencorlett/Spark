@@ -29,7 +29,7 @@ class Grid_Container extends \Grid_Component {
 	protected $_view_name = 'grid/container';
 	
 	/**
-	 * The add button for teh grid
+	 * The add button for the grid
 	 * 
 	 * @var	string
 	 */
@@ -51,6 +51,19 @@ class Grid_Container extends \Grid_Component {
 	}
 	
 	/**
+	 * Get Add Button
+	 * 
+	 * Gets the add button for the container
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_button
+	 */
+	public function get_add_button()
+	{
+		return $this->_add_button;
+	}
+	
+	/**
 	 * Build
 	 * 
 	 * Builds the grid container and returns the
@@ -61,6 +74,7 @@ class Grid_Container extends \Grid_Component {
 	 */
 	public function build()
 	{
-		return \View::factory($this->_view_name);
+		return \View::factory($this->_view_name)
+					->set('container', $this, false);
 	}
 }

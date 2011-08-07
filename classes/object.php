@@ -19,7 +19,7 @@
  */
 namespace Spark;
 
-class Object implements \ArrayAccess {
+class Object implements \ArrayAccess, \Countable, \Iterator {
 	
 	/**
 	 * Object identifier
@@ -50,6 +50,20 @@ class Object implements \ArrayAccess {
 	 * @var	bool
 	 */
 	protected $_has_data_changes = false;
+	
+	/**
+	 * Data keys for iterating
+	 * 
+	 * @var	int
+	 */
+	protected $_data_keys = array();
+	
+	/**
+	 * Current position when iterating
+	 * 
+	 * @var	int
+	 */
+	protected $_current_key = 0;
 	
 	/**
 	 * Construct
@@ -524,7 +538,8 @@ class Object implements \ArrayAccess {
 	 * Offset Get
 	 * 
 	 * Implementation of ArrayAccess::offsetGet()
-	 *
+	 * 
+	 * @access	public
 	 * @link	http://www.php.net/manual/en/arrayaccess.offsetget.php
 	 * @param	string	Offset
 	 * @return	mixed
@@ -538,7 +553,8 @@ class Object implements \ArrayAccess {
 	 * Offset Set
 	 * 
 	 * Implementation of ArrayAccess::offsetSet()
-	 *
+	 * 
+	 * @access	public
 	 * @link	http://www.php.net/manual/en/arrayaccess.offsetset.php
 	 * @param	string $offset
 	 * @param	mixed $value
@@ -552,7 +568,8 @@ class Object implements \ArrayAccess {
 	 * Offset Unset
 	 * 
 	 * Implementation of ArrayAccess::offsetUnset()
-	 *
+	 * 
+	 * @access	public
 	 * @link	http://www.php.net/manual/en/arrayaccess.offsetunset.php
 	 * @param	string	Offset
 	 */
@@ -565,7 +582,8 @@ class Object implements \ArrayAccess {
 	 * Offset Exists
 	 * 
 	 * Implementation of ArrayAccess::offsetExists()
-	 *
+	 * 
+	 * @access	public
 	 * @link	http://www.php.net/manual/en/arrayaccess.offsetexists.php
 	 * @param	string	Offset
 	 * @return	bool
@@ -573,5 +591,102 @@ class Object implements \ArrayAccess {
 	public function offsetExists($offset)
 	{
 		return isset($this->_data[$offset]);
+	}
+	
+	/**
+	 * Count
+	 * 
+	 * Implementation of Countable::count()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/countable.count.php
+	 * @return	int		Count
+	 */
+	public function count()
+	{
+		return count($this->_data);
+	}
+	
+	/**
+	 * Implements [Iterator::key], returns the current row number.
+	 *
+	 *     echo key($result);
+	 *
+	 * @return  integer
+	 */
+	public function key()
+	{
+		return $this->_current_key;
+	}
+
+	/**
+	 * Implements [Iterator::next], moves to the next row.
+	 *
+	 *     next($result);
+	 *
+	 * @return  $this
+	 */
+	public function next()
+	{
+		$this->_current_key = next($this->_data_keys);
+		return $this;
+	}
+
+	/**
+	 * Implements [Iterator::prev], moves to the previous row.
+	 *
+	 *     prev($result);
+	 *
+	 * @return  $this
+	 */
+	public function prev()
+	{
+		$this->_current_key = prev($this->_data_keys);
+		return $this;
+	}
+
+	/**
+	 * Implements [Iterator::rewind], sets the current row to zero.
+	 *
+	 *     rewind($result);
+	 *
+	 * @return  $this
+	 */
+	public function rewind()
+	{
+		$this->_data_keys = array_keys($this->_data);
+		$this->_current_key = reset($this->_data_keys);
+		return $this;
+	}
+
+	/**
+	 * Implements [Iterator::valid], checks if the current row exists.
+	 *
+	 * [!!] This method is only used internally.
+	 *
+	 * @return  boolean
+	 */
+	public function valid()
+	{
+		return $this->offsetExists($this->_current_key);
+	}
+	
+	public function current()
+	{
+		return $this->_data[$this->_current_key];
+	}
+	
+	/**
+	 * To String
+	 * 
+	 * Represents the object
+	 * as a string
+	 * 
+	 * @access	public
+	 * @return	string
+	 */
+	public function __toString()
+	{
+		return (string) $this->get_identifier();
 	}
 }

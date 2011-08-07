@@ -36,6 +36,13 @@ class Grid extends \Object {
 	protected $_columns;
 	
 	/**
+	 * The view name used for the grid
+	 * 
+	 * @var	string
+	 */
+	protected $_view_name = 'grid';
+	
+	/**
 	 * Default page and sorting properties
 	 * 
 	 * @var	mixed
@@ -60,13 +67,19 @@ class Grid extends \Object {
 	protected $_var_name_filters	= 'filters';
 	
 	/**
-	 * Container
-	 * 
 	 * The grid container object
 	 * 
 	 * @var	Spark\Grid_Container
 	 */
 	protected $_container;
+	
+	/**
+	 * Flag to determine if the
+	 * grid uses a container
+	 * 
+	 * @var	Spark\Grid_Container
+	 */
+	protected $_uses_container = false;
 	
 	/**
 	 * Construct
@@ -148,10 +161,24 @@ class Grid extends \Object {
 	}
 	
 	/**
+	 * To String
+	 * 
+	 * Represents the object
+	 * as a string
+	 * 
+	 * @access	public
+	 * @return	string
+	 */
+	public function __toString()
+	{
+		return (string) $this->build();
+	}
+	
+	/**
 	 * Build
 	 * 
 	 * Builds the grid and renders
-	 * it as HTML
+	 * it as a View object
 	 * 
 	 * @access	public
 	 * @return	View
@@ -160,8 +187,39 @@ class Grid extends \Object {
 	{
 		$this->_prepare_grid();
 		
-		$container = $this->get_container()
-						  ->build();
+		// Build the grid
+		$grid = \View::factory($this->_view_name)
+					 ->set('grid', $this, false);
+		
+		// If we can't display a container just return
+		// the grid
+		if ( ! $this->can_display_container()) return $grid;
+		
+		// If we can display a container, add it
+		// and return both of them
+		return $this->get_container()
+					->build()
+					->set('grid', $grid, false);
+	}
+	
+	/**
+	 * Can Display Container
+	 * 
+	 * Determines if the grid can
+	 * display a container or not
+	 * 
+	 * @access	public
+	 * @return	bool	Can display container
+	 */
+	public function can_display_container()
+	{
+		// If we're using ajax we can never
+		// use the container
+		if (\Input::is_ajax()) return false;
+		
+		// If it's not ajax, determine based off
+		// whether the grid is set to use the continaer
+		return $this->get_uses_container();
 	}
 	
 	/**
@@ -386,9 +444,40 @@ class Grid extends \Object {
 	 */
 	public function set_add_button(array $attributes = array())
 	{
-		$this->get_container()
+		$this->set_uses_container(true)
+			 ->get_container()
 			 ->set_add_button($attributes);
 		
 		return $this;
+	}
+	
+	/**
+	 * Set Uses Container
+	 * 
+	 * Sets whether the grid
+	 * uses a container
+	 * 
+	 * @access	public
+	 * @param	bool	Uses container
+	 * @return	Spark\Grid
+	 */
+	public function uses_container($uses)
+	{
+		$this->_uses_container = (bool) $uses;
+		return $this;
+	}
+	
+	/**
+	 * Get Uses Container
+	 * 
+	 * Gets whether the grid
+	 * uses a container
+	 * 
+	 * @access	public
+	 * @return	bool	Uses container
+	 */
+	public function get_uses_container()
+	{
+		return $this->_uses_container;
 	}
 }
