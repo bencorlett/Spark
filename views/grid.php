@@ -40,7 +40,16 @@ table {
 
 $(document).ready(function()
 {
-	$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid();
+	$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid({
+		url		: '<?php echo $grid->get_url(); ?>',
+		vars	: {
+			limit		: '<?php echo $grid->get_var_name_limit(); ?>',
+			page		: '<?php echo $grid->get_var_name_page(); ?>',
+			sort		: '<?php echo $grid->get_var_name_sort(); ?>',
+			direction	: '<?php echo $grid->get_var_name_direction(); ?>',
+			filters		: '<?php echo $grid->get_var_name_filters(); ?>'
+		}
+	});
 });
 
 </script>

@@ -103,6 +103,14 @@ class Grid extends \Object {
 	protected $_uses_container = false;
 	
 	/**
+	 * The url of the grid, used for
+	 * reloading, and ajax requests
+	 * 
+	 * @var	string
+	 */
+	protected $_url;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -667,5 +675,38 @@ class Grid extends \Object {
 	public function get_uses_container()
 	{
 		return $this->_uses_container;
+	}
+	
+	/**
+	 * Set Url
+	 * 
+	 * Sets the grid
+	 * url
+	 * 
+	 * @access	public
+	 * @param	string	Url
+	 * @return	Spark\Grid
+	 */
+	public function set_url($url)
+	{
+		$this->_url = $url;
+		return $this;
+	}
+	
+	/**
+	 * Get Url
+	 * 
+	 * Gets the grid
+	 * url
+	 * 
+	 * @access	public
+	 * @return	string	Grid url
+	 */
+	public function get_url()
+	{
+		// Lazy load url
+		if ( ! $this->_url) $this->_url = \Uri::current();
+		
+		return $this->_url;
 	}
 }
