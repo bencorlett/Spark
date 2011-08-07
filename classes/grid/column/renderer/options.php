@@ -46,5 +46,7 @@ class Grid_Column_Renderer_Options extends \Grid_Column_Renderer_Abstract {
 		}
 		
 		$cell->set_rendered_value($value);
+		
+		return $this;
 	}
 }

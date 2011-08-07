@@ -40,5 +40,7 @@ class Grid_Column_Filter_Text extends \Grid_Column_Filter_Abstract {
 							  ));
 		
 		$filter->set_html($input);
+		
+		return $this;
 	}
 }

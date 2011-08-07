@@ -66,7 +66,17 @@
 			 */
 			handler.find("button.filters-reset").click(function()
 			{
-				alert('Reset');
+				// Reset the filters object
+				filters = {};
+				
+				// Wipe the inputs, just to look nice
+				handler.find("tr.filters .filter").each(function()
+				{
+					$(this).val('');
+				});
+				
+				// Trigger an update on the handler
+				handler.trigger('update');
 			});
 			
 			/**
@@ -99,7 +109,30 @@
 			 */
 			handler.bind('update', function()
 			{
-				handler.replaceWith('test');
+				// Object to be sent
+				var data = {};
+				
+				// Make sure we dynamically
+				// set the parameter names
+				// based off what's configured
+				// in the grid class
+				data[settings.vars.filters] = filters;
+				
+				// Determine if we want
+				// to use ajax or not
+				if (settings.ajax) {
+					alert('use ajax');
+				}
+				else {
+					
+					// If not, we need to build a query
+					// string and visit that url
+					var param = $.param(data);
+					var href = settings.url + (param ? '?' + param : '');
+					
+					// Visit the url
+					window.location.href = href;
+				}
 			});
 		}
 	};

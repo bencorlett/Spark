@@ -34,5 +34,7 @@ class Grid_Column_Renderer_Text extends \Grid_Column_Renderer_Abstract {
 	public function render(\Grid_Column_Cell $cell)
 	{
 		$cell->set_rendered_value($cell->get_original_value());
+		
+		return $this;
 	}
 }

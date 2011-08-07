@@ -49,7 +49,8 @@ table {
 				sort		: '<?php echo $grid->get_var_name_sort(); ?>',
 				direction	: '<?php echo $grid->get_var_name_direction(); ?>',
 				filters		: '<?php echo $grid->get_var_name_filters(); ?>'
-			}
+			},
+			ajax	: <?php echo (int) $grid->get_uses_ajax(); ?>
 		});
 	});
 	
