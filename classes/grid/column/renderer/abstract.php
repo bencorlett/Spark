@@ -18,17 +18,8 @@
  * @link       http://spark.bencorlett.com
  */
 namespace Spark;
-?>
-<table>
-	<tbody>
-		<?php foreach ($grid->get_rows() as $row): ?>
-			<tr>
-				<?php foreach ($row as $cell): ?>
-					<td>
-						<?=$cell->build()?>
-					</td>
-				<?php endforeach ?>
-			</tr>
-		<?php endforeach ?>
-	</tbody>
-</table>
+
+abstract class Grid_Column_Renderer_Abstract extends \Grid_Component
+implements \Grid_Column_Renderer_Interface {
+	
+}

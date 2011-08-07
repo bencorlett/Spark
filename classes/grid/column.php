@@ -22,6 +22,13 @@ namespace Spark;
 class Grid_Column extends \Grid_Component {
 	
 	/**
+	 * The renderer for this column
+	 * 
+	 * @var	Spark\Grid_Column_Renderer_Abstract
+	 */
+	protected $_renderer;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -84,5 +91,56 @@ class Grid_Column extends \Grid_Component {
 		}
 		
 		return parent::get_header();
+	}
+	
+	/**
+	 * Get Type
+	 * 
+	 * Gets the type of the column
+	 * 
+	 * @access	public
+	 * @return	string	Type
+	 */
+	public function get_type()
+	{
+		// Lazy set the type
+		if ( ! $this->has_data('type')) $this->set_data('type', 'text');
+		
+		return parent::get_type();
+	}
+	
+	/**
+	 * Get Renderer
+	 * 
+	 * Gets the renderer for the
+	 * column
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Column_Renderer_Abstract
+	 */
+	public function get_renderer()
+	{
+		// Lazy load the renderer
+		if ( ! $this->_renderer)
+		{
+			// If we've specified when setting up
+			// the column
+			if ( ! $this->has_data('renderer'))
+			{
+				switch ($this->get_type())
+				{
+					default:
+						$this->set_data('renderer', 'Grid_Column_Renderer_Text');
+						break;
+				}
+			}
+			
+			// Now we've got a renderer class name
+			// initiate the renderer
+			$renderer = $this->get_data('renderer');
+			$this->_renderer = $renderer::factory();
+		}
+		
+		return $this->_renderer;
 	}
 }

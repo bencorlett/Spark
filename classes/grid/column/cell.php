@@ -58,7 +58,7 @@ class Grid_Column_Cell extends \Grid_Component {
 	 */
 	public function get_column()
 	{
-		if ( ! $this->_grid instanceof \Grid_Column) throw new \Exception(\Str::f('Cannot retrieve grid column instance for %s', get_class($this)));
+		if ( ! $this->_column instanceof \Grid_Column) throw new \Exception(\Str::f('Cannot retrieve grid column instance for %s', get_class($this)));
 		
 		return $this->_column;
 	}
@@ -74,5 +74,29 @@ class Grid_Column_Cell extends \Grid_Component {
 	public function get_driver()
 	{
 		return $this->get_grid()->get_driver();
+	}
+	
+	/**
+	 * Get Renderer
+	 * 
+	 * Gets the renderer
+	 * based off the cell type
+	 * 
+	 * @access	public
+	 */
+	
+	/**
+	 * Build
+	 * 
+	 * Builds the cell and
+	 * returns a View of it's
+	 * contents
+	 * 
+	 * @access	public
+	 * @return	View
+	 */
+	public function build()
+	{
+		echo $this->get_column()->get_renderer();
 	}
 }
