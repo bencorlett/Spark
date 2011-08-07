@@ -513,16 +513,19 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public static function __callStatic($method, array $arguments)
 	{
-		switch (substr($method, 12))
+		if (substr($method, 0, 11) === 'create_from')
 		{
-			case 'post':
-				return static::factory($_POST)
-							 ->make_recursive();
-			
-			case 'get':
-				
-				return static::factory($_GET)
-							 ->make_recursive();
+			switch (substr($method, 12))
+			{
+				case 'post':
+					return static::factory($_POST)
+								 ->make_recursive();
+
+				case 'get':
+
+					return static::factory($_GET)
+								 ->make_recursive();
+			}
 		}
 		
 		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_class($this), $method));

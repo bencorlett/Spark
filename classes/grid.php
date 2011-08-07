@@ -439,9 +439,26 @@ class Grid extends \Object {
 	protected function _prepare_grid()
 	{
 		// Prepare elements
-		$this->_prepare_columns()
+		$this->_prepare_model()
+			 ->_prepare_columns()
 			 ->_prepare_rows()
 			 ->_prepare_massactions();
+		
+		return $this;
+	}
+	
+	/**
+	 * Prepare Model
+	 * 
+	 * Prepares the model for the grid
+	 * 
+	 * @access	protected
+	 * @return	Spark\Grid
+	 */
+	protected function _prepare_model()
+	{
+		// $get = \Object::factory($_GET)
+		// 			  ->make_recursive();
 		
 		return $this;
 	}
