@@ -33,7 +33,11 @@ class Grid_Column_Filter_Text extends \Grid_Column_Filter_Abstract {
 	 */
 	public function render(\Grid_Column_Filter $filter)
 	{
-		$input = \Form::input(\Str::f('filters[%s]', $filter->get_column()->get_identifier()));
+		$input = \Form::input($filter->get_column()->get_identifier(),
+							  null,
+							  array(
+									'class'	=> \Str::f('grid-%s-filters', $filter->get_grid()->get_identifier()),
+							  ));
 		
 		$filter->set_html($input);
 	}

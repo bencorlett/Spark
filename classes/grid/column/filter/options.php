@@ -42,7 +42,10 @@ class Grid_Column_Filter_Options extends \Grid_Column_Filter_Abstract {
 		// Make sure we have an array of options
 		if ($options->get_data())
 		{
-			$html = \Form::select(\Str::f('filters[%s]', $filter->get_column()->get_identifier()), null, $options->get_data());
+			$html = \Form::select($filter->get_column()->get_identifier(),
+								  null,
+								  array(null => null) + $options->get_data()
+			);
 		}
 		
 		$filter->set_html($html);
