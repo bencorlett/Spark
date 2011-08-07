@@ -32,6 +32,7 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Column_Filter'					=> __DIR__ . '/classes/grid/column/filter.php',
 	'Spark\\Grid_Column_Filter_Abstract'		=> __DIR__ . '/classes/grid/column/filter/abstract.php',
 	'Spark\\Grid_Column_Filter_Interface'		=> __DIR__ . '/classes/grid/column/filter/interface.php',
+	'Spark\\Grid_Column_Filter_Options'			=> __DIR__ . '/classes/grid/column/filter/options.php',
 	'Spark\\Grid_Column_Filter_Text'			=> __DIR__ . '/classes/grid/column/filter/text.php',
 	'Spark\\Grid_Column_Renderer_Abstract'		=> __DIR__ . '/classes/grid/column/renderer/abstract.php',
 	'Spark\\Grid_Column_Renderer_Interface'		=> __DIR__ . '/classes/grid/column/renderer/interface.php',
