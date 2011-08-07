@@ -22,6 +22,20 @@ namespace Spark;
 class Grid extends \Object {
 	
 	/**
+	 * Object containing all available drivers
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected $_drivers;
+	
+	/**
+	 * Object containing driver for the grid
+	 * 
+	 * @var	Spark\Grid_Driver_Abstract
+	 */
+	protected $_driver;
+	
+	/**
 	 * Model object
 	 * 
 	 * @var	mixed
@@ -34,6 +48,13 @@ class Grid extends \Object {
 	 * @var	Spark\Object
 	 */
 	protected $_columns;
+	
+	/**
+	 * Object containing rows for the grid
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected $_rows;
 	
 	/**
 	 * The view name used for the grid
@@ -98,7 +119,8 @@ class Grid extends \Object {
 		// Check we've got a model
 		if ( ! is_object($model)) throw new Exception('You must provide a model when initialising the grid');
 		
-		$this->set_identifier($identifier);
+		$this->set_identifier($identifier)
+			 ->set_model($model);
 	}
 	
 	/**
@@ -171,7 +193,15 @@ class Grid extends \Object {
 	 */
 	public function __toString()
 	{
-		return (string) $this->build();
+		// Make sure we handle errors nicely
+		try
+		{
+			return (string) $this->build();
+		}
+		catch (\Exception $e)
+		{
+			\Error::show_php_error($e);
+		}
 	}
 	
 	/**
@@ -185,6 +215,9 @@ class Grid extends \Object {
 	 */
 	public function build()
 	{
+		// Make sure we have columns
+		if ( ! $this->get_columns()->count()) throw new Exception('You must add a column to the grid before building it');
+		
 		$this->_prepare_grid();
 		
 		// Build the grid
@@ -200,6 +233,133 @@ class Grid extends \Object {
 		return $this->get_container()
 					->build()
 					->set('grid', $grid, false);
+	}
+	
+	/**
+	 * Set Model
+	 * 
+	 * Sets the model for the grid
+	 * 
+	 * @access	public
+	 * @param	mixed	Model
+	 * @return	Spark\Grid
+	 */
+	public function set_model($model)
+	{
+		$this->_model = $model;
+		return $this;
+	}
+	
+	/**
+	 * Get Model
+	 * 
+	 * Gets the model for the grid
+	 * 
+	 * @access	public
+	 * @return	mixed
+	 */
+	public function get_model()
+	{
+		return $this->_model;
+	}
+	
+	/**
+	 * Register Driver
+	 * 
+	 * Registers a driver
+	 * with the grid
+	 * 
+	 * @access	public
+	 * @param	string	Class of model
+	 * @param	string	Class of driver
+	 * @return	Spark\Grid
+	 */
+	public function register_driver($model, $driver)
+	{
+		// Add the driver to the list
+		if ( ! $this->get_drivers()->has_data($model))
+		{
+			$this->get_drivers()->set_data($model, $driver);
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Drivers
+	 * 
+	 * Gets the drivers
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid
+	 */
+	public function get_drivers()
+	{
+		// Lazy load the drivers
+		// with the default drivers
+		if ( ! $this->_drivers)
+		{
+			$this->_drivers = \Object::factory(array(
+				'Orm\\Model'		=> 'Grid_Driver_Orm',
+			));
+		}
+		
+		return $this->_drivers;
+	}
+	
+	/**
+	 * Get Driver
+	 * 
+	 * Gets the driver for the
+	 * grid, based off the model
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Driver_Abstract
+	 */
+	public function get_driver()
+	{
+		// Lazy load the driver
+		if ( ! $this->_driver)
+		{
+			// Loop through drivers and determine the driver based off
+			// the class the model has
+			foreach ($this->get_drivers() as $model_class => $driver_class)
+			{
+				if (is_subclass_of(get_class($this->get_model()), $model_class))
+				{
+					$this->_driver = $driver_class::factory()
+												  ->set_grid($this);
+					break;
+				}
+			}
+			
+			// If we still haven't found a driver
+			// throw an exception
+			if ( ! $this->_driver) throw new Exception(Str::f('There is no driver for the a model which is an instance of %s', get_class($this->get_model())));
+		}
+		
+		return $this->_driver;
+	}
+	
+	/**
+	 * Get Rows
+	 * 
+	 * Gets the rows for
+	 * the grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function get_rows()
+	{
+		// If our driver wants the rows to build them
+		if ( ! $this->_rows)
+		{
+			$this->_rows = \Object::factory();
+		}
+		
+		return $this->_rows;
 	}
 	
 	/**
@@ -254,6 +414,7 @@ class Grid extends \Object {
 	{
 		// Prepare elements
 		$this->_prepare_columns()
+			 ->_prepare_rows()
 			 ->_prepare_massactions();
 		
 		return $this;
@@ -270,6 +431,23 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_columns()
 	{
+		return $this;
+	}
+	
+	/**
+	 * Prepare Rows
+	 * 
+	 * Prepares the rows for the
+	 * grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid
+	 */
+	protected function _prepare_rows()
+	{
+		$this->get_driver()
+			 ->build_rows();
+		
 		return $this;
 	}
 	

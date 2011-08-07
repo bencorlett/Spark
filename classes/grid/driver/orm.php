@@ -19,6 +19,20 @@
  */
 namespace Spark;
 
-abstract class Grid_driver_Orm extends \Grid_driver_Abstract {
+class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	
+	/**
+	 * Get Rows
+	 * 
+	 * Gets the rows based
+	 * off the model
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function build_rows()
+	{
+		$this->get_rows()->set_identifier('rofl');
+		$this->get_rows()->set_data('0', 'rofl');
+	}
 }

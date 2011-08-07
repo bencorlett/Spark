@@ -181,16 +181,17 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 * retains previous data
 	 * 
 	 * @access	public
-	 * @param	array		Data
+	 * @param	mixed Data
 	 * @return	Spark\Object
 	 */
 	public function add_data($data = array())
 	{
-		// If we've been given a string make it an array
-		if (is_string($data)) $data = array($data);
+		// If we've been given a string we just
+		// want to push it to the array
+		if (is_string($data)) $this->_data[] = (string) $data;
 		
 		// Loop through data and add it to the array
-		foreach ($data as $index => $value) $this->set_data($index, $value);
+		else foreach ($data as $index => $value) $this->set_data($index, $value);
 		
 		return $this;
 	}
@@ -633,6 +634,9 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	public function next()
 	{
 		$this->_current_key = next($this->_data_keys);
+		
+		\Log::error(isset($this->_data[$this->_current_key]) ? $this->_data[$this->_current_key] : 'none', __METHOD__);
+		
 		return $this;
 	}
 
@@ -649,6 +653,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	{
 		$this->_data_keys = array_keys($this->_data);
 		$this->_current_key = reset($this->_data_keys);
+		
 		return $this;
 	}
 	
@@ -659,15 +664,26 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 * 
 	 * @access	public
 	 * @link	http://www.php.net/manual/en/iterator.valid.php
-	 * @return  boolean
+	 * @return	bool
 	 */
 	public function valid()
 	{
 		return $this->offsetExists($this->_current_key);
 	}
 	
+	/**
+	 * Current
+	 * 
+	 * Implementation of Iterator::current()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.current.php
+	 * @return	bool
+	 */
 	public function current()
 	{
+		\Log::error($this->_data[$this->_current_key], __METHOD__);
+		
 		return $this->_data[$this->_current_key];
 	}
 	

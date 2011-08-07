@@ -19,34 +19,17 @@
  */
 namespace Spark;
 
-abstract class Grid_Driver_Abstract extends \Grid_Component
-implements \Grid_Driver_Interface {
+interface Grid_Driver_Interface {
 	
 	/**
-	 * Get Model
+	 * Build Rows
 	 * 
-	 * Gets the model
-	 * from the grid
-	 * 
-	 * @access	public
-	 * @return	mixed	Model
-	 */
-	public function get_model()
-	{
-		return $this->get_grid()->get_model();
-	}
-	
-	/**
-	 * Get Rows
-	 * 
-	 * Gets the rows
-	 * from the grid
+	 * Builds the rows based
+	 * off the model and stores
+	 * them in the grid
 	 * 
 	 * @access	public
 	 * @return	Spark\Object
 	 */
-	public function get_rows()
-	{
-		return $this->get_grid()->get_rows(false);
-	}
+	public function build_rows();
 }
