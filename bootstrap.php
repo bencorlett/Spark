@@ -28,6 +28,7 @@ Autoloader::add_classes(array(
 	'Spark\\Grid'								=> __DIR__ . '/classes/grid.php',
 	'Spark\\Grid_Button'						=> __DIR__ . '/classes/grid/button.php',
 	'Spark\\Grid_Column'						=> __DIR__ . '/classes/grid/column.php',
+	'Spark\\Grid_Column_Cell'					=> __DIR__ . '/classes/grid/column/cell.php',
 	'Spark\\Grid_Component'						=> __DIR__ . '/classes/grid/component.php',
 	'Spark\\Grid_Container'						=> __DIR__ . '/classes/grid/container.php',
 	'Spark\\Grid_Driver_Abstract'				=> __DIR__ . '/classes/grid/driver/abstract.php',

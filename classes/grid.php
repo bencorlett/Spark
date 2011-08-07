@@ -301,7 +301,8 @@ class Grid extends \Object {
 		if ( ! $this->_drivers)
 		{
 			$this->_drivers = \Object::factory(array(
-				'Orm\\Model'		=> 'Grid_Driver_Orm',
+				'Orm\\Query'		=> 'Grid_Driver_Orm',
+				'type'				=> 'class',
 			));
 		}
 		
@@ -326,7 +327,8 @@ class Grid extends \Object {
 			// the class the model has
 			foreach ($this->get_drivers() as $model_class => $driver_class)
 			{
-				if (is_subclass_of(get_class($this->get_model()), $model_class))
+				// We can either deal with a class or a subclass
+				if (get_class($this->get_model()) === $model_class or is_subclass_of(get_class($this->get_model()), $model_class))
 				{
 					$this->_driver = $driver_class::factory()
 												  ->set_grid($this);

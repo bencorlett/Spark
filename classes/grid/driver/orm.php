@@ -32,7 +32,29 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	 */
 	public function build_rows()
 	{
-		$this->get_rows()->set_identifier('rofl');
-		$this->get_rows()->set_data('0', 'rofl');
+		// Loop through the results and add them
+		// to the rows
+		foreach ($this->get_model()->get() as $result)
+		{
+			// Create a row
+			$row = \Object::factory();
+			
+			// Loop through columns and add a cell
+			// to the row for each column
+			foreach ($this->get_columns() as $column)
+			{
+				// Create a column cell
+				$cell = \Grid_Column_Cell::factory()
+										 ->set_grid($this->get_grid())
+										 ->set_column($column);
+				
+				// Add the cell to the row
+				$row->set_data($column->get_identifier(), $cell);
+			}
+			
+			// We've now built our row,
+			// add it to the rows object
+			$this->get_rows()->add_data($row);
+		}
 	}
 }

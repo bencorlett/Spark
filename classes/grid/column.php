@@ -38,4 +38,51 @@ class Grid_Column extends \Grid_Component {
 		$this->set_identifier($identifier)
 			 ->set_data($attributes);
 	}
+	
+	/**
+	 * Get Index
+	 * 
+	 * Gets the index of the column
+	 * 
+	 * @access	public
+	 * @return	string	Index
+	 */
+	public function get_index()
+	{
+		// Lazy set the index
+		if ( ! $this->has_data('index')) $this->set_data('index', \Str::alphanumeric($this->get_identifier(), '_'));
+		
+		return parent::get_index();
+	}
+	
+	/**
+	 * Get Header
+	 * 
+	 * Gets the header of the column
+	 * 
+	 * @access	public
+	 * @return	string	Header
+	 */
+	public function get_header()
+	{
+		// Lazy set the header
+		if ( ! $this->has_data('header'))
+		{
+			// Make the header
+			$header = \Str::ucwords(str_replace('_', ' ', $this->get_identifier()));
+			
+			// Change fields just to
+			// look more English proper
+			switch ($header)
+			{
+				case 'Id':
+					$header = 'ID';
+					break;
+			}
+			
+			$this->set_data('header', $header);
+		}
+		
+		return parent::get_header();
+	}
 }

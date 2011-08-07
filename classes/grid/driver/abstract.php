@@ -49,4 +49,18 @@ implements \Grid_Driver_Interface {
 	{
 		return $this->get_grid()->get_rows(false);
 	}
+	
+	/**
+	 * Get Columns
+	 * 
+	 * Gets the columns
+	 * from the grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function get_columns()
+	{
+		return $this->get_grid()->get_columns();
+	}
 }

@@ -30,3 +30,4 @@ namespace Spark;
 		<?php endforeach ?>
 	</tbody>
 </table>
+<pre><?=print_r($grid)?></pre>

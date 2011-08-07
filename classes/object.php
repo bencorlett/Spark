@@ -181,7 +181,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	{
 		// If we've been given a string we just
 		// want to push it to the array
-		if (is_string($data)) $this->_data[] = (string) $data;
+		if ( ! is_array($data)) $this->_data[] = $data;
 		
 		// Loop through data and add it to the array
 		else foreach ($data as $index => $value) $this->set_data($index, $value);
