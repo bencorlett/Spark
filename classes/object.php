@@ -608,11 +608,13 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	}
 	
 	/**
-	 * Implements [Iterator::key], returns the current row number.
-	 *
-	 *     echo key($result);
-	 *
-	 * @return  integer
+	 * Key
+	 * 
+	 * Implementation of Iterator::key()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.key.php
+	 * @return	int		Current key
 	 */
 	public function key()
 	{
@@ -620,11 +622,13 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	}
 
 	/**
-	 * Implements [Iterator::next], moves to the next row.
-	 *
-	 *     next($result);
-	 *
-	 * @return  $this
+	 * Next
+	 * 
+	 * Implementation of Iterator::next()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.next.php
+	 * @return	Spark\Object
 	 */
 	public function next()
 	{
@@ -633,24 +637,13 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	}
 
 	/**
-	 * Implements [Iterator::prev], moves to the previous row.
-	 *
-	 *     prev($result);
-	 *
-	 * @return  $this
-	 */
-	public function prev()
-	{
-		$this->_current_key = prev($this->_data_keys);
-		return $this;
-	}
-
-	/**
-	 * Implements [Iterator::rewind], sets the current row to zero.
-	 *
-	 *     rewind($result);
-	 *
-	 * @return  $this
+	 * Rewind
+	 * 
+	 * Implementation of Iterator::rewind()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.rewind.php
+	 * @return	Spark\Object
 	 */
 	public function rewind()
 	{
@@ -658,12 +651,14 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 		$this->_current_key = reset($this->_data_keys);
 		return $this;
 	}
-
+	
 	/**
-	 * Implements [Iterator::valid], checks if the current row exists.
-	 *
-	 * [!!] This method is only used internally.
-	 *
+	 * Valid
+	 * 
+	 * Implementation of Iterator::valid()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.valid.php
 	 * @return  boolean
 	 */
 	public function valid()
