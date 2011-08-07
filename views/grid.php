@@ -19,7 +19,7 @@
  */
 namespace Spark;
 ?>
-<table>
+<table border="1" cellpadding="8" cellspacing="0" bordercolor="#666">
 	<tbody>
 		<?php foreach ($grid->get_rows() as $row): ?>
 			<tr>

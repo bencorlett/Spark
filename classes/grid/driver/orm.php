@@ -46,7 +46,8 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				// Create a column cell
 				$cell = \Grid_Column_Cell::factory()
 										 ->set_grid($this->get_grid())
-										 ->set_column($column);
+										 ->set_column($column)
+										 ->set_original_value($result->{$column->get_index()});
 				
 				// Add the cell to the row
 				$row->set_data($column->get_identifier(), $cell);

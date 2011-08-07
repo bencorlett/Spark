@@ -30,6 +30,14 @@ class Grid_Column_Cell extends \Grid_Component {
 	protected $_column;
 	
 	/**
+	 * The original value the cell
+	 * has
+	 * 
+	 * @var	string
+	 */
+	protected $_original_value = false;
+	
+	/**
 	 * Set Column
 	 * 
 	 * Sets the column
@@ -77,13 +85,37 @@ class Grid_Column_Cell extends \Grid_Component {
 	}
 	
 	/**
-	 * Get Renderer
+	 * Set Original Value
 	 * 
-	 * Gets the renderer
-	 * based off the cell type
+	 * Sets the original value
+	 * for the cell
 	 * 
 	 * @access	public
+	 * @param	string	Value
+	 * @return	Spark\Grid_Column_Cell
 	 */
+	public function set_original_value($value)
+	{
+		$this->_original_value = $value;
+		return $this;
+	}
+	
+	/**
+	 * Get Original Value
+	 * 
+	 * Gets the original value
+	 * for the cell
+	 * 
+	 * @access	public
+	 * @return	string	Value
+	 */
+	public function get_original_value()
+	{
+		// We must have an original value
+		if ($this->_original_value === false) throw new Exception('An original value must be provided to every cell in the grid');
+		
+		return $this->_original_value;
+	}
 	
 	/**
 	 * Build
@@ -97,6 +129,6 @@ class Grid_Column_Cell extends \Grid_Component {
 	 */
 	public function build()
 	{
-		echo $this->get_column()->get_renderer();
+		echo $this->get_original_value();
 	}
 }
