@@ -38,6 +38,15 @@ class Grid_Column_Cell extends \Grid_Component {
 	protected $_original_value = false;
 	
 	/**
+	 * The rendered value the cell
+	 * has. It can either be a string
+	 * or a View object
+	 * 
+	 * @var	string|View
+	 */
+	protected $_rendered_value;
+	
+	/**
 	 * Set Column
 	 * 
 	 * Sets the column
@@ -72,6 +81,21 @@ class Grid_Column_Cell extends \Grid_Component {
 	}
 	
 	/**
+	 * Get Renderer
+	 * 
+	 * Gets the renderer for
+	 * the column that the
+	 * cell belongs to
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Column_Renderer_Abstract
+	 */
+	public function get_renderer()
+	{
+		return $this->get_column()->get_renderer();
+	}
+	
+	/**
 	 * Get Driver
 	 * 
 	 * Gets the driver for the cell
@@ -91,7 +115,7 @@ class Grid_Column_Cell extends \Grid_Component {
 	 * for the cell
 	 * 
 	 * @access	public
-	 * @param	string	Value
+	 * @param	string	Original value
 	 * @return	Spark\Grid_Column_Cell
 	 */
 	public function set_original_value($value)
@@ -107,7 +131,7 @@ class Grid_Column_Cell extends \Grid_Component {
 	 * for the cell
 	 * 
 	 * @access	public
-	 * @return	string	Value
+	 * @return	string	Original value
 	 */
 	public function get_original_value()
 	{
@@ -115,6 +139,49 @@ class Grid_Column_Cell extends \Grid_Component {
 		if ($this->_original_value === false) throw new Exception('An original value must be provided to every cell in the grid');
 		
 		return $this->_original_value;
+	}
+	
+	/**
+	 * Set Rendered Value
+	 * 
+	 * Sets the rendered value
+	 * for the cell
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Column_Cell
+	 */
+	public function set_rendered_value($value)
+	{
+		// We can either accept a string, value, or an instance of View
+		if (is_string($value) or is_numeric($value) or $value instanceof \View)
+		{
+			$this->_rendered_value = $value;
+			return $this;
+		}
+		
+		// Let the person know
+		throw new Exception('The rendered value for a grid cell must be either a string, a number or an instance of View');
+	}
+	
+	/**
+	 * Get Rendered Value
+	 * 
+	 * Gets the rendered value
+	 * for the cell
+	 * 
+	 * @access	public
+	 * @return	string	Rendered value
+	 */
+	public function get_rendered_value()
+	{
+		// Lazy render the value
+		if ( ! $this->_rendered_value)
+		{
+			$this->get_renderer()
+				 ->render($this);
+		}
+		
+		return $this->_rendered_value;
 	}
 	
 	/**
@@ -129,6 +196,6 @@ class Grid_Column_Cell extends \Grid_Component {
 	 */
 	public function build()
 	{
-		echo $this->get_original_value();
+		return $this->get_rendered_value();
 	}
 }

@@ -21,4 +21,15 @@ namespace Spark;
 
 interface Grid_Column_Renderer_Interface {
 	
+	/**
+	 * Render
+	 * 
+	 * Renders a cell and populates
+	 * it's rendered value
+	 * 
+	 * @access	public
+	 * @param	Spark\Grid_Column_Cell	Cell
+	 * @return	Spark\Grid_Column_Renderer_Interface
+	 */
+	public function render(\Grid_Column_Cell $cell);
 }
