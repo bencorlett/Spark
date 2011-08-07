@@ -172,6 +172,9 @@ class Grid extends \Object {
 	 */
 	public function add_column($identifier = null, array $attributes = array())
 	{
+		// Sanitise the identifier
+		$identifier = \Str::alphanumeric($identifier, '_');
+		
 		// Only add the column if it doesn't exist
 		if ( ! $this->get_columns()->has_data($identifier))
 		{

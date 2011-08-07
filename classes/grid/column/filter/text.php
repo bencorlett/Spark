@@ -19,7 +19,22 @@
  */
 namespace Spark;
 
-abstract class Grid_Column_Renderer_Abstract extends \Object
-implements \Grid_Column_Renderer_Interface {
+class Grid_Column_Filter_Text extends \Grid_Column_Filter_Abstract {
 	
+	/**
+	 * Render
+	 * 
+	 * Renders a filter for
+	 * a column
+	 * 
+	 * @access	public
+	 * @param	Spark\Grid_Column_Filter	Filter
+	 * @return	Spark\Grid_Column_Filter_Interface
+	 */
+	public function render(\Grid_Column_Filter $filter)
+	{
+		$input = \Form::input(\Str::f('filters[%s]', $filter->get_column()->get_identifier()));
+		
+		$filter->set_html($input);
+	}
 }

@@ -19,7 +19,7 @@
  */
 namespace Spark;
 
-abstract class Grid_Column_Renderer_Abstract extends \Object
-implements \Grid_Column_Renderer_Interface {
+abstract class Grid_Column_Filter_Abstract extends \Object
+implements \Grid_Column_Filter_Interface {
 	
 }

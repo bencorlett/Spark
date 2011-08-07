@@ -20,6 +20,22 @@
 namespace Spark;
 ?>
 <table border="1" cellpadding="8" cellspacing="0" bordercolor="#666">
+	<thead>
+		<tr>
+			<?php foreach ($grid->get_columns() as $column): ?>
+				<th>
+					<?=$column->get_header()?>
+				</th>
+			<?php endforeach ?>
+		</tr>
+		<tr>
+			<?php foreach ($grid->get_columns() as $column): ?>
+				<th>
+					<?=$column->get_filter()?>
+				</th>
+			<?php endforeach ?>
+		</tr>
+	</thead>
 	<tbody>
 		<?php foreach ($grid->get_rows() as $row): ?>
 			<tr>

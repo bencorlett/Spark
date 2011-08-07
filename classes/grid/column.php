@@ -29,6 +29,13 @@ class Grid_Column extends \Grid_Component {
 	protected $_renderer;
 	
 	/**
+	 * The filter for this column
+	 * 
+	 * @var	Spark\Grid_Column_Filter_Abstract
+	 */
+	protected $_filter;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -123,8 +130,9 @@ class Grid_Column extends \Grid_Component {
 		// Lazy load the renderer
 		if ( ! $this->_renderer)
 		{
-			// If we've specified when setting up
-			// the column
+			// If we've just set a type for the
+			// grid, and not explicitly set the
+			// renderer
 			if ( ! $this->has_data('renderer'))
 			{
 				switch ($this->get_type())
@@ -152,5 +160,31 @@ class Grid_Column extends \Grid_Component {
 		}
 		
 		return $this->_renderer;
+	}
+	
+	/**
+	 * Get Filter
+	 * 
+	 * Gets the filter for the grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Column_Filter_Abstract
+	 */
+	public function get_filter()
+	{
+		// Lazy load the filter
+		if ( ! $this->_filter)
+		{
+			// The filter is it's own object, that way it can store
+			// the original values and rendered values etc all in
+			// it's own little space
+			$this->_filter = \Grid_Column_Filter::factory()
+												->set_grid($this->get_grid())
+												->set_column($this)
+												->set_data('type', $this->get_data('type'))
+												->set_data('filter', $this->get_data('filter'));
+		}
+		
+		return $this->_filter;
 	}
 }

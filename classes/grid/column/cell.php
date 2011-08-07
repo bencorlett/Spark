@@ -148,6 +148,7 @@ class Grid_Column_Cell extends \Grid_Component {
 	 * for the cell
 	 * 
 	 * @access	public
+	 * @param	string|View
 	 * @return	Spark\Grid_Column_Cell
 	 */
 	public function set_rendered_value($value)
@@ -170,7 +171,7 @@ class Grid_Column_Cell extends \Grid_Component {
 	 * for the cell
 	 * 
 	 * @access	public
-	 * @return	string	Rendered value
+	 * @return	string|View	Rendered value
 	 */
 	public function get_rendered_value()
 	{
@@ -188,11 +189,11 @@ class Grid_Column_Cell extends \Grid_Component {
 	 * Build
 	 * 
 	 * Builds the cell and
-	 * returns a View of it's
-	 * contents
+	 * returns a string or
+	 * View of it's contents
 	 * 
 	 * @access	public
-	 * @return	View
+	 * @return	string|View
 	 */
 	public function build()
 	{
