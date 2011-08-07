@@ -19,7 +19,7 @@
  */
 namespace Spark;
 
-final abstract class Grid_Component extends \Object {
+abstract class Grid_Component extends \Object {
 	
 	/**
 	 * Reference to the grid this driver
@@ -39,7 +39,7 @@ final abstract class Grid_Component extends \Object {
 	 * @param	Spark\Grid	Grid
 	 * @return	Spark\Grid_Component
 	 */
-	public function set_grid(\Grid $grid)
+	final public function set_grid(\Grid $grid)
 	{
 		$this->_grid = $grid;
 		return $this;
@@ -54,7 +54,7 @@ final abstract class Grid_Component extends \Object {
 	 * @access	public
 	 * @return	Spark\Grid
 	 */
-	public function get_grid()
+	final public function get_grid()
 	{
 		// Make sure the grid has been set for this component
 		if ( ! $this->_grid instanceof \Grid) throw new \Exception(\Str::f('Cannot retrieve grid instance for %s', get_class($this)));

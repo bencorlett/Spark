@@ -139,6 +139,8 @@ class Object implements \ArrayAccess {
 	public function set_identifier($identifier)
 	{
 		$this->_identifier = (string) $identifier;
+		
+		return $this;
 	}
 	
 	/**

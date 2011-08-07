@@ -84,4 +84,44 @@ class Grid extends \Object {
 		$identifier = str_replace('--', '-', \Str::lower(\Str::alphanumeric($identifier, '-')));
 		return parent::set_identifier($identifier);
 	}
+	
+	/**
+	 * Get Columns
+	 * 
+	 * Gets the columns object
+	 * and lazy loads if it's
+	 * not set
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function get_columns()
+	{
+		// Get the columns
+		if ( ! $this->_columns) $this->_columns = \Object::factory();
+		
+		return $this->_columns;
+	}
+	
+	/**
+	 * Add Column
+	 * 
+	 * Adds a column to the grid
+	 * 
+	 * @access	public
+	 * @param	string	Identifier
+	 * @param	array	Attributes
+	 * @return	Spark\Grid
+	 */
+	public function add_column($identifier = null, array $attributes = array())
+	{
+		// Only add the column if it doesn't exist
+		if ( ! $this->get_columns()->has_data($identifier))
+		{
+			$this->get_columns()->set_data($identifier, \Grid_Column::factory($identifier, $attributes)
+																	->set_grid($this));
+		}
+		
+		return $this;
+	}
 }
