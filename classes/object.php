@@ -54,16 +54,9 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	/**
 	 * Data keys for iterating
 	 * 
-	 * @var	int
+	 * @var	array
 	 */
 	protected $_data_keys = array();
-	
-	/**
-	 * Current position when iterating
-	 * 
-	 * @var	int
-	 */
-	protected $_current_key = 0;
 	
 	/**
 	 * Construct
@@ -591,7 +584,8 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public function offsetExists($offset)
 	{
-		return isset($this->_data[$offset]);
+		if ($offset or $offset === 0) return isset($this->_data[$offset]);
+		return false;
 	}
 	
 	/**
@@ -619,7 +613,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public function key()
 	{
-		return $this->_current_key;
+		return current($this->_data_keys);
 	}
 
 	/**
@@ -633,10 +627,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public function next()
 	{
-		$this->_current_key = next($this->_data_keys);
-		
-		\Log::error(isset($this->_data[$this->_current_key]) ? $this->_data[$this->_current_key] : 'none', __METHOD__);
-		
+		next($this->_data_keys);
 		return $this;
 	}
 
@@ -652,7 +643,6 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	public function rewind()
 	{
 		$this->_data_keys = array_keys($this->_data);
-		$this->_current_key = reset($this->_data_keys);
 		
 		return $this;
 	}
@@ -668,7 +658,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public function valid()
 	{
-		return $this->offsetExists($this->_current_key);
+		return $this->offsetExists(current($this->_data_keys));
 	}
 	
 	/**
@@ -682,9 +672,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public function current()
 	{
-		\Log::error($this->_data[$this->_current_key], __METHOD__);
-		
-		return $this->_data[$this->_current_key];
+		return $this->_data[current($this->_data_keys)];
 	}
 	
 	/**
