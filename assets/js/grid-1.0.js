@@ -18,46 +18,110 @@
  */
 (function($) {
 	
-	$.fn.sparkGrid = function() {
+	/**
+	 * Settings object
+	 * 
+	 * @var	Object
+	 */
+	var settings = {};
+	
+	/**
+	 * Object containing filters
+	 * 
+	 * @var	Object
+	 */
+	var filters = {};
+	
+	/**
+	 * The handler of the plugin,
+	 * the element the plugin
+	 * is triggered on
+	 */
+	var handler;
+	
+	/**
+	 * Plugin methods
+	 */
+	var methods = {
 		
 		/**
-		 * The element object
+		 * Init
 		 * 
-		 * @var	Object
+		 * Used to initalise the plugin
 		 */
-		var element = $(this);
-		
-		/**
-		 * The selector string
-		 * 
-		 * @var	string
-		 */
-		var selector = $(element).selector;
-		
-		/**
-		 * The grid identifier
-		 * 
-		 * @var	string
-		 */
-		var identifier = selector.substr(6);
-		
-		/**
-		 * When the user clicks on
-		 * search, to apply the filters
-		 */
-		$(selector + "-filter-actions-search").click(function()
-		{
-			// Filters object
-			var filters = {};
+		init: function(options) {
 			
-			$("input.grid-" + identifier + "-filters").each(function()
+			if (options) {
+				$.extend(settings, options);
+			}
+			
+			/**
+			 * Set the handler variable
+			 * to the trigger element
+			 */
+			handler = this;
+			
+			/**
+			 * When the user resets filters
+			 */
+			handler.find("button.filters-reset").click(function()
 			{
-				if ($(this).val())
-				{
-					filters[$(this).attr('name')] = $(this).val();
-				}
+				alert('Reset');
 			});
-		});
+			
+			/**
+			 * When the user applies filters
+			 */
+			handler.find("button.filters-apply").click(function()
+			{
+				// Reset the filters if
+				// they exist
+				if (filters) filters = {};
+				
+				// Loop through filters and add to the data
+				// object, to be sent off to the grid url
+				handler.find("tr.filters .filter").each(function()
+				{
+					// Only add to the filters if they
+					// exist, no point filling it with
+					// empty data
+					if ($(this).val()) {
+						filters[$(this).attr('name')] = $(this).val();
+					}
+				});
+				
+				// Trigger an update on the handler
+				handler.trigger('update');
+			});
+			
+			/**
+			 * When the handler is to update
+			 */
+			handler.bind('update', function()
+			{
+				handler.replaceWith('test');
+			});
+		}
+	};
+	
+	/**
+	 * jQuery Plugin namespace declaration
+	 */
+	$.fn.sparkGrid = function(method) {
+		
+		/**
+		 * Delegate functionality
+		 * based on method
+		 */
+		if (methods[method]) {
+			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		}
+		else if (typeof method === 'object' || ! method) {
+			return methods.init.apply(this, arguments);
+		}
+		else {
+			$.error('Method ' + method + ' does not exist in jQuery.sparkGrid');
+		}
 	}
 	
 })(jQuery);

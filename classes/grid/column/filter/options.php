@@ -44,7 +44,10 @@ class Grid_Column_Filter_Options extends \Grid_Column_Filter_Abstract {
 		{
 			$html = \Form::select($filter->get_column()->get_identifier(),
 								  null,
-								  array(null => null) + $options->get_data()
+								  array(null => null) + $options->get_data(),
+								  array(
+								  	'class'		=> 'filter',
+								  )
 			);
 		}
 		

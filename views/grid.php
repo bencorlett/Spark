@@ -36,25 +36,24 @@ table {
 
 </style>
 
-<script>
-
-$(document).ready(function()
-{
-	$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid({
-		url		: '<?php echo $grid->get_url(); ?>',
-		vars	: {
-			limit		: '<?php echo $grid->get_var_name_limit(); ?>',
-			page		: '<?php echo $grid->get_var_name_page(); ?>',
-			sort		: '<?php echo $grid->get_var_name_sort(); ?>',
-			direction	: '<?php echo $grid->get_var_name_direction(); ?>',
-			filters		: '<?php echo $grid->get_var_name_filters(); ?>'
-		}
-	});
-});
-
-</script>
-
 <div class="grid" id="grid-<?php echo $grid->get_identifier()?>">
+	<script type="text/javascript">
+	
+	$(document).ready(function()
+	{
+		$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid({
+			url		: '<?php echo $grid->get_url(); ?>',
+			vars	: {
+				limit		: '<?php echo $grid->get_var_name_limit(); ?>',
+				page		: '<?php echo $grid->get_var_name_page(); ?>',
+				sort		: '<?php echo $grid->get_var_name_sort(); ?>',
+				direction	: '<?php echo $grid->get_var_name_direction(); ?>',
+				filters		: '<?php echo $grid->get_var_name_filters(); ?>'
+			}
+		});
+	});
+	
+	</script>
 	<table class="controls">
 		<tbody>
 			<tr>
@@ -62,8 +61,8 @@ $(document).ready(function()
 					<?=\Html::nbs()?>
 				</td>
 				<td class="filter-actions">
-					<?php echo \Form::button(null, 'Reset Filters', array('id' => \Str::f('grid-%s-filter-actions-reset', $grid->get_identifier()))); ?>
-					<?php echo \Form::button(null, 'Search', array('id' => \Str::f('grid-%s-filter-actions-search', $grid->get_identifier()))); ?>
+					<?php echo \Form::button(null, 'Reset Filters', array('class' => 'filters-reset')); ?>
+					<?php echo \Form::button(null, 'Search', array('class' => 'filters-apply')); ?>
 				</td>
 			</tr>
 		</tbody>
@@ -77,7 +76,7 @@ $(document).ready(function()
 					</th>
 				<?php endforeach ?>
 			</tr>
-			<tr>
+			<tr class="filters">
 				<?php foreach ($grid->get_columns() as $column): ?>
 					<th>
 						<?php echo $column->get_filter(); ?>

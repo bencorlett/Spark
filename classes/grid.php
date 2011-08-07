@@ -98,7 +98,7 @@ class Grid extends \Object {
 	 * Flag to determine if the
 	 * grid uses a container
 	 * 
-	 * @var	Spark\Grid_Container
+	 * @var	bool
 	 */
 	protected $_uses_container = false;
 	
@@ -109,6 +109,14 @@ class Grid extends \Object {
 	 * @var	string
 	 */
 	protected $_url;
+	
+	/**
+	 * Flat to determine if the grid
+	 * uses ajax to update or not
+	 * 
+	 * @var	bool
+	 */
+	protected $_uses_ajax = false;
 	
 	/**
 	 * Construct
@@ -708,5 +716,35 @@ class Grid extends \Object {
 		if ( ! $this->_url) $this->_url = \Uri::current();
 		
 		return $this->_url;
+	}
+	
+	/**
+	 * Set Uses Ajax
+	 * 
+	 * Sets whether the grid
+	 * uses ajax
+	 * 
+	 * @access	public
+	 * @param	bool	Uses ajax
+	 * @return	Spark\Grid
+	 */
+	public function set_uses_ajax($uses)
+	{
+		$this->_uses_ajax = (bool) $uses;
+		return $this;
+	}
+	
+	/**
+	 * Get Uses Ajax
+	 * 
+	 * Gets whether the grid
+	 * uses ajax
+	 * 
+	 * @access	public
+	 * @return	bool	Uses ajax
+	 */
+	public function get_uses_ajax()
+	{
+		return $this->_uses_ajax;
 	}
 }
