@@ -25,7 +25,7 @@ namespace Spark;
 			<tr>
 				<?php foreach ($row as $cell): ?>
 					<td>
-						<?=$cell->build()?>
+						<?=$cell?>
 					</td>
 				<?php endforeach ?>
 			</tr>

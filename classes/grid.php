@@ -176,7 +176,8 @@ class Grid extends \Object {
 		if ( ! $this->get_columns()->has_data($identifier))
 		{
 			$this->get_columns()->set_data($identifier, \Grid_Column::factory($identifier, $attributes)
-																	->set_grid($this));
+																	->set_grid($this)
+																	->make_recursive());
 		}
 		
 		return $this;
@@ -332,6 +333,10 @@ class Grid extends \Object {
 				{
 					$this->_driver = $driver_class::factory()
 												  ->set_grid($this);
+					
+					// Make sure the driver is valid
+					if ( ! $this->_driver instanceof \Grid_Driver_Abstract) throw new Exception('Grid drivers must extend Spark\\Grid_Driver_Abstract');
+					
 					break;
 				}
 			}

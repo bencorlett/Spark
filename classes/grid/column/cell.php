@@ -198,4 +198,25 @@ class Grid_Column_Cell extends \Grid_Component {
 	{
 		return $this->get_rendered_value();
 	}
+	
+	/**
+	 * To String
+	 * 
+	 * Represents the object
+	 * as a string
+	 * 
+	 * @access	public
+	 * @return	string
+	 */
+	public function __toString()
+	{
+		try
+		{
+			return (string) $this->build();
+		}
+		catch (\Exception $e)
+		{
+			\Error::show_php_error($e);
+		}
+	}
 }

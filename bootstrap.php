@@ -31,6 +31,7 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Column_Cell'					=> __DIR__ . '/classes/grid/column/cell.php',
 	'Spark\\Grid_Column_Renderer_Abstract'		=> __DIR__ . '/classes/grid/column/renderer/abstract.php',
 	'Spark\\Grid_Column_Renderer_Interface'		=> __DIR__ . '/classes/grid/column/renderer/interface.php',
+	'Spark\\Grid_Column_Renderer_Options'		=> __DIR__ . '/classes/grid/column/renderer/options.php',
 	'Spark\\Grid_Column_Renderer_Text'			=> __DIR__ . '/classes/grid/column/renderer/text.php',
 	
 	'Spark\\Grid_Component'						=> __DIR__ . '/classes/grid/component.php',

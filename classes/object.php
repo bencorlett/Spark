@@ -584,7 +584,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 */
 	public function offsetExists($offset)
 	{
-		if ($offset or $offset === 0) return isset($this->_data[$offset]);
+		if ($offset or $offset === 0 or (is_numeric($offset) and $offset == 0)) return isset($this->_data[$offset]);
 		return false;
 	}
 	

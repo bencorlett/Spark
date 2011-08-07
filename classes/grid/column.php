@@ -129,6 +129,10 @@ class Grid_Column extends \Grid_Component {
 			{
 				switch ($this->get_type())
 				{
+					case 'options':
+						$this->set_data('renderer', 'Grid_Column_Renderer_Options');
+						break;
+					
 					default:
 						$this->set_data('renderer', 'Grid_Column_Renderer_Text');
 						break;
@@ -139,6 +143,12 @@ class Grid_Column extends \Grid_Component {
 			// initiate the renderer
 			$renderer = $this->get_data('renderer');
 			$this->_renderer = $renderer::factory();
+			
+			// Make sure the renderer is valid
+			if ( ! $this->_renderer instanceof \Grid_Column_Renderer_Abstract or ! $this->_renderer instanceof \Grid_Column_Renderer_Interface)
+			{
+				throw new Exception('Grid renderers must extend Spark\\Grid_Column_Renderer_Abstract and inherit from Spark\\Grid_Column_Renderer_Interface');
+			}
 		}
 		
 		return $this->_renderer;
