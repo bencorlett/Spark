@@ -170,8 +170,11 @@ class Object implements \ArrayAccess {
 	 * @param	array		Data
 	 * @return	Spark\Object
 	 */
-	public function add_data(array $data)
+	public function add_data($data = array())
 	{
+		// If we've been given a string make it an array
+		if (is_string($data)) $data = array($data);
+		
 		// Loop through data and add it to the array
 		foreach ($data as $index => $value) $this->set_data($index, $value);
 		
