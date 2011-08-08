@@ -61,7 +61,7 @@
 			{
 				// Reset form
 				handler.find('form.filters-form').remove();
-				handler.append($("<form></form>").css('display', 'block').addClass('filters-form'));
+				handler.append($("<form></form>").css('display', 'none').addClass('filters-form'));
 				
 				// Wipe the inputs, just to look nice
 				handler.find("tr.filters .filter").each(function()
@@ -80,7 +80,7 @@
 			{
 				// Reset form
 				handler.find('form.filters-form').remove();
-				handler.append($("<form></form>").css('display', 'block').addClass('filters-form'));
+				handler.append($("<form></form>").css('display', 'none').addClass('filters-form'));
 				
 				// Loop through filters and add to the data
 				// object, to be sent off to the grid url
@@ -90,7 +90,10 @@
 					// exist, no point filling it with
 					// empty data
 					if ($(this).val()) {
-						$(this).clone().appendTo(handler.find('form.filters-form'));
+						
+						// The second val() method is to make sure that select boxes
+						// get the value that the original select box had
+						$(this).clone().appendTo(handler.find('form.filters-form')).val($(this).val());
 					}
 				});
 				

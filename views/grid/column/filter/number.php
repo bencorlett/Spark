@@ -23,7 +23,7 @@ namespace Spark;
 	<div class="line">
 		<?=\Form::label('From', \Str::f('grid-%s-filter-%s-min', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()))?>
 		<?=\Form::input($filter->get_column()->get_identifier() . '[min]',
-						null,
+						$filter->get_user_value() ? $filter->get_user_value()->get_min() : null,
 						array(
 							'class'	=> 'filter',
 							'id'	=> \Str::f('grid-%s-filter-%s-min', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()),
@@ -33,7 +33,7 @@ namespace Spark;
 	<div class="line">
 		<?=\Form::label('To', \Str::f('grid-%s-filter-%s-max', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()))?>
 		<?=\Form::input($filter->get_column()->get_identifier() . '[max]',
-						null,
+						$filter->get_user_value() ? $filter->get_user_value()->get_max() : null,
 						array(
 							'class'	=> 'filter',
 							'id'	=> \Str::f('grid-%s-filter-%s-max', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()),

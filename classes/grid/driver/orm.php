@@ -40,7 +40,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 		foreach ($this->get_columns() as $column)
 		{
 			// Only process a value if there is one
-			if (($value = $column->get_filter()->get_real_value()) !== null)
+			if (($value = $column->get_filter()->get_real_value()) !== false)
 			{
 				// If the value is a string we need
 				// to filter where the index contains
@@ -55,9 +55,25 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				// a "min" property and a "max" property
 				// which the column must be between. Used
 				// commonly for dates, numbers and timestamps
-				elseif ($value instanceof \Object and $value->get_min() !== null and $value->get_max() !== null)
+				elseif ($value instanceof \Object and ($value->get_min() !== null or $value->get_max() !== null))
 				{
+					// If we've got a min and a max
+					if ($value->get_min() !== null and $value->get_max() !== null)
+					{
+						$this->get_model()->where($column->get_index(), 'BETWEEN', array($value->get_min(), $value->get_max()));
+					}
 					
+					// If we've only got a min
+					if ($value->get_min() !== null)
+					{
+						$this->get_model()->where($column->get_index(), '>=', $value->get_min());
+					}
+					
+					// If we've only got a max
+					elseif ($value->get_max() !== null)
+					{
+						$this->get_model()->where($column->get_index(), '<=', $value->get_max());
+					}
 				}
 				
 				// Else the value is not valid
