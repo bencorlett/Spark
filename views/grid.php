@@ -19,6 +19,7 @@
  */
 namespace Spark;
 ?>
+
 <style>
 
 table {
@@ -35,22 +36,25 @@ table {
 
 
 </style>
-
 <div class="grid" id="grid-<?php echo $grid->get_identifier()?>">
 	<script type="text/javascript">
 	
-	$(document).ready(function()
-	{
+	$(document).ready(function() {
+		
 		$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid({
-			url		: '<?php echo $grid->get_url(); ?>',
-			vars	: {
-				limit		: '<?php echo $grid->get_var_name_limit(); ?>',
-				page		: '<?php echo $grid->get_var_name_page(); ?>',
-				sort		: '<?php echo $grid->get_var_name_sort(); ?>',
-				direction	: '<?php echo $grid->get_var_name_direction(); ?>',
-				filters		: '<?php echo $grid->get_var_name_filters(); ?>'
+			identifier		: '<?php echo $grid->get_identifier(); ?>',
+			url				: '<?php echo $grid->get_url(); ?>',
+			vars			: {
+				limit			: '<?php echo $grid->get_var_name_limit(); ?>',
+				page			: '<?php echo $grid->get_var_name_page(); ?>',
+				sort			: '<?php echo $grid->get_var_name_sort(); ?>',
+				direction		: '<?php echo $grid->get_var_name_direction(); ?>',
+				filters			: '<?php echo $grid->get_var_name_filters(); ?>'
 			},
-			ajax	: <?php echo (int) $grid->get_uses_ajax(); ?>
+			ajax			: <?php echo (int) $grid->get_uses_ajax(); ?>
+			<?php if (($params = $grid->get_current_params_json()) !== false): ?>
+				, currentParams: <?php echo $params; ?>
+			<?php endif ?>
 		});
 	});
 	

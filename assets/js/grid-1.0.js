@@ -23,7 +23,19 @@
 	 * 
 	 * @var	Object
 	 */
-	var settings = {};
+	var settings = {
+		identifier		: 'grid',
+		url				: '',
+		vars			: {
+			limit			: 'limit',
+			page			: 'page',
+			sort			: 'sort',
+			direction		: 'direction',
+			filters			: 'filters',
+		},
+		ajax			: true,
+		currentParams	: {}
+	};
 	
 	/**
 	 * The handler of the plugin,
@@ -31,6 +43,13 @@
 	 * is triggered on
 	 */
 	var handler;
+	
+	/**
+	 * The field the
+	 * grid is being sorted
+	 * by
+	 */
+	var sort;
 	
 	/**
 	 * Plugin methods
@@ -44,21 +63,29 @@
 		 */
 		init: function(options) {
 			
-			if (options) {
-				$.extend(settings, options);
-			}
-			
 			/**
 			 * Set the handler variable
 			 * to the trigger element
 			 */
 			handler = this;
 			
+			if (options) {
+				$.extend(settings, options);
+			}
+			
+			/**
+			 * Initialise parameters
+			 */
+			if (typeof settings.currentParams[settings.vars.filters] === 'undefined')
+			{
+				settings.currentParams[settings.vars.filters] = {};
+			}
+			
 			/**
 			 * When the user resets filters
 			 */
-			handler.find("button.filters-reset").click(function()
-			{
+			handler.find("button.filters-reset").click(function() {
+				
 				// Reset form
 				handler.find('form.filters-form').remove();
 				handler.append($("<form></form>").css('display', 'none').addClass('filters-form'));
@@ -76,11 +103,10 @@
 			/**
 			 * When the user applies filters
 			 */
-			handler.find("button.filters-apply").click(function()
-			{
-				// Reset form
-				handler.find('form.filters-form').remove();
-				handler.append($("<form></form>").css('display', 'none').addClass('filters-form'));
+			handler.find("button.filters-apply").click(function() {
+				
+				// Reset the form
+				handler.trigger('reset-filters-form');
 				
 				// Loop through filters and add to the data
 				// object, to be sent off to the grid url
@@ -93,11 +119,11 @@
 						
 						// The second val() method is to make sure that select boxes
 						// get the value that the original select box had
-						$(this).clone().appendTo(handler.find('form.filters-form')).val($(this).val());
+						handler.find('form.filters-form').append($('<input></input>').attr('name', $(this).attr('name')).attr('value', $(this).attr('value')));
 					}
 				});
 				
-				// // Trigger an update on the handler
+				// Trigger an update on the handler
 				handler.trigger('update');
 			});
 			
@@ -105,8 +131,8 @@
 			 * The user can click enter
 			 * as a shortcut to apply filters
 			 */
-			handler.find("tr.filters .filter").keypress(function(e)
-			{
+			handler.find("tr.filters .filter").keypress(function(e) {
+				
 				switch (e.keyCode) {
 					case 13:
 						handler.find("button.filters-apply").trigger('click');
@@ -115,40 +141,63 @@
 			});
 			
 			/**
+			 * Reset filters form
+			 */
+			handler.bind('reset-filters-form', function() {
+				
+				// Reset form
+				handler.find('form.filters-form').remove();
+				handler.append($("<form></form>").css('display', 'none').addClass('filters-form'));
+			});
+			
+			/**
+			 * When the user clicks on
+			 * a column header to sort
+			 * by that column
+			 */
+			handler.find("tr.headers .header").click(function() {
+				
+				// Generate the filters form
+				handler.trigger('generate-filters-form');
+				
+				// Set the sort
+				sort = $(this).attr('column');
+				
+				// Trigger an update
+				handler.trigger('update');
+			});
+			
+			/**
 			 * When the handler is to update
 			 */
-			handler.bind('update', function()
-			{
-				// Object to be sent
-				var data = {};
+			handler.bind('update', function() {
 				
-				// Make sure we dynamically
-				// set the parameter names
-				// based off what's configured
-				// in the grid class
-				data[settings.vars.filters] = handler.find('form.filters-form').formParams();
+				// Update the current params
+				settings.currentParams[settings.vars.filters] = handler.find('form.filters-form').formParams();
 				
-				// Determine if we want
-				// to use ajax or not
-				if (settings.ajax) {
-					$.ajax({
-						url			: settings.url,
-						data		: data,
-						success		: function(data, textStatus, jqXHR) {
-							handler.replaceWith(data);
-						}
-					});
-				}
-				else {
-					
-					// If not, we need to build a query
-					// string and visit that url
-					var param = $.param(data);
-					var href = settings.url + (param ? '?' + param : '');
-					
-					// Visit the url
-					window.location.href = href;
-				}
+				// Set them to a cookie
+				$.cookie('grid[' + settings.identifier + ']', JSON.stringify(settings.currentParams));
+				
+				// // Determine if we want
+				// // to use ajax or not
+				// if (settings.ajax) {
+				// 	$.ajax({
+				// 		url			: settings.url,
+				// 		success		: function(data, textStatus, jqXHR) {
+				// 			handler.replaceWith(data);
+				// 		}
+				// 	});
+				// }
+				// else {
+				// 	
+				// 	// If not, we need to build a query
+				// 	// string and visit that url
+				// 	var param = $.param(data);
+				// 	var href = settings.url + (param ? '?' + param : '');
+				// 	
+				// 	// Visit the url
+				// 	window.location.href = href;
+				// }
 			});
 		}
 	};
@@ -288,3 +337,45 @@
 	});
 
 })(jQuery)
+
+/**
+ * jQuery Cookie plugin
+ *
+ * Copyright (c) 2010 Klaus Hartl (stilbuero.de)
+ * Dual licensed under the MIT and GPL licenses:
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ */
+jQuery.cookie = function (key, value, options) {
+
+    // key and at least value given, set cookie...
+    if (arguments.length > 1 && String(value) !== "[object Object]") {
+        options = jQuery.extend({}, options);
+
+        if (value === null || value === undefined) {
+            options.expires = -1;
+        }
+
+        if (typeof options.expires === 'number') {
+            var days = options.expires, t = options.expires = new Date();
+            t.setDate(t.getDate() + days);
+        }
+
+        value = String(value);
+
+        return (document.cookie = [
+            encodeURIComponent(key), '=',
+            options.raw ? value : encodeURIComponent(value),
+            options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+            options.path ? '; path=' + options.path : '',
+            options.domain ? '; domain=' + options.domain : '',
+            options.secure ? '; secure' : ''
+        ].join(''));
+    }
+
+    // key and possibly options given, get cookie...
+    options = value || {};
+    var result, decode = options.raw ? function (s) { return s; } : decodeURIComponent;
+    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null;
+};

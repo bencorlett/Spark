@@ -25,8 +25,9 @@ namespace Spark;
 		<?=\Form::input($filter->get_column()->get_identifier() . '[min]',
 						$filter->get_user_value() ? $filter->get_user_value()->get_min() : null,
 						array(
-							'class'	=> 'filter',
-							'id'	=> \Str::f('grid-%s-filter-%s-min', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()),
+							// 'original-value'	=> $filter->get_user_value() ? $filter->get_user_value()->get_min() : null,
+							'class'				=> 'filter',
+							'id'				=> \Str::f('grid-%s-filter-%s-min', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()),
 						)
 		)?>
 	</div>
@@ -35,8 +36,9 @@ namespace Spark;
 		<?=\Form::input($filter->get_column()->get_identifier() . '[max]',
 						$filter->get_user_value() ? $filter->get_user_value()->get_max() : null,
 						array(
-							'class'	=> 'filter',
-							'id'	=> \Str::f('grid-%s-filter-%s-max', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()),
+							// 'original-value'	=> $filter->get_user_value() ? $filter->get_user_value()->get_max() : null,
+							'class'				=> 'filter',
+							'id'				=> \Str::f('grid-%s-filter-%s-max', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()),
 						)
 		)?>
 	</div>

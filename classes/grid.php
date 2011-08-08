@@ -476,6 +476,17 @@ class Grid extends \Object {
 		// parameters
 		if ( ! $this->_params)
 		{
+			$cookie = \Object::factory($_COOKIE);
+			
+			if (isset($cookie['grid'][$this->get_identifier()]))
+			{
+				print_r( (array) json_decode(stripslashes($cookie['grid'][$this->get_identifier()])) );
+				
+				
+				// $params = \Object::factory($cookie['grid'][$this->get_identifier()])
+				// 				 ->make_recursive();
+			}
+			
 			$get = \Object::factory($_GET)
 						  ->make_recursive();
 			
@@ -815,5 +826,27 @@ class Grid extends \Object {
 	public function get_uses_ajax()
 	{
 		return $this->_uses_ajax;
+	}
+	
+	/**
+	 * Get Current Params Json
+	 * 
+	 * Gets the current grid
+	 * params for json
+	 * 
+	 * @access	public
+	 * @return	string	Json
+	 */
+	public function get_current_params_json()
+	{
+		// Get cookie data
+		$cookie = \Object::factory($_COOKIE);
+		
+		if (isset($cookie['grid'][$this->get_identifier()]))
+		{
+			return stripslashes($cookie['grid'][$this->get_identifier()]);
+		}
+		
+		return false;
 	}
 }
