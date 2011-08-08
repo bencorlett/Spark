@@ -114,7 +114,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	bool
 	 */
-	protected $_uses_ajax = true;
+	protected $_uses_ajax = false;
 	
 	/**
 	 * Construct
