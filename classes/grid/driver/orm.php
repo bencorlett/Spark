@@ -52,10 +52,10 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				
 				// If the value is an instance of object
 				// then it must be a range, which contains
-				// a "from" property and a "to" property
+				// a "min" property and a "max" property
 				// which the column must be between. Used
 				// commonly for dates, numbers and timestamps
-				elseif ($value instanceof \Object)
+				elseif ($value instanceof \Object and $value->get_min() !== null and $value->get_max() !== null)
 				{
 					
 				}

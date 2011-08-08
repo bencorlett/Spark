@@ -64,17 +64,6 @@ class Grid extends \Object {
 	protected $_view_name = 'grid';
 	
 	/**
-	 * Default page and sorting properties
-	 * 
-	 * @var	mixed
-	 */
-	protected $_default_limit		= 20;
-	protected $_default_page		= 1;
-	protected $_default_sort		= false;
-	protected $_default_direction	= 'desc';
-	protected $_default_filters		= array();
-	
-	/**
 	 * Page and sorting property var names,
 	 * used in GET urls when manipulating the
 	 * grid. These can be overriden if they conflict
@@ -125,7 +114,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	bool
 	 */
-	protected $_uses_ajax = true;
+	protected $_uses_ajax = false;
 	
 	/**
 	 * Construct
@@ -260,8 +249,12 @@ class Grid extends \Object {
 			{
 				// Create and send a response
 				// with the grid as the contents
-				$response = new \Response('ff');
+				$response = new \Response($grid);
 				$response->send(true);
+				
+				// Close down fuel
+				\Event::shutdown();
+				\Fuel::finish();
 				
 				exit;
 			}
@@ -503,6 +496,7 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_columns()
 	{
+		\Log::error(print_r($_GET, true), __METHOD__);
 		// Loop through filters in the parameters and place appropriate
 		// filters in appropriate columns
 		if ($this->get_params()->get_filters())

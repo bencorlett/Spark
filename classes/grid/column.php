@@ -141,6 +141,10 @@ class Grid_Column extends \Grid_Component {
 						$this->set_data('renderer', 'Grid_Column_Renderer_Options');
 						break;
 					
+					case 'number':
+						$this->set_data('renderer', 'Grid_Column_Renderer_Number');
+						break;
+					
 					default:
 						$this->set_data('renderer', 'Grid_Column_Renderer_Text');
 						break;

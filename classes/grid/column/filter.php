@@ -45,6 +45,13 @@ class Grid_Column_Filter extends \Grid_Component {
 	protected $_html;
 	
 	/**
+	 * The default value of the filter
+	 * 
+	 * @var	string|Object
+	 */
+	protected $_default_value;
+	
+	/**
 	 * The user value of the filter
 	 * 
 	 * @var	string|Object
@@ -161,6 +168,11 @@ class Grid_Column_Filter extends \Grid_Component {
 						$this->set_data('filter', 'Grid_Column_Filter_Options');
 						break;
 					
+					case 'number':
+						$this->set_data('filter', 'Grid_Column_Filter_Number');
+						break;
+					
+					
 					default:
 						$this->set_data('filter', 'Grid_Column_Filter_Text');
 						break;
@@ -222,7 +234,7 @@ class Grid_Column_Filter extends \Grid_Component {
 	 * Set User Value
 	 * 
 	 * Sets the user value
-	 * of a filter
+	 * of the filter
 	 * 
 	 * @access	public
 	 * @param	string|Object	Value
@@ -244,7 +256,7 @@ class Grid_Column_Filter extends \Grid_Component {
 	 * Get User Value
 	 * 
 	 * Gets the user value
-	 * of a filter
+	 * of the filter
 	 * 
 	 * @access	public
 	 * @return	string|Object	Value
