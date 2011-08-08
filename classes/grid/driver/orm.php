@@ -22,6 +22,56 @@ namespace Spark;
 class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	
 	/**
+	 * Prepare Model
+	 * 
+	 * Prepares the model
+	 * based off parameters
+	 * such as filters, sort
+	 * and page
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Driver_Abstract
+	 */
+	public function prepare_model()
+	{
+		// Loop through columns, if they have
+		// a real value we need to apply that
+		// to the model
+		foreach ($this->get_columns() as $column)
+		{
+			// Only process a value if there is one
+			if (($value = $column->get_filter()->get_real_value()) !== null)
+			{
+				// If the value is a string we need
+				// to filter where the index contains
+				// that string
+				if ( ! is_array($value) and ! is_object($value))
+				{
+					$this->get_model()->where($column->get_index(), 'LIKE', '%' . $value . '%');
+				}
+				
+				// If the value is an instance of object
+				// then it must be a range, which contains
+				// a "from" property and a "to" property
+				// which the column must be between. Used
+				// commonly for dates, numbers and timestamps
+				elseif ($value instanceof \Object)
+				{
+					
+				}
+				
+				// Else the value is not valid
+				else
+				{
+					throw new Exception('The value given to the driver to render is not a valid string or an instance of Spark\\Object');
+				}
+			}
+		}
+		
+		return $this;
+	}
+	
+	/**
 	 * Get Rows
 	 * 
 	 * Gets the rows based

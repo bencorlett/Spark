@@ -88,6 +88,15 @@ class Grid extends \Object {
 	protected $_var_name_filters	= 'filters';
 	
 	/**
+	 * An object storing the get
+	 * parameters for page, sorting
+	 * etc, outlined above
+	 * 
+	 * @var	bool
+	 */
+	protected $_params;
+	
+	/**
 	 * The grid container object
 	 * 
 	 * @var	Spark\Grid_Container
@@ -116,7 +125,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	bool
 	 */
-	protected $_uses_ajax = false;
+	protected $_uses_ajax = true;
 	
 	/**
 	 * Construct
@@ -213,15 +222,11 @@ class Grid extends \Object {
 	 */
 	public function __toString()
 	{
-		// Make sure we handle errors nicely
-		try
-		{
-			return (string) $this->build();
-		}
-		catch (\Exception $e)
-		{
-			\Error::show_php_error($e);
-		}
+		// Create a new error
+		$e = new Exception(\Str::f('Object of class %s could not be converted to string. This has to do with overriding the response when ajax is used with the grid', get_class($this)));
+		
+		// Show it
+		\Error::show_php_error($e);
 	}
 	
 	/**
@@ -246,7 +251,24 @@ class Grid extends \Object {
 		
 		// If we can't display a container just return
 		// the grid
-		if ( ! $this->can_display_container()) return $grid;
+		if ( ! $this->can_display_container())
+		{
+			// If we're dealing with an
+			// AJAX request, we want to
+			// stream a new response
+			if (\Input::is_ajax())
+			{
+				// Create and send a response
+				// with the grid as the contents
+				$response = new \Response('ff');
+				$response->send(true);
+				
+				exit;
+			}
+			
+			// Return the grid
+			return $grid;
+		}
 		
 		// If we can display a container, add it
 		// and return both of them
@@ -439,10 +461,61 @@ class Grid extends \Object {
 	protected function _prepare_grid()
 	{
 		// Prepare elements
-		$this->_prepare_model()
-			 ->_prepare_columns()
+		$this->_prepare_columns()
+			 ->_prepare_model()
 			 ->_prepare_rows()
 			 ->_prepare_massactions();
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Parameters
+	 * 
+	 * Gets the get parameters
+	 * 
+	 * @access	public
+	 * @return	Spark\Object	Get
+	 */
+	public function get_params()
+	{
+		// Initialise the get
+		// parameters
+		if ( ! $this->_params)
+		{
+			$get = \Object::factory($_GET)
+						  ->make_recursive();
+			
+			$this->_params = $get;
+		}
+		
+		return $this->_params;
+	}
+	
+	/**
+	 * Prepare Columns
+	 * 
+	 * Prepares the columns for the
+	 * grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid
+	 */
+	protected function _prepare_columns()
+	{
+		// Loop through filters in the parameters and place appropriate
+		// filters in appropriate columns
+		if ($this->get_params()->get_filters())
+		{
+			foreach ($this->get_params()->get_filters() as $column_identifier => $filter)
+			{
+				if ($column = $this->get_columns()->{'get_'.$column_identifier}())
+				{
+					$column->get_filter()
+						   ->set_user_value($filter);
+				}
+			}
+		}
 		
 		return $this;
 	}
@@ -457,23 +530,8 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_model()
 	{
-		// $get = \Object::factory($_GET)
-		// 			  ->make_recursive();
+		$this->get_driver()->prepare_model();
 		
-		return $this;
-	}
-	
-	/**
-	 * Prepare Columns
-	 * 
-	 * Prepares the columns for the
-	 * grid
-	 * 
-	 * @access	public
-	 * @return	Spark\Grid
-	 */
-	protected function _prepare_columns()
-	{
 		return $this;
 	}
 	

@@ -22,6 +22,19 @@ namespace Spark;
 interface Grid_Driver_Interface {
 	
 	/**
+	 * Prepare Model
+	 * 
+	 * Prepares the model
+	 * based off parameters
+	 * such as filters, sort
+	 * and page
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Driver_Abstract
+	 */
+	public function prepare_model();
+	
+	/**
 	 * Build Rows
 	 * 
 	 * Builds the rows based

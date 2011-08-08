@@ -45,6 +45,20 @@ class Grid_Column_Filter extends \Grid_Component {
 	protected $_html;
 	
 	/**
+	 * The user value of the filter
+	 * 
+	 * @var	string|Object
+	 */
+	protected $_user_value;
+	
+	/**
+	 * The real value of the filter
+	 * 
+	 * @var	string|Object
+	 */
+	protected $_real_value = false;
+	
+	/**
 	 * Set Column
 	 * 
 	 * Sets the column
@@ -202,5 +216,87 @@ class Grid_Column_Filter extends \Grid_Component {
 		{
 			\Error::show_php_error($e);
 		}
+	}
+	
+	/**
+	 * Set User Value
+	 * 
+	 * Sets the user value
+	 * of a filter
+	 * 
+	 * @access	public
+	 * @param	string|Object	Value
+	 * @return	Spark\Grid_Column_Filter
+	 */
+	public function set_user_value($value)
+	{
+		// Make sure we have a valid type
+		if ( ! is_string($value) and ! $value instanceof \Object)
+		{
+			throw new Exception('The user value provided to a grid column filter must be either a string or an instance of Spark\\Object');
+		}
+		
+		$this->_user_value = $value;
+		return $this;
+	}
+	
+	/**
+	 * Get User Value
+	 * 
+	 * Gets the user value
+	 * of a filter
+	 * 
+	 * @access	public
+	 * @return	string|Object	Value
+	 */
+	public function get_user_value()
+	{
+		return $this->_user_value;
+	}
+	
+	/**
+	 * Set Real Value
+	 * 
+	 * Sets the real value
+	 * of the filter, once it
+	 * has been translated
+	 * by the filter driver
+	 * 
+	 * @access	public
+	 * @param	string|Object	Value
+	 * @return	Spark\Grid_Column_Filter
+	 */
+	public function set_real_value($value)
+	{
+		// Make sure we have a valid type
+		if ( ! is_string($value) and ! $value instanceof \Object)
+		{
+			throw new Exception('The real value provided to a grid column filter must be either a string or an instance of Spark\\Object');
+		}
+		
+		$this->_real_value = $value;
+		return $this;
+	}
+	
+	/**
+	 * Get Real Value
+	 * 
+	 * Gets the real value of
+	 * the filter
+	 * 
+	 * @access	public
+	 * @return	string|Object	Value
+	 */
+	public function get_real_value()
+	{
+		// If there is no real value but there is a user
+		// generated value, then generate a real value
+		if ($this->_real_value === false and $this->get_user_value() !== null)
+		{
+			$this->get_filter()
+				 ->translate($this);
+		}
+		
+		return $this->_real_value;
 	}
 }
