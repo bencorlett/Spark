@@ -63,7 +63,13 @@ table {
 		<tbody>
 			<tr>
 				<td class="pager">
-					<?=\Html::nbs()?>
+					Page
+					<span class="previous">&laquo;</span>
+					<?php echo \Form::input(null, $grid->get_page(), array('class' => 'page', 'style' => 'width: 30px;')); ?>
+					<span class="next">&raquo;</span>
+					of <?php echo $grid->get_total_pages(); ?>
+					<span class="separator">|</span>
+					Total <?php echo $grid->get_total_records(); ?> record<?php echo $grid->get_total_records() != 1 ? 's' : null; ?> found
 				</td>
 				<td class="filter-actions">
 					<?php echo \Form::button(null, 'Reset Filters', array('class' => 'filters-reset')); ?>

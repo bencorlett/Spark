@@ -81,7 +81,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	mixed
 	 */
-	protected $_default_limit		= 20;
+	protected $_default_limit		= 5;
 	protected $_default_page		= 1;
 	protected $_default_sort;
 	protected $_default_direction	= 'desc';
@@ -125,7 +125,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	bool
 	 */
-	protected $_uses_ajax = false;
+	protected $_uses_ajax = true;
 	
 	/**
 	 * Construct
@@ -567,6 +567,15 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_model()
 	{
+		// Make sure that the page is valid
+		if (($page = $this->get_params()->get_data($this->get_var_name_page())) !== null)
+		{
+			// Make an int
+			$page = intval($page);
+			if ($page < 1) $page = 1;
+			$this->get_params()->set_data($this->get_var_name_page(), $page);
+		}
+		
 		$this->get_driver()->prepare_model();
 		
 		return $this;
@@ -880,5 +889,61 @@ class Grid extends \Object {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Get Page
+	 * 
+	 * Gets the page
+	 * parameter
+	 * 
+	 * @access	public
+	 * @return	int		Page
+	 */
+	public function get_page()
+	{
+		return $this->get_params()->get_data($this->get_var_name_page());
+	}
+	
+	/**
+	 * Get Total Pages
+	 * 
+	 * Gets the total
+	 * pages
+	 * 
+	 * @access	public
+	 * @return	int		Total pages
+	 */
+	public function get_total_pages()
+	{
+		return $this->get_params()->get_total_pages();
+	}
+	
+	/**
+	 * Get Total Records
+	 * 
+	 * Gets the total
+	 * records found
+	 * 
+	 * @access	public
+	 * @return	int		Total records
+	 */
+	public function get_total_records()
+	{
+		return $this->get_params()->get_total_records();
+	}
+	
+	/**
+	 * Get Records Shown
+	 * 
+	 * Gets the records shown
+	 * on the current grid
+	 * 
+	 * @access	public
+	 * @return	int		Records
+	 */
+	public function get_records_shown()
+	{
+		return $this->get_rows()->count();
 	}
 }

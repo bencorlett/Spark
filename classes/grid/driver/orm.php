@@ -138,6 +138,13 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				}
 			}
 			
+			// Set the total records and
+			// pages parameters for display
+			// on the grid
+			$this->get_params()
+				 ->set_total_records($count)
+				 ->set_total_pages(($count > $limit) ? ceil($count / $limit) : 1);
+			
 			// Apply to model
 			$this->get_model()
 				 ->limit($limit)

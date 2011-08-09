@@ -150,14 +150,58 @@
 			 */
 			handler.find("tr.headers .header").click(function() {
 				
-				// Generate the filters form
-				handler.trigger('generate-filters-form');
-				
 				// Set the sort
 				handler.data(settings.vars.sort, $(this).attr('column'));
 				
 				// Trigger an update
 				handler.trigger('update');
+			});
+			
+			/**
+			 * When the user types
+			 * a value in the pagination
+			 */
+			handler.find('table.controls input.page').keypress(function(e) {
+				
+				switch (e.keyCode) {
+					case 13:
+						
+						$(this).trigger('update')
+						break;
+				}
+			});
+			
+			/**
+			 * Update pagination from
+			 * input value
+			 */
+			handler.find('table.controls input.page').bind('update', function() {
+				
+				// Set the page
+				handler.data(settings.vars.page, $(this).val());
+				
+				// Trigger an update
+				handler.trigger('update');
+			});
+			
+			/**
+			 * When user clicks previous in
+			 * the pagination
+			 */
+			handler.find('table.controls span.previous').click(function() {
+				
+				// Increase the value
+				handler.find('table.controls input.page').val(parseInt(handler.find('table.controls input.page').val()) - 1).trigger('update');
+			});
+			
+			/**
+			 * When user clicks next in
+			 * the pagination
+			 */
+			handler.find('table.controls span.next').click(function() {
+				
+				// Increase the value
+				handler.find('table.controls input.page').val(parseInt(handler.find('table.controls input.page').val()) + 1).trigger('update');
 			});
 			
 			/**
@@ -185,6 +229,13 @@
 					else settings.currentParams[settings.vars.direction] = 'asc';
 					
 					settings.currentParams[settings.vars.sort] = handler.data(settings.vars.sort);
+				}
+				
+				/**
+				 * Update pagination
+				 */
+				if (handler.data(settings.vars.page)) {
+					settings.currentParams[settings.vars.page] = handler.data(settings.vars.page);
 				}
 				
 				// Set them to a cookie
