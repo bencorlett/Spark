@@ -165,12 +165,23 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	 */
 	public function build_rows()
 	{
+		// Counter
+		$i = 0;
+		
 		// Loop through the results and add them
 		// to the rows
 		foreach ($this->get_model()->get() as $result)
 		{
 			// Create a row
-			$row = \Object::factory();
+			$row = \Grid_Row::factory()
+							->set_grid($this->get_grid());
+			
+			// Set the class of the row
+			$class = '';
+			if (++ $i == 1) $class = 'first';
+			$class .= ($i % 2 == 0) ? ' even' : ' odd';
+			if ($i == $this->get_model()->count()) $class .= ' last';
+			$row->set_class($class);
 			
 			// Loop through columns and add a cell
 			// to the row for each column
@@ -183,7 +194,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 										 ->set_original_value($result->{$column->get_index()});
 				
 				// Add the cell to the row
-				$row->set_data($column->get_identifier(), $cell);
+				$row->add_cell($column->get_identifier(), $cell);
 			}
 			
 			// We've now built our row,

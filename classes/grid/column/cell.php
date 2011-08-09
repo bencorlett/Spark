@@ -220,4 +220,18 @@ class Grid_Column_Cell extends \Grid_Component {
 			\Error::show_php_error($e);
 		}
 	}
+	
+	/**
+	 * Get Class
+	 * 
+	 * Gets the class of
+	 * the cell
+	 * 
+	 * @access	public
+	 * @return	string	Class
+	 */
+	public function get_class()
+	{
+		return $this->get_column()->get_class();
+	}
 }

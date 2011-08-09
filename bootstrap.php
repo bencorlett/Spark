@@ -45,6 +45,7 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Driver_Abstract'				=> __DIR__ . '/classes/grid/driver/abstract.php',
 	'Spark\\Grid_Driver_Interface'				=> __DIR__ . '/classes/grid/driver/interface.php',
 	'Spark\\Grid_Driver_Orm'					=> __DIR__ . '/classes/grid/driver/orm.php',
+	'Spark\\Grid_Row'							=> __DIR__ . '/classes/grid/row.php',
 	
 	// Object
 	'Spark\\Object'								=> __DIR__ . '/classes/object.php',

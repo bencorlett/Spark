@@ -191,4 +191,38 @@ class Grid_Column extends \Grid_Component {
 		
 		return $this->_filter;
 	}
+	
+	/**
+	 * Get Class
+	 * 
+	 * Gets the column's class
+	 * built on various
+	 * parameters
+	 * 
+	 * @access	public
+	 * @return	string	Class
+	 */
+	public function get_class()
+	{
+		// If we don't have a class
+		if ( ! $this->has_data('class'))
+		{
+			// Class fallback
+			$class = '';
+			
+			// If we're the first column
+			if ($this->get_first()) $class = 'first';
+			
+			// Add the column type
+			if ($this->get_type()) $class .= ' type-' . $this->get_type();
+			
+			// If we're the last column
+			if ($this->get_last()) $class .= ' last';
+			
+			// Set the data
+			$this->set_data('class', $class);
+		}
+		
+		return $this->get_data('class');
+	}
 }

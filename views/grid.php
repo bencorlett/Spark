@@ -19,26 +19,12 @@
  */
 namespace Spark;
 ?>
-
-<style>
-
-table {
-	width: 100%;
-}
-
-.controls .pager {
-	
-}
-
-.controls .filter-actions {
-	text-align: right;
-}
-
-
-</style>
 <div class="grid" id="grid-<?php echo $grid->get_identifier()?>">
 	<script type="text/javascript">
 	
+	/**
+	 * Initialise the grid
+	 */
 	$(document).ready(function() {
 		
 		$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid({
@@ -84,7 +70,7 @@ table {
 		<thead>
 			<tr class="headers">
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<th>
+					<th class="<?php echo $column->get_class(); ?>">
 						<span class="header" column="<?php echo $column->get_index(); ?>">
 							<?php echo $column->get_header(); ?>
 						</span>
@@ -93,7 +79,7 @@ table {
 			</tr>
 			<tr class="filters">
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<th>
+					<th class="<?php echo $column->get_class(); ?>">
 						<?php echo $column->get_filter(); ?>
 					</th>
 				<?php endforeach ?>
@@ -101,9 +87,9 @@ table {
 		</thead>
 		<tbody>
 			<?php foreach ($grid->get_rows() as $row): ?>
-				<tr>
-					<?php foreach ($row as $cell): ?>
-						<td>
+				<tr class="<?php echo $row->get_class(); ?>">
+					<?php foreach ($row->get_cells() as $cell): ?>
+						<td class="<?php echo $cell->get_class(); ?>">
 							<?php echo $cell; ?>
 						</td>
 					<?php endforeach ?>

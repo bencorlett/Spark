@@ -217,9 +217,21 @@ class Grid extends \Object {
 		// Only add the column if it doesn't exist
 		if ( ! $this->get_columns()->has_data($identifier))
 		{
+			// Determine if we're using the first column
+			if ( ! $this->get_columns()->count()) $attributes['first'] = true;
+			
+			// Set the column
 			$this->get_columns()->set_data($identifier, \Grid_Column::factory($identifier, $attributes)
 																	->set_grid($this)
 																	->make_recursive());
+			
+			// Set the last column
+			$i = 0;
+			foreach ($this->get_columns() as $column)
+			{
+				if (++$i < $this->get_columns()->count()) $column->uns_last();
+				else $column->set_last(true);
+			}
 		}
 		
 		return $this;

@@ -1,0 +1,94 @@
+/**
+ * Spark Fuel Package By Ben Corlett
+ * 
+ * Spark - Set your fuel on fire!
+ * 
+ * The Spark Fuel Package is an open-source
+ * fuel package consisting of several 'widgets'
+ * engineered to make developing various
+ * web-based systems easier and quicker.
+ * 
+ * @package    Fuel
+ * @subpackage Spark
+ * @version    1.0
+ * @author     Ben Corlett (http://www.bencorlett.com)
+ * @license    MIT License
+ * @copyright  (c) 2011 Ben Corlett
+ * @link       http://spark.bencorlett.com
+ */
+
+div.grid > table {
+	width: 100%;
+	border-spacing: 0;
+}
+
+div.grid > table.controls {
+	margin: 0 0 5px;
+}
+
+div.grid > table.grid {
+	margin: 0 0 20px;
+}
+
+/* === Headers ============== */
+
+div.grid > table.grid > thead > tr.headers > th {
+	background: #6190ba;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7ea6c7), color-stop(0.49, #6c98c0), color-stop(0.51, #6191ba), to(#628cb0));
+	background: -moz-linear-gradient(top, #7ea6c7, #6c98c0 49%, #6191ba 51%, #628cb0);
+	padding: 3px 0;
+	text-shadow: 0 -1px 0 #467faf;
+	color: #fbfbfd;
+}
+
+div.grid > table.grid > thead > tr.headers > th.first {
+	border-top-left-radius: 3px;
+}
+
+div.grid > table.grid > thead > tr.headers > th.last {
+	border-top-right-radius: 3px;
+}
+
+/* =/= Headers ============== */
+
+/* === Filters ============== */
+
+div.grid > table.grid > thead > tr.filters > th {
+	background: #eaeaec;
+}
+
+div.grid > table.grid > thead > tr.filters > th.first {
+	border-bottom-left-radius: 3px;
+}
+
+div.grid > table.grid > thead > tr.filters > th.last {
+	border-bottom-right-radius: 3px;
+}
+
+/* =/= Filters ============== */
+
+/* === Cells ============== */
+
+div.grid > table.grid > tbody > tr > td {
+	padding: 2px;
+}
+
+div.grid > table.grid > tbody > tr.even > td {
+	background: #edf3f7;
+}
+
+div.grid > table.grid > tbody > tr > td.first {
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+div.grid > table.grid > tbody > tr > td.last {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+div.grid > table.grid > tbody > tr:hover > td {
+	background-color: #e8f1f6;
+}
+
+/* =/= Cells ================ */
