@@ -77,6 +77,17 @@ class Grid extends \Object {
 	protected $_var_name_filters	= 'filters';
 	
 	/**
+	 * Default limit, sort and direction
+	 * 
+	 * @var	mixed
+	 */
+	protected $_default_limit		= 4;
+	protected $_default_page		= 1;
+	protected $_default_sort;
+	protected $_default_direction	= 'desc';
+	protected $_default_filters		= array();
+	
+	/**
 	 * An object storing the get
 	 * parameters for page, sorting
 	 * etc, outlined above
@@ -494,14 +505,23 @@ class Grid extends \Object {
 			// Get the cookie
 			$cookie = \Object::factory($_COOKIE);
 			
-			// Params fallback
-			$params = false;
-			if (isset($cookie['grid-' . $this->get_identifier()]) and $params = json_decode(stripslashes($cookie['grid-' . $this->get_identifier()]), true))
+			// Params fallback with default
+			// values
+			$params = \Object::factory(array(
+				$this->_var_name_limit		=> $this->_default_limit,
+				$this->_var_name_page		=> $this->_default_page,
+				$this->_var_name_sort		=> $this->_default_sort,
+				$this->_var_name_direction	=> $this->_default_direction,
+				$this->_var_name_filters	=> $this->_default_filters,
+			));
+			
+			// Now override the values with the
+			// user provided values
+			if (isset($cookie['grid-' . $this->get_identifier()]) and $new_params = json_decode(stripslashes($cookie['grid-' . $this->get_identifier()]), true))
 			{
-				$params = \Object::factory($params)
-								 ->make_recursive();
+				$params->add_data($new_params)
+					   ->make_recursive();
 			}
-			if ( ! $params) $params = \Object::factory();
 			
 			$this->_params = $params;
 		}
@@ -522,9 +542,9 @@ class Grid extends \Object {
 	{
 		// Loop through filters in the parameters and place appropriate
 		// filters in appropriate columns
-		if ($this->get_params()->get_filters())
+		if ($this->get_params()->get_data($this->get_var_name_filters()))
 		{
-			foreach ($this->get_params()->get_filters() as $column_identifier => $filter)
+			foreach ($this->get_params()->get_data($this->get_var_name_filters()) as $column_identifier => $filter)
 			{
 				if ($column = $this->get_columns()->{'get_'.$column_identifier}())
 				{

@@ -85,7 +85,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 		}
 		
 		// Loop through sort and direction
-		if ($sort = $this->get_params()->get_sort() and $direction = $this->get_params()->get_direction())
+		if ($sort = $this->get_params()->get_data($this->get_grid()->get_var_name_sort()) and $direction = $this->get_params()->get_data($this->get_grid()->get_var_name_direction()))
 		{
 			// Loop through columns and match
 			// to sort
@@ -100,6 +100,55 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 					break;
 				}
 			}
+		}
+		
+		// Process page, limit and offset
+		if ($page = $this->get_params()->get_data($this->get_grid()->get_var_name_page()) and $limit = $this->get_params()->get_data($this->get_grid()->get_var_name_limit()))
+		{
+			// Get the count of rows to make sure that
+			// the offset is valid
+			$count = $this->get_model()->count();
+			
+			// Minus one because the first
+			// page has an offset of 0
+			$offset = ($page - 1) * $limit;
+			
+			// Reduce offset / page
+			// to make sure it's under
+			// the boundaries
+			if ($offset > $count)
+			{
+				while ($offset > $count)
+				{
+					$offset -= $limit;
+					$page --;
+				}
+			}
+			
+			// // The offset is the limit
+			// // multiplied by the page
+			// // limit = 4, page = 2, offset = 8
+			// $offset = $limit * floor($count / $limit);
+			// 
+			// // If our page is too high, say we're
+			// // on page 6 but there will only be
+			// // records on page 5, due to the filters
+			// $maximum_page = $offset / $limit;
+			// 
+			// // echo $maximum_page . ' vs ' . $page;
+			// 
+			// // if ($maximum_page > 0)
+			// // {
+			// // 	
+			// // 	$this->get_params()->set_data($this->get_grid()->get_var_name_page(), $maximum_page);
+			// // 	$page = $this->get_params()->get_data($this->get_grid()->get_var_name_page());
+			// // }
+			// 
+			
+			// Apply to model
+			$this->get_model()
+				 ->limit($limit)
+				 ->offset($offset);
 		}
 		
 		return $this;
