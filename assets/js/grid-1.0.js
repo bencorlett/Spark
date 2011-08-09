@@ -205,7 +205,19 @@
 			});
 			
 			/**
-			 * When the handler is to update
+			 * When user changes the limit
+			 */
+			handler.find('table.controls .limit').change(function() {
+				
+				// Set the limit
+				handler.data(settings.vars.limit, $(this).val());
+				
+				// Trigger an update
+				handler.trigger('update');
+			});
+			
+			/**
+			 * When the handler needs to update
 			 */
 			handler.bind('update', function() {
 				
@@ -236,6 +248,13 @@
 				 */
 				if (handler.data(settings.vars.page)) {
 					settings.currentParams[settings.vars.page] = handler.data(settings.vars.page);
+				}
+				
+				/**
+				 * Update limit
+				 */
+				if (handler.data(settings.vars.limit)) {
+					settings.currentParams[settings.vars.limit] = handler.data(settings.vars.limit);
 				}
 				
 				// Set them to a cookie

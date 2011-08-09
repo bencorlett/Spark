@@ -69,6 +69,8 @@ table {
 					<span class="next">&raquo;</span>
 					of <?php echo $grid->get_total_pages(); ?>
 					<span class="separator">|</span>
+					View <?php echo \Form::select(null, $grid->get_limit(), $grid->get_limit_options(), array('class' => 'limit')); ?> per page
+					<span class="separator">|</span>
 					Total <?php echo $grid->get_total_records(); ?> record<?php echo $grid->get_total_records() != 1 ? 's' : null; ?> found
 				</td>
 				<td class="filter-actions">

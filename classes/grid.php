@@ -88,6 +88,19 @@ class Grid extends \Object {
 	protected $_default_filters		= array();
 	
 	/**
+	 * Limit options for the grid
+	 * 
+	 * @var	array
+	 */
+	protected $_limit_options = array(
+		20		=> 20,
+		30		=> 30,
+		50		=> 50,
+		100		=> 100,
+		200		=> 200,
+	);
+	
+	/**
 	 * An object storing the get
 	 * parameters for page, sorting
 	 * etc, outlined above
@@ -945,5 +958,66 @@ class Grid extends \Object {
 	public function get_records_shown()
 	{
 		return $this->get_rows()->count();
+	}
+	
+	/**
+	 * Get Limit
+	 * 
+	 * Gets the current
+	 * limit placed on the
+	 * grid
+	 * 
+	 * @access	public
+	 * @return	int		Limit
+	 */
+	public function get_limit()
+	{
+		return $this->get_params()->get_limit();
+	}
+	
+	/**
+	 * Set Limit Options
+	 * 
+	 * Sets the limit options
+	 * for the grid
+	 * 
+	 * Note: You don't need to
+	 *       include the default
+	 *       limit if you're overridden
+	 *       it, as it's added dynamically in
+	 *       Spark\Grid::get_limit_options()
+	 * 
+	 * @access	public
+	 * @param	array	Limit options
+	 * @return	Spark\Grid
+	 */
+	public function set_limit_options(array $options)
+	{
+		$this->_limit_options = $options;
+	}
+	
+	/**
+	 * Get Limit Options
+	 * 
+	 * Returns an associative
+	 * array of limit options
+	 * 
+	 * @access	public
+	 * @return	array	Limit Options
+	 */
+	public function get_limit_options()
+	{
+		// If the limit we have is not standard
+		// we need to add it to the array
+		if ( ! in_array($this->_default_limit, $this->_limit_options))
+		{
+			$this->_limit_options[$this->_default_limit] = $this->_default_limit;
+		}
+		
+		// Sort the options
+		// so they're ascending
+		ksort($this->_limit_options);
+		
+		return $this->_limit_options;
 	}
 }
