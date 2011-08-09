@@ -114,7 +114,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	bool
 	 */
-	protected $_uses_ajax = true;
+	protected $_uses_ajax = false;
 	
 	/**
 	 * Construct
@@ -854,9 +854,9 @@ class Grid extends \Object {
 		// Get cookie data
 		$cookie = \Object::factory($_COOKIE);
 		
-		if (isset($cookie['grid'][$this->get_identifier()]))
+		if (isset($cookie['grid-' . $this->get_identifier()]))
 		{
-			return stripslashes($cookie['grid'][$this->get_identifier()]);
+			return stripslashes($cookie['grid-' . $this->get_identifier()]);
 		}
 		
 		return false;

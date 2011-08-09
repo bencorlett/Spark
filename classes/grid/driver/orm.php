@@ -35,8 +35,8 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	public function prepare_model()
 	{
 		// Loop through columns, if they have
-		// a real value we need to apply that
-		// to the model
+		// filters with a real (translated)
+		// value and process them
 		foreach ($this->get_columns() as $column)
 		{
 			// Only process a value if there is one
@@ -80,6 +80,24 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				else
 				{
 					throw new Exception('The value given to the driver to render is not a valid string or an instance of Spark\\Object');
+				}
+			}
+		}
+		
+		// Loop through sort and direction
+		if ($sort = $this->get_params()->get_sort() and $direction = $this->get_params()->get_direction())
+		{
+			// Loop through columns and match
+			// to sort
+			foreach ($this->get_columns() as $column)
+			{
+				// Yay, we found one
+				if ($sort === $column->get_identifier())
+				{
+					// Apply the sort and direction to the model
+					$this->get_model()->order_by($column->get_index(), $direction);
+					
+					break;
 				}
 			}
 		}

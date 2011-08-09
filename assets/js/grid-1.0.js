@@ -55,13 +55,6 @@
 			 * is triggered on
 			 */
 			var handler;
-
-			/**
-			 * The field the
-			 * grid is being sorted
-			 * by
-			 */
-			var sort;
 			
 			/**
 			 * Set the handler variable
@@ -161,7 +154,7 @@
 				handler.trigger('generate-filters-form');
 				
 				// Set the sort
-				sort = $(this).attr('column');
+				handler.data(settings.vars.sort, $(this).attr('column'));
 				
 				// Trigger an update
 				handler.trigger('update');
@@ -172,8 +165,27 @@
 			 */
 			handler.bind('update', function() {
 				
-				// Update the current params
-				settings.currentParams[settings.vars.filters] = handler.find('form.filters-form').formParams();
+				/**
+				 * Update filter params
+				 */
+				if (handler.find('form.filters-form').length > 0 ) {
+					settings.currentParams[settings.vars.filters] = handler.find('form.filters-form').formParams();
+				}
+				
+				/**
+				 * Update sort and direction
+				 */
+				if (handler.data(settings.vars.sort)) {
+					
+					// Work out the direction based on the column
+					// we're clicking on
+					if ((settings.currentParams[settings.vars.sort] == handler.data(settings.vars.sort)) && settings.currentParams[settings.vars.direction] == 'asc') {
+						settings.currentParams[settings.vars.direction] = 'desc';
+					}
+					else settings.currentParams[settings.vars.direction] = 'asc';
+					
+					settings.currentParams[settings.vars.sort] = handler.data(settings.vars.sort);
+				}
 				
 				// Set them to a cookie
 				$.cookie('grid-' + settings.identifier, JSON.stringify(settings.currentParams));

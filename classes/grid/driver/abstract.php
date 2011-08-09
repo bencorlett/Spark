@@ -63,4 +63,18 @@ implements \Grid_Driver_Interface {
 	{
 		return $this->get_grid()->get_columns();
 	}
+	
+	/**
+	 * Get Params
+	 * 
+	 * Gets the params
+	 * from the grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Object	Params
+	 */
+	public function get_params()
+	{
+		return $this->get_grid()->get_params();
+	}
 }
