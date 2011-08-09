@@ -176,28 +176,24 @@
 				settings.currentParams[settings.vars.filters] = handler.find('form.filters-form').formParams();
 				
 				// Set them to a cookie
-				$.cookie('grid[' + settings.identifier + ']', JSON.stringify(settings.currentParams));
+				$.cookie('grid-' + settings.identifier, JSON.stringify(settings.currentParams));
 				
-				// // Determine if we want
-				// // to use ajax or not
-				// if (settings.ajax) {
-				// 	$.ajax({
-				// 		url			: settings.url,
-				// 		success		: function(data, textStatus, jqXHR) {
-				// 			handler.replaceWith(data);
-				// 		}
-				// 	});
-				// }
-				// else {
-				// 	
-				// 	// If not, we need to build a query
-				// 	// string and visit that url
-				// 	var param = $.param(data);
-				// 	var href = settings.url + (param ? '?' + param : '');
-				// 	
-				// 	// Visit the url
-				// 	window.location.href = href;
-				// }
+				// Determine if we want
+				// to use ajax or not
+				if (settings.ajax) {
+					$.ajax({
+						url			: settings.url,
+						success		: function(data, textStatus, jqXHR) {
+							handler.replaceWith(data);
+						}
+					});
+				}
+				else {
+					
+					// If not, we just simply
+					// visit the grid url
+					window.location.href = settings.url;
+				}
 			});
 		}
 	};

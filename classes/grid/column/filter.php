@@ -243,9 +243,9 @@ class Grid_Column_Filter extends \Grid_Component {
 	public function set_user_value($value)
 	{
 		// Make sure we have a valid type
-		if ( ! is_string($value) and ! $value instanceof \Object)
+		if ( ! is_string($value) and ! is_numeric($value) and ! $value instanceof \Object)
 		{
-			throw new Exception('The user value provided to a grid column filter must be either a string or an instance of Spark\\Object');
+			throw new Exception('The user value provided to a grid column filter must be either a string, a number or an instance of Spark\\Object');
 		}
 		
 		$this->_user_value = $value;
@@ -281,9 +281,9 @@ class Grid_Column_Filter extends \Grid_Component {
 	public function set_real_value($value)
 	{
 		// Make sure we have a valid type
-		if ( ! is_string($value) and ! $value instanceof \Object)
+		if ( ! is_string($value) and ! is_numeric($value) and ! $value instanceof \Object)
 		{
-			throw new Exception('The real value provided to a grid column filter must be either a string or an instance of Spark\\Object');
+			throw new Exception('The real value provided to a grid column filter must be either a string, a number or an instance of Spark\\Object');
 		}
 		
 		$this->_real_value = $value;
