@@ -114,7 +114,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	bool
 	 */
-	protected $_uses_ajax = false;
+	protected $_uses_ajax = true;
 	
 	/**
 	 * Construct
@@ -153,6 +153,7 @@ class Grid extends \Object {
 		// friendly, as they both use the identifier
 		// extensively
 		$identifier = str_replace('--', '-', \Str::lower(\Str::alphanumeric($identifier, '-')));
+		
 		return parent::set_identifier($identifier);
 	}
 	
@@ -245,7 +246,7 @@ class Grid extends \Object {
 			// If we're dealing with an
 			// AJAX request, we want to
 			// stream a new response
-			if (\Input::is_ajax())
+			if (\Input::is_ajax() and $this->should_override_response())
 			{
 				// Create and send a response
 				// with the grid as the contents
@@ -268,6 +269,20 @@ class Grid extends \Object {
 		return $this->get_container()
 					->build()
 					->set('grid', $grid, false);
+	}
+	
+	/**
+	 * Should Override Response
+	 * 
+	 * Determine if this grid
+	 * should override the response
+	 * 
+	 * @access	public
+	 * @return	bool	Should override response
+	 */
+	public function should_override_response()
+	{
+		return (bool) (\Input::get('grid_identifier') == $this->get_identifier());
 	}
 	
 	/**
@@ -505,7 +520,6 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_columns()
 	{
-		\Log::error(print_r($_GET, true), __METHOD__);
 		// Loop through filters in the parameters and place appropriate
 		// filters in appropriate columns
 		if ($this->get_params()->get_filters())

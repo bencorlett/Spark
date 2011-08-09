@@ -19,39 +19,6 @@
 (function($) {
 	
 	/**
-	 * Settings object
-	 * 
-	 * @var	Object
-	 */
-	var settings = {
-		identifier		: 'grid',
-		url				: '',
-		vars			: {
-			limit			: 'limit',
-			page			: 'page',
-			sort			: 'sort',
-			direction		: 'direction',
-			filters			: 'filters',
-		},
-		ajax			: true,
-		currentParams	: {}
-	};
-	
-	/**
-	 * The handler of the plugin,
-	 * the element the plugin
-	 * is triggered on
-	 */
-	var handler;
-	
-	/**
-	 * The field the
-	 * grid is being sorted
-	 * by
-	 */
-	var sort;
-	
-	/**
 	 * Plugin methods
 	 */
 	var methods = {
@@ -62,6 +29,39 @@
 		 * Used to initalise the plugin
 		 */
 		init: function(options) {
+			
+			/**
+			 * Settings object
+			 * 
+			 * @var	Object
+			 */
+			var settings = {
+				identifier		: 'grid',
+				url				: '',
+				vars			: {
+					limit			: 'limit',
+					page			: 'page',
+					sort			: 'sort',
+					direction		: 'direction',
+					filters			: 'filters',
+				},
+				ajax			: true,
+				currentParams	: {}
+			};
+
+			/**
+			 * The handler of the plugin,
+			 * the element the plugin
+			 * is triggered on
+			 */
+			var handler;
+
+			/**
+			 * The field the
+			 * grid is being sorted
+			 * by
+			 */
+			var sort;
 			
 			/**
 			 * Set the handler variable
@@ -183,6 +183,9 @@
 				if (settings.ajax) {
 					$.ajax({
 						url			: settings.url,
+						data		: {
+							grid_identifier	: settings.identifier
+						},
 						success		: function(data, textStatus, jqXHR) {
 							handler.replaceWith(data);
 						}
