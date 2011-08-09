@@ -81,7 +81,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	mixed
 	 */
-	protected $_default_limit		= 5;
+	protected $_default_limit		= 20;
 	protected $_default_page		= 1;
 	protected $_default_sort;
 	protected $_default_direction	= 'desc';
@@ -93,6 +93,7 @@ class Grid extends \Object {
 	 * @var	array
 	 */
 	protected $_limit_options = array(
+		10		=> 10,
 		20		=> 20,
 		30		=> 30,
 		50		=> 50,
