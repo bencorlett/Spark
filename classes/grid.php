@@ -81,7 +81,7 @@ class Grid extends \Object {
 	 * 
 	 * @var	mixed
 	 */
-	protected $_default_limit		= 4;
+	protected $_default_limit		= 20;
 	protected $_default_page		= 1;
 	protected $_default_sort;
 	protected $_default_direction	= 'desc';

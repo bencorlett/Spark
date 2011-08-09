@@ -118,32 +118,25 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 			// the boundaries
 			if ($offset > $count)
 			{
+				// Set to a new variable
+				// as we're going to
+				// reset it in the params
+				// once we've calculated it
+				$over_page = $page;
+				
 				while ($offset > $count)
 				{
 					$offset -= $limit;
-					$page --;
+					$over_page --;
+				}
+				
+				// Reset in the params
+				if ($over_page !== $page)
+				{
+					$this->get_params()->set_data($this->get_grid()->get_var_name_page(), $over_page);
+					$page = $this->get_params()->get_data($this->get_grid()->get_var_name_page());
 				}
 			}
-			
-			// // The offset is the limit
-			// // multiplied by the page
-			// // limit = 4, page = 2, offset = 8
-			// $offset = $limit * floor($count / $limit);
-			// 
-			// // If our page is too high, say we're
-			// // on page 6 but there will only be
-			// // records on page 5, due to the filters
-			// $maximum_page = $offset / $limit;
-			// 
-			// // echo $maximum_page . ' vs ' . $page;
-			// 
-			// // if ($maximum_page > 0)
-			// // {
-			// // 	
-			// // 	$this->get_params()->set_data($this->get_grid()->get_var_name_page(), $maximum_page);
-			// // 	$page = $this->get_params()->get_data($this->get_grid()->get_var_name_page());
-			// // }
-			// 
 			
 			// Apply to model
 			$this->get_model()
