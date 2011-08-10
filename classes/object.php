@@ -6,54 +6,57 @@
  * 
  * The Spark Fuel Package is an open-source
  * fuel package consisting of several 'widgets'
- * engineered to make developing
- * administration systems easier and quicker.
+ * engineered to make developing various
+ * web-based systems easier and quicker.
  * 
  * @package    Fuel
  * @subpackage Spark
+ * @version    1.0
  * @author     Ben Corlett (http://www.bencorlett.com)
  * @license    MIT License
  * @copyright  (c) 2011 Ben Corlett
- * @link       http://www.github.com/bencorlett/spark
+ * @link       http://spark.bencorlett.com
  */
 namespace Spark;
 
-class Object {
+class Object implements \ArrayAccess, \Countable, \Iterator {
 	
 	/**
-	 * Object instance for Singleton access
+	 * Object identifier
 	 * 
-	 * @var	Spark\Object
+	 * @var	array
 	 */
-	protected static $_instance = null;
+	protected $_identifier;
 	
 	/**
-	 * Object attributes
+	 * Object data
 	 * 
 	 * @var	array
 	 */
 	protected $_data = array();
 	
 	/**
-	 * Has data changes flag
+	 * Object original data
+	 * 
+	 * @var	array
+	 */
+	protected $_original_data = array();
+	
+	/**
+	 * Flag to determine if the object
+	 * has had data changes since it
+	 * was initialised
 	 * 
 	 * @var	bool
 	 */
 	protected $_has_data_changes = false;
 	
 	/**
-	 * Original data that was loaded
+	 * Data keys for iterating
 	 * 
 	 * @var	array
 	 */
-	protected $_original_data;
-	
-	/**
-	 * Name of object identifier
-	 * 
-	 * @var	string
-	 */
-	protected $_identifier = null;
+	protected $_data_keys = array();
 	
 	/**
 	 * Construct
@@ -70,10 +73,7 @@ class Object {
 		$arguments = func_get_args();
 		
 		// Set a fallback if none
-		if (empty($arguments[0]))
-		{
-			$arguments[0] = array();
-		}
+		if (empty($arguments[0])) $arguments[0] = array();
 		
 		// Set the data
 		$this->_data			= $arguments[0];
@@ -134,67 +134,18 @@ class Object {
 	}
 	
 	/**
-	 * Instance
-	 * 
-	 * Get the instance of the
-	 * class using the Singleton
-	 * pattern
-	 * 
-	 * @access	public
-	 * @param	mixed
-	 * @return	Spark\Object
-	 */
-	public static function instance()
-	{
-		// You can't get an instance
-		// of this class, but rather
-		// of all the child classes
-		// that inherit this class
-		if (get_called_class() === __CLASS__)
-		{
-			throw new Exception('static::%s() can only be called on a child class of %s, and not this class itself', __FUNCTION__, __CLASS__);
-		}
-		
-		if (is_null(static::$_instance))
-		{
-			// Create a reflection class from the called class
-			$reflection_class = new \ReflectionClass(get_called_class());
-
-			// Create a new instance of the reflection class and
-			// parse the arguments given to this function to the
-			// new instance of that class
-			static::$_instance = $reflection_class->newInstanceArgs(func_get_args());
-		}
-		
-		return static::$_instance;
-	}
-	
-	/**
-	 * Has Data Changes
-	 * 
-	 * Determines if the class has had
-	 * data changes since being initalised
-	 * 
-	 * @access	public
-	 * @return 	bool	Has data changes
-	 */
-	public function has_data_changes()
-	{
-		return $this->_has_data_changes;
-	}
-	
-	/**
 	 * Set Identifier
 	 * 
-	 * Sets the identifier of the class
+	 * Sets the identifier for the
+	 * object
 	 * 
 	 * @access	public
-	 * @param	string		Identifier
+	 * @param	string	Identifier
 	 * @return	Spark\Object
 	 */
 	public function set_identifier($identifier)
 	{
-		$this->_identifier = $identifier;
+		$this->_identifier = (string) $identifier;
 		
 		return $this;
 	}
@@ -202,13 +153,17 @@ class Object {
 	/**
 	 * Get Identifier
 	 * 
-	 * Gets the identifier of the class
+	 * Gets the identifier for the
+	 * object
 	 * 
 	 * @access	public
 	 * @return	string	Identifier
 	 */
 	public function get_identifier()
 	{
+		// Lazy set the identifier
+		if ( ! isset($this->_identifier)) $this->_identifier = get_class($this);
+		
 		return $this->_identifier;
 	}
 	
@@ -219,18 +174,18 @@ class Object {
 	 * retains previous data
 	 * 
 	 * @access	public
-	 * @param	array		Data
+	 * @param	mixed Data
 	 * @return	Spark\Object
 	 */
-	public function add_data(array $data)
+	public function add_data($data = array())
 	{
-		// Loop through data and add it
-		foreach ($data as $index => $value)
-		{
-			$this->set_data($index, $value);
-		}
+		// If we've been given a string we just
+		// want to push it to the array
+		if ( ! is_array($data)) $this->_data[] = $data;
 		
-		// Return this
+		// Loop through data and add it to the array
+		else foreach ($data as $index => $value) $this->set_data($index, $value);
+		
 		return $this;
 	}
 	
@@ -280,11 +235,8 @@ class Object {
 		{
 			$this->_data[$key] = $value;
 			
-			// Set original data
-			if ( ! isset($this->_original_data[$key]))
-			{
-				$this->_original_data[$key] = $value;
-			}
+			// Set original data if it's not been set
+			if ( ! isset($this->_original_data[$key])) $this->_original_data[$key] = $value;
 		}
 		
 		// Return this
@@ -313,10 +265,7 @@ class Object {
 		$this->_has_data_changes = true;
 		
 		// If no key provided, unset all
-		if (is_null($key))
-		{
-			$this->_data = array();
-		}
+		if ($key === null) $this->_data = array();
 		
 		// Key must be string, nothing else
 		else if (is_string($key))
@@ -343,12 +292,9 @@ class Object {
 	 */
 	public function has_data($key = null)
 	{
-		if (is_null($key))
-		{
-			return (bool) $this->_data;
-		}
+		if ($key === null) return (bool) $this->_data;
 		
-		return (bool) isset($this->_data[$key]);
+		return isset($this->_data[$key]);
 	}
 	
 	/**
@@ -382,21 +328,7 @@ class Object {
 	 */
 	public function get_data($key = null, $default = null)
 	{
-		// If no key provided, return all
-		if (is_null($key))
-		{
-			return $this->_data;
-		}
-		
-		// // If the user has used shorthand
-		// // notation to access array depth
-		// if (strpos($key, '.'))
-		// {
-		// 	
-		// }
-		
-		// Return the default data
-		return (isset($this->_data[$key])) ? $this->_data[$key] : $default;
+		return $this->_get_data($key, $default);
 	}
 	
 	/**
@@ -412,9 +344,9 @@ class Object {
 	 * 
 	 * For example:
 	 * 
-	 * 		$this->get_original_data('a.b.c');
+	 * 		$this->get_data('a.b.c');
 	 * 
-	 * Will look for $this->_original_data['a']['b']['c'].
+	 * Will look for $this->_data['a']['b']['c'].
 	 * 
 	 * The second parameter is the default value
 	 * to return if the specified value isn't set
@@ -430,81 +362,107 @@ class Object {
 	 */
 	public function get_original_data($key = null, $default = null)
 	{
-		// If no key provided, return all
-		if (is_null($key))
-		{
-			return $this->_original_data;
-		}
+		return $this->_get_data($key, $default, 'original_data');
+	}
+	
+	/**
+	 * Get Data
+	 * 
+	 * Gets data from the object
+	 * 
+	 * If key is empty it wil return
+	 * all of the data as an array.
+	 * The key will accept using a '.'
+	 * to separate depths within an array
+	 * (Like Fuel's config class).
+	 * 
+	 * For example:
+	 * 
+	 * 		$this->get_data('a.b.c');
+	 * 
+	 * Will look for $this->_data['a']['b']['c'].
+	 * 
+	 * The second parameter is the default value
+	 * to return if the specified value isn't set
+	 * 
+	 * If the key is provided return the
+	 * value of the attribute specified
+	 * by the key.
+	 * 
+	 * @access	protected
+	 * @param	string|null	Key
+	 * @param	mixed		Default
+	 * @param	string		Source
+	 * @return	mixed		Data
+	 */
+	protected function _get_data($key = null, $default = null, $source = 'data')
+	{
 		
-		// // If the user has used shorthand
-		// // notation to access array depth
-		// if (strpos($key, '.'))
-		// {
-		// 	
-		// }
+		// If no key provided, return all
+		if ($key === null) return $this->{'_' . $source};
+		
+		// If the user has used dot
+		// notation to access array depth
+		if (strpos($key, '.') !== false)
+		{
+			// Extract keys and data
+			$key_array = explode('.', $key);
+			$data = $this->{'_' . $source};
+			
+			// Loop through keys and try to match to data
+			foreach ($key_array as $index => $key)
+			{
+				// If we've been given an incomplete
+				// implementation of the dot notation
+				if ($key == null) return $default;
+				
+				// If we've been given an array
+				if (is_array($data))
+				{
+					if ( ! isset($data[$key])) return $default;
+					
+					// Step a level deeper
+					$data = $data[$key];
+				}
+				
+				// If we've nested objects within objects
+				elseif ($data instanceof Object) $data = $data->get_data($key);
+				
+				else return $default;
+			}
+			
+			// Return whatever we've found
+			return $data;
+		}
 		
 		// Return the default data
-		return (isset($this->_original_data[$key])) ? $this->_original_data[$key] : $default;
+		return isset($this->{'_' . $source}[$key]) ? $this->{'_' . $source}[$key] : $default;
 	}
 	
 	/**
-	 * Set Data Using Method
+	 * Make Recursive
 	 * 
-	 * Overwrite data in the object
-	 * using setter / getter methods
+	 * Makes the data in a spark
+	 * object a recursive set of
+	 * spark objects
 	 * 
 	 * @access	public
-	 * @param	string	Key
-	 * @param	mixed	Value
+	 * @return	Spark\Object
 	 */
-	public function set_data_using_method($key, $value)
+	public function make_recursive()
 	{
+		// Loop through data and convert
+		// to objects
+		foreach ($this->_data as $key => $value)
+		{
+			if (is_array($value))
+			{
+				$this->_data[$key] = \Object::factory($value)
+											->make_recursive();
+			}
+		}
+		
 		return $this;
-	}
-	
-	
-	/**
-	 * To Array
-	 * 
-	 * Convert Object Attributes
-	 * to an array.
-	 * 
-	 * If the keys aren't provided
-	 * it will return all of the data as
-	 * an array
-	 * 
-	 * @access	public
-	 * @param	array	Keys
-	 * @return	array	Data
-	 */
-	public function to_array(array $keys = array())
-	{
-		// If no attributes were specified, return
-		// all data
-		if (empty($keys))
-		{
-			return $this->_data;
-		}
-		
-		// To return fallback
-		$to_return = array();
-		
-		// Loop through keys provided, get data
-		// and add them to the array to return
-		foreach ($keys as $key)
-		{
-			if (isset($this->_data[$key]))
-			{
-				$to_return[$key] = $this->_data[$key];
-			}
-			else
-			{
-				$to_return[$key] = null;
-			}
-		}
-		
-		// Return the array
-		return $to_return;
 	}
 	
 	/**
@@ -518,13 +476,12 @@ class Object {
 	 * @param	array	Arguments
 	 * @return	mixed
 	 */
-	public function __call($method, $arguments)
+	public function __call($method, array $arguments)
 	{
 		// Get the key
 		$key = substr($method, 4);
 		
-		// Check different setters / getters
-		// and return results if applicable
+		// Bunch of more setters and getters
 		switch (substr($method, 0, 3))
 		{
 			case 'get':
@@ -540,55 +497,198 @@ class Object {
 				return isset($this->_data[$key]);
 		}
 		
-		throw new Exception('Call to undefined method %s::%s()', get_called_class(), $method);
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_called_class(), $method));
 	}
 	
-	/** 
-	 * Underscore
+	/**
+	 * Call Static
 	 * 
-	 * Gets the object property
-	 * by first checking
-	 * for a property that matches
-	 * the given key, and then checking
-	 * for a property name with an
-	 * underscore prepended
+	 * Magic method used to create
+	 * an instance of the object
 	 * 
-	 * @access	protected
-	 * @param	string	Key
-	 * @return	string	Property name
+	 * @access	public
+	 * @param	string	Method
+	 * @param	array	Arguments
+	 * @return	mixed
 	 */
-	protected function _underscore($key)
+	public static function __callStatic($method, array $arguments)
 	{
-		// The underscore property
-		$underscore = sprintf('_%s', $key);
-		
-		// Return the property without an
-		// underscore if it exists
-		if (property_exists($this, $key))
+		if (substr($method, 0, 11) === 'create_from')
 		{
-			return $key;
-		}
-		else if (property_exists($this, $underscore))
-		{
-			return $underscore;
+			switch (substr($method, 12))
+			{
+				case 'post':
+					return static::factory($_POST)
+								 ->make_recursive();
+
+				case 'get':
+
+					return static::factory($_GET)
+								 ->make_recursive();
+			}
 		}
 		
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_class($this), $method));
+	}
+	
+	/**
+	 * Offset Get
+	 * 
+	 * Implementation of ArrayAccess::offsetGet()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/arrayaccess.offsetget.php
+	 * @param	string	Offset
+	 * @return	mixed
+	 */
+	public function offsetGet($offset)
+	{
+		return isset($this->_data[$offset]) ? $this->_data[$offset] : null;
+	}
+	
+	/**
+	 * Offset Set
+	 * 
+	 * Implementation of ArrayAccess::offsetSet()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/arrayaccess.offsetset.php
+	 * @param	string $offset
+	 * @param	mixed $value
+	 */
+	public function offsetSet($offset, $value)
+	{
+		$this->_data[$offset] = $value;
+	}
+	
+	/**
+	 * Offset Unset
+	 * 
+	 * Implementation of ArrayAccess::offsetUnset()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/arrayaccess.offsetunset.php
+	 * @param	string	Offset
+	 */
+	public function offsetUnset($offset)
+	{
+		unset($this->_data[$offset]);
+	}
+
+	/**
+	 * Offset Exists
+	 * 
+	 * Implementation of ArrayAccess::offsetExists()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/arrayaccess.offsetexists.php
+	 * @param	string	Offset
+	 * @return	bool
+	 */
+	public function offsetExists($offset)
+	{
+		if ($offset or $offset === 0 or (is_numeric($offset) and $offset == 0)) return isset($this->_data[$offset]);
 		return false;
+	}
+	
+	/**
+	 * Count
+	 * 
+	 * Implementation of Countable::count()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/countable.count.php
+	 * @return	int		Count
+	 */
+	public function count()
+	{
+		return count($this->_data);
+	}
+	
+	/**
+	 * Key
+	 * 
+	 * Implementation of Iterator::key()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.key.php
+	 * @return	int		Current key
+	 */
+	public function key()
+	{
+		return current($this->_data_keys);
+	}
+
+	/**
+	 * Next
+	 * 
+	 * Implementation of Iterator::next()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.next.php
+	 * @return	Spark\Object
+	 */
+	public function next()
+	{
+		next($this->_data_keys);
+		return $this;
+	}
+
+	/**
+	 * Rewind
+	 * 
+	 * Implementation of Iterator::rewind()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.rewind.php
+	 * @return	Spark\Object
+	 */
+	public function rewind()
+	{
+		$this->_data_keys = array_keys($this->_data);
+		
+		return $this;
+	}
+	
+	/**
+	 * Valid
+	 * 
+	 * Implementation of Iterator::valid()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.valid.php
+	 * @return	bool
+	 */
+	public function valid()
+	{
+		return $this->offsetExists(current($this->_data_keys));
+	}
+	
+	/**
+	 * Current
+	 * 
+	 * Implementation of Iterator::current()
+	 * 
+	 * @access	public
+	 * @link	http://www.php.net/manual/en/iterator.current.php
+	 * @return	bool
+	 */
+	public function current()
+	{
+		return $this->_data[current($this->_data_keys)];
 	}
 	
 	/**
 	 * To String
 	 * 
-	 * Called when the class
-	 * is treated as a string
+	 * Represents the object
+	 * as a string
 	 * 
 	 * @access	public
-	 * @return	string	String
+	 * @return	string
 	 */
 	public function __toString()
 	{
-		return ($this->get_identifier()) ? $this->get_identifier() : get_called_class();
+		return (string) $this->get_identifier();
 	}
 }
-
-/* End of file classes/object.php */
