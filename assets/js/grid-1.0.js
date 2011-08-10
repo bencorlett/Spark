@@ -116,6 +116,9 @@
 					}
 				});
 				
+				// Reset to page 1
+				handler.data(settings.vars.page, 1);
+				
 				// Trigger an update on the handler
 				handler.trigger('update');
 			});
