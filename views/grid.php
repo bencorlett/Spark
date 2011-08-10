@@ -70,7 +70,7 @@ namespace Spark;
 		<thead>
 			<tr class="headers">
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<th class="<?php echo $column->get_class(); ?>">
+					<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
 						<span class="header" column="<?php echo $column->get_index(); ?>">
 							<?php echo $column->get_header(); ?>
 						</span>
@@ -79,7 +79,7 @@ namespace Spark;
 			</tr>
 			<tr class="filters">
 				<?php foreach ($grid->get_columns() as $column): ?>
-					<th class="<?php echo $column->get_class(); ?>">
+					<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
 						<?php echo $column->get_filter(); ?>
 					</th>
 				<?php endforeach ?>
@@ -89,7 +89,7 @@ namespace Spark;
 			<?php foreach ($grid->get_rows() as $row): ?>
 				<tr class="<?php echo $row->get_class(); ?>">
 					<?php foreach ($row->get_cells() as $cell): ?>
-						<td class="<?php echo $cell->get_class(); ?>">
+						<td class="<?php echo $cell->get_class(); ?>" style="<?php echo $cell->get_style(); ?>">
 							<?php echo $cell; ?>
 						</td>
 					<?php endforeach ?>

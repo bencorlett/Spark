@@ -52,7 +52,7 @@ class Grid_Column_Filter_Options extends \Grid_Column_Filter_Abstract {
 			);
 		}
 		
-		$filter->set_html($html);
+		$filter->set_html(html_tag('div', null, $html));
 		
 		return $this;
 	}

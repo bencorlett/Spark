@@ -225,4 +225,41 @@ class Grid_Column extends \Grid_Component {
 		
 		return $this->get_data('class');
 	}
+	
+	/**
+	 * Get Style
+	 * 
+	 * Gets the column's style
+	 * built on various parameters
+	 * 
+	 * @access	public
+	 * @return	string	Style
+	 */
+	public function get_style()
+	{
+		// Process the width first
+		if ($this->has_data('width'))
+		{
+			$width = $this->get_data('width');
+			
+			// If we've been given a width
+			// that's a number, we need to
+			// add "px" on the end
+			if (is_numeric($width)) $width .= 'px';
+			
+			$this->set_data('width', $width);
+			
+			// If the user hasn't overwritten the width
+			// in the style, add it to the style
+			if (strpos($this->get_data('style'), 'width') === false)
+			{
+				$this->set_data('style', $this->get_data('style') . ' width: ' . $this->get_data('width') . ';');
+			}
+		}
+		
+		// Trim what we've created
+		$this->set_data('style', trim($this->get_data('style')));
+		
+		return $this->get_data('style');
+	}
 }

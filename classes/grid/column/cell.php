@@ -234,4 +234,18 @@ class Grid_Column_Cell extends \Grid_Component {
 	{
 		return $this->get_column()->get_class();
 	}
+	
+	/**
+	 * Get Style
+	 * 
+	 * Gets the style
+	 * of the cell
+	 * 
+	 * @access	public
+	 * @return	string	Style
+	 */
+	public function get_style()
+	{
+		return $this->get_column()->get_style();
+	}
 }

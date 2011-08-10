@@ -212,6 +212,9 @@
 				// Set the limit
 				handler.data(settings.vars.limit, $(this).val());
 				
+				// Reset to page 1
+				handler.data(settings.vars.page, 1);
+				
 				// Trigger an update
 				handler.trigger('update');
 			});

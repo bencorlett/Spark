@@ -40,7 +40,7 @@ class Grid_Column_Filter_Text extends \Grid_Column_Filter_Abstract {
 									'class'				=> 'filter',
 							  ));
 		
-		$filter->set_html($input);
+		$filter->set_html(html_tag('div', null, $input));
 		
 		return $this;
 	}

@@ -20,7 +20,7 @@
 namespace Spark;
 ?>
 <div class="range">
-	<div class="line">
+	<div class="line min">
 		<?=\Form::label('From', \Str::f('grid-%s-filter-%s-min', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()))?>
 		<?=\Form::input($filter->get_column()->get_identifier() . '[min]',
 						$filter->get_user_value() ? $filter->get_user_value()->get_min() : null,
@@ -31,7 +31,7 @@ namespace Spark;
 						)
 		)?>
 	</div>
-	<div class="line">
+	<div class="line max">
 		<?=\Form::label('To', \Str::f('grid-%s-filter-%s-max', $filter->get_grid()->get_identifier(), $filter->get_column()->get_identifier()))?>
 		<?=\Form::input($filter->get_column()->get_identifier() . '[max]',
 						$filter->get_user_value() ? $filter->get_user_value()->get_max() : null,
