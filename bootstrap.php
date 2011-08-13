@@ -52,4 +52,7 @@ Autoloader::add_classes(array(
 	
 	// Str
 	'Spark\\Str'								=> __DIR__ . '/classes/str.php',
+	
+	// View
+	'Spark\\View'								=> __DIR__ . '/classes/view.php',
 ));
