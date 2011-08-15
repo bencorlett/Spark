@@ -280,7 +280,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	/**
 	 * Has Data
 	 * 
-	 * Determines if the model has
+	 * Determines if the object has
 	 * data for the given key
 	 * 
 	 * If key is empty it will determine
