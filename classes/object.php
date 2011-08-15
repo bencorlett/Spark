@@ -532,6 +532,65 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	}
 	
 	/**
+	 * Set
+	 * 
+	 * Magic method to set a property
+	 * of the object
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 * @param	mixed	Value
+	 */
+	public function __set($key, $value)
+	{
+		$this->_data[$key] = $value;
+	}
+	
+	/**
+	 * Get
+	 * 
+	 * Magic method to get a property
+	 * of the object
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 * @return	mixed	Value
+	 */
+	public function __get($key)
+	{
+		return isset($this->_data[$key]) ? $this->_data[$key] : false;
+	}
+	
+	/**
+	 * Isset
+	 * 
+	 * Magic method to determine
+	 * if a property is set
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 * @return	bool	Isset
+	 */
+	public function __isset($key)
+	{
+		return isset($this->_data[$key]);
+	}
+	
+	/**
+	 * Unset
+	 * 
+	 * Magic method to unset
+	 * a property
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 */
+	public function __unset($key)
+	{
+		unset($this->_data[$key]);
+	}
+	
+	/**
 	 * Offset Get
 	 * 
 	 * Implementation of ArrayAccess::offsetGet()
