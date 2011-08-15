@@ -23,17 +23,17 @@ abstract class Grid_Driver_Abstract extends \Grid_Component
 implements \Grid_Driver_Interface {
 	
 	/**
-	 * Get Model
+	 * Get Query
 	 * 
-	 * Gets the model
+	 * Gets the query
 	 * from the grid
 	 * 
 	 * @access	public
-	 * @return	mixed	Model
+	 * @return	mixed	Query
 	 */
-	public function get_model()
+	public function get_query()
 	{
-		return $this->get_grid()->get_model();
+		return $this->get_grid()->get_query();
 	}
 	
 	/**

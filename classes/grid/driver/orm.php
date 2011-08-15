@@ -22,9 +22,9 @@ namespace Spark;
 class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	
 	/**
-	 * Prepare Model
+	 * Prepare Query
 	 * 
-	 * Prepares the model
+	 * Prepares the query
 	 * based off parameters
 	 * such as filters, sort
 	 * and page
@@ -32,7 +32,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	 * @access	public
 	 * @return	Spark\Grid_Driver_Abstract
 	 */
-	public function prepare_model()
+	public function prepare_query()
 	{
 		// Loop through columns, if they have
 		// filters with a real (translated)
@@ -47,7 +47,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				// that string
 				if ( ! is_array($value) and ! is_object($value))
 				{
-					$this->get_model()->where($column->get_index(), 'LIKE', '%' . $value . '%');
+					$this->get_query()->where($column->get_index(), 'LIKE', '%' . $value . '%');
 				}
 				
 				// If the value is an instance of object
@@ -60,19 +60,19 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 					// If we've got a min and a max
 					if ($value->get_min() !== null and $value->get_max() !== null)
 					{
-						$this->get_model()->where($column->get_index(), 'BETWEEN', array($value->get_min(), $value->get_max()));
+						$this->get_query()->where($column->get_index(), 'BETWEEN', array($value->get_min(), $value->get_max()));
 					}
 					
 					// If we've only got a min
 					if ($value->get_min() !== null)
 					{
-						$this->get_model()->where($column->get_index(), '>=', $value->get_min());
+						$this->get_query()->where($column->get_index(), '>=', $value->get_min());
 					}
 					
 					// If we've only got a max
 					elseif ($value->get_max() !== null)
 					{
-						$this->get_model()->where($column->get_index(), '<=', $value->get_max());
+						$this->get_query()->where($column->get_index(), '<=', $value->get_max());
 					}
 				}
 				
@@ -94,8 +94,8 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				// Yay, we found one
 				if ($sort === $column->get_identifier())
 				{
-					// Apply the sort and direction to the model
-					$this->get_model()->order_by($column->get_index(), $direction);
+					// Apply the sort and direction to the query
+					$this->get_query()->order_by($column->get_index(), $direction);
 					
 					break;
 				}
@@ -107,7 +107,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 		{
 			// Get the count of rows to make sure that
 			// the offset is valid
-			$count = $this->get_model()->count();
+			$count = $this->get_query()->count();
 			
 			// Minus one because the first
 			// page has an offset of 0
@@ -145,8 +145,8 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 				 ->set_total_records($count)
 				 ->set_total_pages(($count > $limit) ? ceil($count / $limit) : 1);
 			
-			// Apply to model
-			$this->get_model()
+			// Apply to query
+			$this->get_query()
 				 ->limit($limit)
 				 ->offset($offset);
 		}
@@ -158,7 +158,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 	 * Get Rows
 	 * 
 	 * Gets the rows based
-	 * off the model
+	 * off the query
 	 * 
 	 * @access	public
 	 * @return	Spark\Object
@@ -170,7 +170,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 		
 		// Loop through the results and add them
 		// to the rows
-		foreach ($this->get_model()->get() as $result)
+		foreach ($this->get_query()->get() as $result)
 		{
 			// Create a row
 			$row = \Grid_Row::factory()
@@ -180,7 +180,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 			$class = '';
 			if (++ $i == 1) $class = 'first';
 			$class .= ($i % 2 == 0) ? ' even' : ' odd';
-			if ($i == $this->get_model()->count()) $class .= ' last';
+			if ($i == $this->get_query()->count()) $class .= ' last';
 			$row->set_class($class);
 			
 			// Loop through columns and add a cell

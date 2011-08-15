@@ -36,11 +36,11 @@ class Grid extends \Object {
 	protected $_driver;
 	
 	/**
-	 * Model object
+	 * Query object
 	 * 
 	 * @var	mixed
 	 */
-	protected $_model;
+	protected $_query;
 	
 	/**
 	 * Object containing columns for the grid
@@ -150,16 +150,16 @@ class Grid extends \Object {
 	 * @param	mixed
 	 * @return	Spark\Grid
 	 */
-	public function __construct($identifier = null, $model = null)
+	public function __construct($identifier = null, $query = null)
 	{
 		// Check we've got an identifier
 		if ( ! $identifier) throw new Exception('An identifier must be provided when initialising the grid');
 		
-		// Check we've got a model
-		if ( ! is_object($model)) throw new Exception('You must provide a model when initialising the grid');
+		// Check we've got a query
+		if ( ! is_object($query)) throw new Exception('You must provide a query when initialising the grid');
 		
 		$this->set_identifier($identifier)
-			 ->set_model($model);
+			 ->set_query($query);
 	}
 	
 	/**
@@ -323,31 +323,31 @@ class Grid extends \Object {
 	}
 	
 	/**
-	 * Set Model
+	 * Set Query
 	 * 
-	 * Sets the model for the grid
+	 * Sets the query for the grid
 	 * 
 	 * @access	public
-	 * @param	mixed	Model
+	 * @param	mixed	Query
 	 * @return	Spark\Grid
 	 */
-	public function set_model($model)
+	public function set_query($query)
 	{
-		$this->_model = $model;
+		$this->_query = $query;
 		return $this;
 	}
 	
 	/**
-	 * Get Model
+	 * Get Query
 	 * 
-	 * Gets the model for the grid
+	 * Gets the query for the grid
 	 * 
 	 * @access	public
 	 * @return	mixed
 	 */
-	public function get_model()
+	public function get_query()
 	{
-		return $this->_model;
+		return $this->_query;
 	}
 	
 	/**
@@ -357,16 +357,16 @@ class Grid extends \Object {
 	 * with the grid
 	 * 
 	 * @access	public
-	 * @param	string	Class of model
+	 * @param	string	Class of query
 	 * @param	string	Class of driver
 	 * @return	Spark\Grid
 	 */
-	public function register_driver($model, $driver)
+	public function register_driver($query, $driver)
 	{
 		// Add the driver to the list
-		if ( ! $this->get_drivers()->has_data($model))
+		if ( ! $this->get_drivers()->has_data($query))
 		{
-			$this->get_drivers()->set_data($model, $driver);
+			$this->get_drivers()->set_data($query, $driver);
 		}
 		
 		return $this;
@@ -400,7 +400,7 @@ class Grid extends \Object {
 	 * Get Driver
 	 * 
 	 * Gets the driver for the
-	 * grid, based off the model
+	 * grid, based off the query
 	 * 
 	 * @access	public
 	 * @return	Spark\Grid_Driver_Abstract
@@ -411,11 +411,11 @@ class Grid extends \Object {
 		if ( ! $this->_driver)
 		{
 			// Loop through drivers and determine the driver based off
-			// the class the model has
-			foreach ($this->get_drivers() as $model_class => $driver_class)
+			// the class the query has
+			foreach ($this->get_drivers() as $query_class => $driver_class)
 			{
 				// We can either deal with a class or a subclass
-				if (get_class($this->get_model()) === $model_class or is_subclass_of(get_class($this->get_model()), $model_class))
+				if (get_class($this->get_query()) === $query_class or is_subclass_of(get_class($this->get_query()), $query_class))
 				{
 					$this->_driver = $driver_class::factory()
 												  ->set_grid($this);
@@ -429,7 +429,7 @@ class Grid extends \Object {
 			
 			// If we still haven't found a driver
 			// throw an exception
-			if ( ! $this->_driver) throw new Exception(Str::f('There is no driver for the a model which is an instance of %s', get_class($this->get_model())));
+			if ( ! $this->_driver) throw new Exception(Str::f('There is no driver for the a query which is an instance of %s', get_class($this->get_query())));
 		}
 		
 		return $this->_driver;
@@ -507,7 +507,7 @@ class Grid extends \Object {
 	{
 		// Prepare elements
 		$this->_prepare_columns()
-			 ->_prepare_model()
+			 ->_prepare_query()
 			 ->_prepare_rows()
 			 ->_prepare_massactions();
 		
@@ -584,14 +584,14 @@ class Grid extends \Object {
 	}
 	
 	/**
-	 * Prepare Model
+	 * Prepare Query
 	 * 
-	 * Prepares the model for the grid
+	 * Prepares the query for the grid
 	 * 
 	 * @access	protected
 	 * @return	Spark\Grid
 	 */
-	protected function _prepare_model()
+	protected function _prepare_query()
 	{
 		// Make sure that the page is valid
 		if (($page = $this->get_params()->get_data($this->get_var_name_page())) !== null)
@@ -602,7 +602,7 @@ class Grid extends \Object {
 			$this->get_params()->set_data($this->get_var_name_page(), $page);
 		}
 		
-		$this->get_driver()->prepare_model();
+		$this->get_driver()->prepare_query();
 		
 		return $this;
 	}
