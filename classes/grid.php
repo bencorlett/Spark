@@ -388,8 +388,8 @@ class Grid extends \Object {
 		if ( ! $this->_drivers)
 		{
 			$this->_drivers = \Object::factory(array(
-				'Orm\\Query'		=> 'Grid_Driver_Orm',
-				'type'				=> 'class',
+				'Orm\\Query'								=> 'Grid_Driver_Orm',
+				'Fuel\\Core\\Database_Query_Builder_Select'	=> 'Grid_Driver_Database',
 			));
 		}
 		
