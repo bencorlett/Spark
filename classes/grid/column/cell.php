@@ -30,6 +30,14 @@ class Grid_Column_Cell extends \Grid_Component {
 	protected $_column;
 	
 	/**
+	 * Reference to the row
+	 * this cell is attached to
+	 * 
+	 * @var	Spark\Grid_Row
+	 */
+	protected $_row;
+	
+	/**
 	 * The original value the cell
 	 * has
 	 * 
@@ -78,6 +86,38 @@ class Grid_Column_Cell extends \Grid_Component {
 		if ( ! $this->_column instanceof \Grid_Column) throw new \Exception(\Str::f('Cannot retrieve grid column instance for %s', get_class($this)));
 		
 		return $this->_column;
+	}
+	
+	/**
+	 * Set Row
+	 * 
+	 * Sets the row property
+	 * this cell belongs to
+	 * 
+	 * @access	public
+	 * @param	Spark\Grid_Row	Row
+	 * @return	Spark\Grid_Column_Cell
+	 */
+	public function set_row(\Grid_Row $row)
+	{
+		$this->_row = $row;
+		return $this;
+	}
+	
+	/**
+	 * Get Row
+	 * 
+	 * Gets the row property
+	 * this cell belongs to
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Row	Row
+	 */
+	public function get_row()
+	{
+		if ( ! $this->_row instanceof \Grid_Row) throw new \Exception(\Str::f('Cannot retrieve row instance for %s', get_class($this)));
+		
+		return $this->_row;
 	}
 	
 	/**
@@ -247,5 +287,70 @@ class Grid_Column_Cell extends \Grid_Component {
 	public function get_style()
 	{
 		return $this->get_column()->get_style();
+	}
+	
+	/**
+	 * Allows Action
+	 * 
+	 * Determines if the current
+	 * cell is allowed to have
+	 * actions or not
+	 * 
+	 * @access	public
+	 * @return	bool	Allows action
+	 */
+	public function allows_action()
+	{
+		/**
+		 * Todo: Some cells won't allow you to set a location
+		 *       based on their type, checkboxes for example
+		 */
+		return true;
+	}
+	
+	/**
+	 * Get Action
+	 * 
+	 * Gets the action
+	 * of the cell
+	 * 
+	 * @access	public
+	 * @return	string	Action
+	 */
+	public function get_action()
+	{
+		// If the cell isn't allowed to have an action
+		if ( ! $this->allows_action()) return false;
+		
+		// Action fallback
+		$action = false;
+		
+		// Get the cell action but default to the row action
+		if ($this->get_data('action')) $action = $this->get_data('action');
+		elseif ($this->get_row()->get_action()) $action = $this->get_row()->get_action();
+		
+		// If we had no action, return false
+		if ( ! $action) return false;
+		
+		// Otherwise return the action
+		return \Uri::create($action);
+	}
+	
+	/**
+	 * Get Onclick
+	 * 
+	 * Gets the onlickc of
+	 * the cell based off
+	 * the action
+	 * 
+	 * @access	public
+	 * @return	string	Onclick
+	 */
+	public function get_onclick()
+	{
+		// If there is no action
+		if ( ! $action = $this->get_action()) return false;
+		
+		return 'window.location.href=\'' . $action . '\'';
 	}
 }

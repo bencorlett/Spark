@@ -89,7 +89,7 @@ namespace Spark;
 			<?php foreach ($grid->get_rows() as $row): ?>
 				<tr class="<?php echo $row->get_class(); ?>">
 					<?php foreach ($row->get_cells() as $cell): ?>
-						<td class="<?php echo $cell->get_class(); ?>" style="<?php echo $cell->get_style(); ?>">
+						<td class="<?php echo $cell->get_class(); ?>" style="<?php echo $cell->get_style(); ?>" onclick="<?php echo $cell->get_onclick(); ?>">
 							<?php echo $cell; ?>
 						</td>
 					<?php endforeach ?>

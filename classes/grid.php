@@ -142,6 +142,14 @@ class Grid extends \Object {
 	protected $_uses_ajax = true;
 	
 	/**
+	 * A user defined string that
+	 * represents each row action
+	 * 
+	 * @var	string
+	 */
+	protected $_row_action;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -236,6 +244,36 @@ class Grid extends \Object {
 		}
 		
 		return $this;
+	}
+	
+	/**
+	 * Set Row Action
+	 * 
+	 * Sets the action of
+	 * each row in the grid
+	 * 
+	 * @access	public
+	 * @param	string	Row action
+	 * @return	Spark\Grid
+	 */
+	public function set_row_action($row_action)
+	{
+		$this->_row_action = (string) $row_action;
+		return $this;
+	}
+	
+	/**
+	 * Get Row Action
+	 * 
+	 * Gets the action of
+	 * each row in the grid
+	 * 
+	 * @access	public
+	 * @return	string	Row action
+	 */
+	public function get_row_action()
+	{
+		return $this->_row_action;
 	}
 	
 	/**

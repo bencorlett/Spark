@@ -77,4 +77,18 @@ implements \Grid_Driver_Interface {
 	{
 		return $this->get_grid()->get_params();
 	}
+	
+	/**
+	 * Get Row Action
+	 * 
+	 * Gets the row action
+	 * string from the grid
+	 * 
+	 * @access	public
+	 * @return	string	Row action
+	 */
+	public function get_row_action()
+	{
+		return $this->get_grid()->get_row_action();
+	}
 }
