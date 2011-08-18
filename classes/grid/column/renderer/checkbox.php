@@ -73,4 +73,19 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract {
 		
 		return $this;
 	}
+	
+	/**
+	 * Allows Action
+	 * 
+	 * Returns whether the renderer for this
+	 * column allows cells within it to have
+	 * an action applied to them or not
+	 * 
+	 * @access	public
+	 * @return	bool	Allows action
+	 */
+	public function allows_action()
+	{
+		return false;
+	}
 }

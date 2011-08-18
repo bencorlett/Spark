@@ -305,7 +305,16 @@ class Grid_Column_Cell extends \Grid_Component {
 		 * Todo: Some cells won't allow you to set a location
 		 *       based on their type, checkboxes for example
 		 */
-		return true;
+		
+		// If the user has provided an action
+		// to the column which has then been applied
+		// to the cell by the driver
+		if ($this->get_data('action')) return true;
+		
+		// Otherwise, ask the renderer
+		// as it knows whether or not
+		// actions should be allowed on cells
+		return $this->get_renderer()->allows_action();
 	}
 	
 	/**
