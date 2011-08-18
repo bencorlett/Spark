@@ -71,9 +71,7 @@ namespace Spark;
 			<tr class="headers">
 				<?php foreach ($grid->get_columns() as $column): ?>
 					<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
-						<span class="header" column="<?php echo $column->get_index(); ?>">
-							<?php echo $column->get_header(); ?>
-						</span>
+						<?php echo $column->get_header(); ?>
 					</th>
 				<?php endforeach ?>
 			</tr>

@@ -30,7 +30,6 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Button'						=> __DIR__ . '/classes/grid/button.php',
 	'Spark\\Grid_Column'						=> __DIR__ . '/classes/grid/column.php',
 	'Spark\\Grid_Column_Cell'					=> __DIR__ . '/classes/grid/column/cell.php',
-	
 	'Spark\\Grid_Column_Filter'					=> __DIR__ . '/classes/grid/column/filter.php',
 	'Spark\\Grid_Column_Filter_Abstract'		=> __DIR__ . '/classes/grid/column/filter/abstract.php',
 	'Spark\\Grid_Column_Filter_Checkbox'		=> __DIR__ . '/classes/grid/column/filter/checkbox.php',
@@ -38,14 +37,13 @@ Autoloader::add_classes(array(
 	'Spark\\Grid_Column_Filter_Number'			=> __DIR__ . '/classes/grid/column/filter/number.php',
 	'Spark\\Grid_Column_Filter_Options'			=> __DIR__ . '/classes/grid/column/filter/options.php',
 	'Spark\\Grid_Column_Filter_Text'			=> __DIR__ . '/classes/grid/column/filter/text.php',
-	
+	'Spark\\Grid_Column_Header'					=> __DIR__ . '/classes/grid/column/header.php',
 	'Spark\\Grid_Column_Renderer_Abstract'		=> __DIR__ . '/classes/grid/column/renderer/abstract.php',
 	'Spark\\Grid_Column_Renderer_Checkbox'		=> __DIR__ . '/classes/grid/column/renderer/checkbox.php',
 	'Spark\\Grid_Column_Renderer_Interface'		=> __DIR__ . '/classes/grid/column/renderer/interface.php',
 	'Spark\\Grid_Column_Renderer_Number'		=> __DIR__ . '/classes/grid/column/renderer/number.php',
 	'Spark\\Grid_Column_Renderer_Options'		=> __DIR__ . '/classes/grid/column/renderer/options.php',
 	'Spark\\Grid_Column_Renderer_Text'			=> __DIR__ . '/classes/grid/column/renderer/text.php',
-	
 	'Spark\\Grid_Component'						=> __DIR__ . '/classes/grid/component.php',
 	'Spark\\Grid_Container'						=> __DIR__ . '/classes/grid/container.php',
 	'Spark\\Grid_Driver_Abstract'				=> __DIR__ . '/classes/grid/driver/abstract.php',

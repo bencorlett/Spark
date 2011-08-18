@@ -37,4 +37,24 @@ class Grid_Column_Renderer_Text extends \Grid_Column_Renderer_Abstract {
 		
 		return $this;
 	}
+	
+	/**
+	 * Render Header
+	 * 
+	 * Renders the header of a column
+	 * 
+	 * @access	public
+	 * @param	Spark\Grid_Column_Header	Header
+	 * @return	Spark\Grid_Column_Renderer_Interface
+	 */
+	public function render_header(\Grid_Column_Header $header)
+	{
+		// Standard header
+		$header->set_rendered_value(html_tag('span', array(
+			'class'			=> 'header',
+			'column'		=> $header->get_column()->get_index(),
+		), $header->get_original_value()));
+		
+		return $this;
+	}
 }

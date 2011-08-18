@@ -36,6 +36,29 @@ class Grid_Column extends \Grid_Component {
 	protected $_filter;
 	
 	/**
+	 * The header for this column
+	 * 
+	 * @var	Spark\Grid_Column_Header
+	 */
+	protected $_header;
+	
+	/**
+	 * The original header for this
+	 * column
+	 * 
+	 * @var	string
+	 */
+	protected $_original_header;
+	
+	/**
+	 * The rendered header for this
+	 * column
+	 * 
+	 * @var	string
+	 */
+	protected $_rendered_header;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -79,25 +102,16 @@ class Grid_Column extends \Grid_Component {
 	 */
 	public function get_header()
 	{
-		// Lazy set the header
-		if ( ! $this->has_data('header'))
+		// Lazy load the header
+		if ( ! $this->_header)
 		{
-			// Make the header
-			$header = \Str::ucwords(str_replace('_', ' ', $this->get_identifier()));
-			
-			// Change fields just to
-			// look more English proper
-			switch ($header)
-			{
-				case 'Id':
-					$header = 'ID';
-					break;
-			}
-			
-			$this->set_data('header', $header);
+			$this->_header = \Grid_Column_Header::factory()
+												->set_grid($this->get_grid())
+												->set_column($this)
+												->set_data('header', $this->get_data('header'));
 		}
 		
-		return $this->get_data('header');
+		return $this->_header;
 	}
 	
 	/**

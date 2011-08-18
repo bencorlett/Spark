@@ -51,4 +51,26 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract {
 		
 		return $this;
 	}
+	
+	/**
+	 * Render Header
+	 * 
+	 * Renders the header of a column
+	 * 
+	 * @access	public
+	 * @param	Spark\Grid_Column_Header	Header
+	 * @return	Spark\Grid_Column_Renderer_Interface
+	 */
+	public function render_header(\Grid_Column_Header $header)
+	{
+		// Build a checkbox
+		$checkbox = \Form::checkbox(null, 1, array(
+			'targets'	=> ($name = $header->get_column()->get_name()) ? $name : $header->get_column()->get_identifier() . '[]',
+		));
+		
+		// Set the rendered value
+		$header->set_rendered_value(html_tag('span', array('class' => 'header-checkbox'), $checkbox));
+		
+		return $this;
+	}
 }

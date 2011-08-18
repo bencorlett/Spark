@@ -151,13 +151,22 @@
 			 * a column header to sort
 			 * by that column
 			 */
-			handler.find("tr.headers .header").click(function() {
+			handler.find("tr.headers span.header").click(function() {
 				
 				// Set the sort
 				handler.data(settings.vars.sort, $(this).attr('column'));
 				
 				// Trigger an update
 				handler.trigger('update');
+			});
+			
+			/**
+			 * When a user clicks a checkbox header to select
+			 * all checkboxes in the grid
+			 */
+			handler.find('tr.headers span.header-checkbox input[type="checkbox"]').change(function()
+			{
+				handler.find('tbody tr input[type="checkbox"][name=' + $(this).attr('targets') + ']')[$(this).attr('checked') ? 'attr' : 'removeAttr']('checked', 'checked');
 			});
 			
 			/**

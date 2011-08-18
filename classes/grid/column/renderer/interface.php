@@ -32,4 +32,15 @@ interface Grid_Column_Renderer_Interface {
 	 * @return	Spark\Grid_Column_Renderer_Interface
 	 */
 	public function render(\Grid_Column_Cell $cell);
+	
+	/**
+	 * Render Header
+	 * 
+	 * Renders the header of a column
+	 * 
+	 * @access	public
+	 * @param	Spark\Grid_Column_Header	Header
+	 * @return	Spark\Grid_Column_Renderer_Interface
+	 */
+	public function render_header(\Grid_Column_Header $header);
 }
