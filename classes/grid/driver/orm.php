@@ -220,8 +220,74 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 										 ->set_row($row)
 										 ->set_original_value($result->{$column->get_index()});
 				
+				// Process cell actions
+				if ($action = $column->get_action())
+				{
+					// Get dynamic parameters from the row
+					// action
+					preg_match('/\{\w+\}/', $action, $matches);
+
+					// Loop through the matches and
+					// update the row action string
+					foreach ($matches as $match)
+					{
+						// Determine the actual property
+						// the user is after
+						$property = str_replace(array('{', '}'), null, $match);
+
+						// Get the value of that proprty
+						// in this result and replace it
+						// in the string
+						$value = $result->$property;
+						$action = str_replace($match, $value, $action);
+					}
+
+					// Set the action of the cell
+					$cell->set_action($action);
+				}
+
+				
 				// Add the cell to the row
 				$row->add_cell($column->get_identifier(), $cell);
+			}
+			
+			// Process any actions on the column
+			if ($actions = $column->get_actions() and $actions->count())
+			{
+				// Clone the actions object
+				$actions = clone $actions;
+				
+				foreach ($actions as $action => $name)
+				{
+					// New action
+					$new_action = false;
+					
+					// Get dynamic parameters from the row
+					// uri
+					preg_match('/\{\w+\}/', $action, $matches);
+					
+					// Loop through the matches and
+					// update the row uri string
+					foreach ($matches as $match)
+					{
+						// Determine the actual property
+						// the user is after
+						$property = str_replace(array('{', '}'), null, $match);
+					
+						// Get the value of that proprty
+						// in this result and replace it
+						// in the string
+						$value = $result->$property;
+						$new_action = \Uri::create(str_replace($match, $value, $action));
+						
+						// Update the actions
+						$actions->unset_data($action)
+								->set_data($new_action, $name);
+					}
+				}
+				
+				// Set the actions of the cell
+				$cell->set_actions($actions);
 			}
 			
 			// We've now built our row,

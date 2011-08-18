@@ -151,6 +151,10 @@ class Grid_Column extends \Grid_Component {
 			{
 				switch ($this->get_type())
 				{
+					case 'action':
+						$this->set_data('renderer', 'Grid_Column_Renderer_Action');
+						break;
+					
 					case 'checkbox':
 						$this->set_data('renderer', 'Grid_Column_Renderer_Checkbox');
 						break;

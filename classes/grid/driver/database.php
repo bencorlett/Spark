@@ -212,6 +212,32 @@ class Grid_driver_Database extends \Grid_Driver_Abstract {
 			if ($i == $this->get_results()->count()) $class .= ' last';
 			$row->set_class($class);
 			
+			// Process the row action of the grid
+			if ($action = $this->get_row_action())
+			{
+				// Get dynamic parameters from the row
+				// action
+				preg_match('/\{\w+\}/', $action, $matches);
+				
+				// Loop through the matches and
+				// update the row action string
+				foreach ($matches as $match)
+				{
+					// Determine the actual property
+					// the user is after
+					$property = str_replace(array('{', '}'), null, $match);
+					
+					// Get the value of that proprty
+					// in this result and replace it
+					// in the string
+					$value = $result->$property;
+					$action = \Uri::create(str_replace($match, $value, $action));
+				}
+				
+				// Set the action of the row
+				$row->set_action($action);
+			}
+			
 			// Loop through columns and add a cell
 			// to the row for each column
 			foreach ($this->get_columns() as $column)
@@ -222,6 +248,71 @@ class Grid_driver_Database extends \Grid_Driver_Abstract {
 										 ->set_column($column)
 										 ->set_row($row)
 										 ->set_original_value($result->{$column->get_index()});
+				
+				// Process cell actions
+				if ($action = $column->get_action())
+				{
+					// Get dynamic parameters from the row
+					// action
+					preg_match('/\{\w+\}/', $action, $matches);
+
+					// Loop through the matches and
+					// update the row action string
+					foreach ($matches as $match)
+					{
+						// Determine the actual property
+						// the user is after
+						$property = str_replace(array('{', '}'), null, $match);
+
+						// Get the value of that proprty
+						// in this result and replace it
+						// in the string
+						$value = $result->$property;
+						$action = \Uri::create(str_replace($match, $value, $action));
+					}
+
+					// Set the action of the cell
+					$cell->set_action($action);
+				}
+				
+				// Process any actions on the column
+				if ($actions = $column->get_actions() and $actions->count())
+				{
+					// Clone the actions object
+					$actions = clone $actions;
+					
+					foreach ($actions as $action => $name)
+					{
+						// New action
+						$new_action = false;
+						
+						// Get dynamic parameters from the row
+						// uri
+						preg_match('/\{\w+\}/', $action, $matches);
+						
+						// Loop through the matches and
+						// update the row uri string
+						foreach ($matches as $match)
+						{
+							// Determine the actual property
+							// the user is after
+							$property = str_replace(array('{', '}'), null, $match);
+						
+							// Get the value of that proprty
+							// in this result and replace it
+							// in the string
+							$value = $result->$property;
+							$new_action = \Uri::create(str_replace($match, $value, $action));
+							
+							// Update the actions
+							$actions->unset_data($action)
+									->set_data($new_action, $name);
+						}
+					}
+					
+					// Set the actions of the cell
+					$cell->set_actions($actions);
+				}
 				
 				// Add the cell to the row
 				$row->add_cell($column->get_identifier(), $cell);
