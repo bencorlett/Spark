@@ -66,7 +66,7 @@ class Grid_Column extends \Grid_Component {
 		// Lazy set the index
 		if ( ! $this->has_data('index')) $this->set_data('index', \Str::alphanumeric($this->get_identifier(), '_'));
 		
-		return parent::get_index();
+		return $this->get_data('index');
 	}
 	
 	/**
@@ -97,7 +97,7 @@ class Grid_Column extends \Grid_Component {
 			$this->set_data('header', $header);
 		}
 		
-		return parent::get_header();
+		return $this->get_data('header');
 	}
 	
 	/**
@@ -113,7 +113,7 @@ class Grid_Column extends \Grid_Component {
 		// Lazy set the type
 		if ( ! $this->has_data('type')) $this->set_data('type', 'text');
 		
-		return parent::get_type();
+		return $this->get_data('type');
 	}
 	
 	/**
