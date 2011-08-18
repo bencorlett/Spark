@@ -164,14 +164,18 @@ class Grid_Column_Filter extends \Grid_Component {
 			{
 				switch ($this->get_type())
 				{
-					case 'options':
-						$this->set_data('filter', 'Grid_Column_Filter_Options');
+					case 'checkbox':
+						$this->set_data('filter', 'Grid_Column_Filter_Checkbox');
 						break;
+					
 					
 					case 'number':
 						$this->set_data('filter', 'Grid_Column_Filter_Number');
 						break;
 					
+					case 'options':
+						$this->set_data('filter', 'Grid_Column_Filter_Options');
+						break;
 					
 					default:
 						$this->set_data('filter', 'Grid_Column_Filter_Text');

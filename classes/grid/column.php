@@ -137,12 +137,16 @@ class Grid_Column extends \Grid_Component {
 			{
 				switch ($this->get_type())
 				{
-					case 'options':
-						$this->set_data('renderer', 'Grid_Column_Renderer_Options');
+					case 'checkbox':
+						$this->set_data('renderer', 'Grid_Column_Renderer_Checkbox');
 						break;
 					
 					case 'number':
 						$this->set_data('renderer', 'Grid_Column_Renderer_Number');
+						break;
+					
+					case 'options':
+						$this->set_data('renderer', 'Grid_Column_Renderer_Options');
 						break;
 					
 					default:
