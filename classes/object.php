@@ -528,7 +528,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 			}
 		}
 		
-		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_class($this), $method));
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', __CLASS__, $method));
 	}
 	
 	/**
