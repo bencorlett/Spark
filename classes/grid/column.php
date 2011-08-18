@@ -275,6 +275,17 @@ class Grid_Column extends \Grid_Component {
 			}
 		}
 		
+		// Next process the align
+		if ($this->has_data('align'))
+		{
+			// If the user hasn't overwritten the
+			// text-align property in the style
+			if (strpos($this->get_data('style'), 'text-align') === false)
+			{
+				$this->set_data('style', $this->get_data('style') . ' text-align: ' . $this->get_data('align') . ';');
+			}
+		}
+		
 		// Trim what we've created
 		$this->set_data('style', trim($this->get_data('style')));
 		
