@@ -33,15 +33,6 @@ class Grid_Column_Filter_Checkbox extends \Grid_Column_Filter_Abstract {
 	 */
 	public function render(\Grid_Column_Filter $filter)
 	{
-		// $input = \Form::input($filter->get_column()->get_identifier(),
-		// 					  $filter->get_user_value(),
-		// 					  array(
-		// 							// 'original-value'	=> $filter->get_user_value(),
-		// 							'class'				=> 'filter',
-		// 					  ));
-		// 
-		// $filter->set_html(html_tag('div', null, $input));
-		// 
 		return $this;
 	}
 	
@@ -57,9 +48,6 @@ class Grid_Column_Filter_Checkbox extends \Grid_Column_Filter_Abstract {
 	 */
 	public function translate(\Grid_Column_Filter $filter)
 	{
-		// // We don't need to manipulate anything
-		// $filter->set_real_value($filter->get_user_value());
-		// 
 		return $this;
 	}
 }
