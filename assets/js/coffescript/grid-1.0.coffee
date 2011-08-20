@@ -1,21 +1,22 @@
-/**
- * Spark Fuel Package By Ben Corlett
- * 
- * Spark - Set your fuel on fire!
- * 
- * The Spark Fuel Package is an open-source
- * fuel package consisting of several 'widgets'
- * engineered to make developing various
- * web-based systems easier and quicker.
- * 
- * @package    Fuel
- * @subpackage Spark
- * @version    1.0
- * @author     Ben Corlett (http://www.bencorlett.com)
- * @license    MIT License
- * @copyright  (c) 2011 Ben Corlett
- * @link       http://spark.bencorlett.com
- */
+###
+Spark Fuel Package By Ben Corlett
+
+Spark - Set your fuel on fire!
+
+The Spark Fuel Package is an open-source
+fuel package consisting of several 'widgets'
+engineered to make developing various
+web-based systems easier and quicker.
+
+@package    Fuel
+@subpackage Spark
+@version    1.0
+@author     Ben Corlett (http://www.bencorlett.com)
+@license    MIT License
+@copyright  (c) 2011 Ben Corlett
+@link       http://spark.bencorlett.com
+###
+
 (($) ->
 	methods = init: (options) ->
 		settings = 
@@ -160,6 +161,7 @@
 			
 			data
 ) jQuery
+
 jQuery.cookie = (key, value, options) ->
 	if arguments.length > 1 and String(value) != "[object Object]"
 		options = jQuery.extend({}, options)
@@ -172,6 +174,6 @@ jQuery.cookie = (key, value, options) ->
 		return (document.cookie = [ encodeURIComponent(key), "=", (if options.raw then value else encodeURIComponent(value)), (if options.expires then "; expires=" + options.expires.toUTCString() else ""), (if options.path then "; path=" + options.path else ""), (if options.domain then "; domain=" + options.domain else ""), (if options.secure then "; secure" else "") ].join(""))
 	options = value or {}
 	decode = (if options.raw then (s) ->
-		s
-	 else decodeURIComponent)
+	  s
+	else decodeURIComponent)
 	(if (result = new RegExp("(?:^|; )" + encodeURIComponent(key) + "=([^;]*)").exec(document.cookie)) then decode(result[1]) else null)
