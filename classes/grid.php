@@ -822,20 +822,22 @@ class Grid extends \Object {
 	}
 	
 	/**
-	 * Set Add Button
+	 * Add Button
 	 * 
-	 * Sets the add button
-	 * for the grid
+	 * Adds a button to the grid
 	 * 
 	 * @access	public
 	 * @param	array	Attributes
 	 * @return	Spark\Grid
 	 */
-	public function set_add_button(array $attributes = array())
+	public function add_button($identifier = null, array $attributes = array())
 	{
+		// Sanitise the identifier
+		$identifier = \Str::alphanumeric($identifier, '_');
+		
 		$this->set_uses_container(true)
 			 ->get_container()
-			 ->set_add_button($attributes);
+			 ->add_button($identifier, $attributes);
 		
 		return $this;
 	}
@@ -850,7 +852,7 @@ class Grid extends \Object {
 	 * @param	bool	Uses container
 	 * @return	Spark\Grid
 	 */
-	public function uses_container($uses)
+	public function set_uses_container($uses)
 	{
 		$this->_uses_container = (bool) $uses;
 		return $this;

@@ -22,6 +22,41 @@ namespace Spark;
 class Grid_Button extends \Object {
 	
 	/**
+	 * Build
+	 * 
+	 * Builds a button for the grid
+	 * container and returns it as
+	 * either a view or html
+	 * 
+	 * @access	public
+	 * @return	string|View
+	 */
+	public function build()
+	{
+		// We need a label and an action at the very least
+		if ( ! $this->has_label() or ( ! $this->has_action() and ! $this->has_onclick()))
+		{
+			throw new Exception('You must provide at least a label and an action (or substitute an onclick for an action) when adding a button to the grid');
+		}
+		
+		// If we haven't been given
+		// something to do onclick,
+		// default to the action uri
+		// given
+		if ( ! $this->has_onclick())
+		{
+			$this->set_onclick('window.location.href=\''. \Uri::create($this->get_action()) . '\'')
+				 ->uns_action();
+		}
+		
+		// Return a form button
+		return \Form::button(null,
+							 $this->get_label(),
+							 $this->get_data()
+		);
+	}
+	
+	/**
 	 * To String
 	 * 
 	 * Represents the object
@@ -32,6 +67,13 @@ class Grid_Button extends \Object {
 	 */
 	public function __toString()
 	{
-		return (string) $this->build();
+		try
+		{
+			return (string) $this->build();
+		}
+		catch (\Exception $e)
+		{
+			\Error::show_php_error($e);
+		}
 	}
 }

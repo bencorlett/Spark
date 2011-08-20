@@ -29,24 +29,32 @@ class Grid_Container extends \Grid_Component {
 	protected $_view_name = 'grid/container';
 	
 	/**
-	 * The add button for the grid
+	 * The buttons for the grid
 	 * 
-	 * @var	string
+	 * @var	Spark\Object
 	 */
-	protected $_add_button;
+	protected $_buttons;
 	
 	/**
-	 * Set Add Button
+	 * Add Button
 	 * 
-	 * Sets the add button for the container
+	 * Adds a button
 	 * 
 	 * @access	public
 	 * @param	array	Attributes
 	 * @return	Spark\Grid_Container
 	 */
-	public function set_add_button(array $attributes = array())
+	public function add_button($identifier, array $attributes = array())
 	{
-		$this->_add_button = \Grid_Button::factory($attributes);
+		// Only add the button if it doesn't
+		// exist
+		if ( ! $this->get_buttons()->has_data($identifier))
+		{
+			// Add a button to the buttons collection
+			$this->get_buttons()->set_data($identifier, \Grid_Button::factory($attributes)
+																	->make_recursive());
+		}
+		
 		return $this;
 	}
 	
@@ -58,9 +66,15 @@ class Grid_Container extends \Grid_Component {
 	 * @access	public
 	 * @return	Spark\Grid_button
 	 */
-	public function get_add_button()
+	public function get_buttons()
 	{
-		return $this->_add_button;
+		// Lazy load the buttons
+		if ( ! $this->_buttons)
+		{
+			$this->_buttons = \Object::factory();
+		}
+		
+		return $this->_buttons;
 	}
 	
 	/**

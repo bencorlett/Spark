@@ -19,14 +19,13 @@
  */
 namespace Spark;
 ?>
-<style>
-body {
-	font-family: "Helvetica";
-	color: #666;
-}
-</style>
-<div style="text-align: right; border-bottom: 1px solid #ccc;">
-	<?php if ($container->get_add_button()): ?>
-		<?=$container->get_add_button()?>
+<div class="grid-container" id="grid-<?php echo $container->get_grid()->get_identifier()?>-container">
+	<?php if ($container->get_buttons()->count()): ?>
+		<div class="buttons">
+			<?php foreach ($container->get_buttons() as $button): ?>
+				<?php echo $button; ?>
+			<?php endforeach ?>
+		</div>
 	<?php endif ?>
+	<?php echo isset($grid) ? $grid : null; ?>
 </div>
