@@ -33,20 +33,14 @@ class Breadcrumbs extends \Object {
 	 * breadcrumbs
 	 * 
 	 * @access	public
-	 * @param	int		Level
 	 * @param	string	Text
+	 * @param	int		Level
 	 * @param	string	Uri
 	 */
-	public static function add($level, $text, $uri = null)
+	public static function add($text, $level = false, $uri = null)
 	{
-		// We need a level
-		if ( ! is_int($level))
-		{
-			throw new Exception('The level provided \'%s\' isn\'nt an integer', $level);
-		}
-		
 		// Add the breadcrumb
-		static::instance()->_add($level, $text, $uri);
+		static::instance()->_add($text, $level, $uri);
 	}
 	
 	/**
@@ -62,30 +56,38 @@ class Breadcrumbs extends \Object {
 	 * breadcrumbs
 	 * 
 	 * @access	public
-	 * @param	int		Level
 	 * @param	string	Text
+	 * @param	int		Level
 	 * @param	string	Uri
 	 */
-	protected function _add($level, $text, $uri = null)
+	protected function _add($text, $level = false, $uri = null)
 	{
 		// Create new breadcrumbs
 		$old_breadcrumbs = $this->get_breadcrumbs();
 		$new_breadcrumbs = \Object::factory();
 		
-		// Loop through old breadcrumbs
-		// and add all breadcrumbs to the new
-		// breadcrumbs only if the level
-		// is less than the new level
-		foreach ($old_breadcrumbs as $old_breadcrumb)
+		if ($level !== false)
 		{
-			// If we're adding a number 2, remove 3 and greater
-			if ($old_breadcrumb->get_identifier() >= $level)
+			// Loop through old breadcrumbs
+			// and add all breadcrumbs to the new
+			// breadcrumbs only if the level
+			// is less than the new level
+			foreach ($old_breadcrumbs as $old_breadcrumb)
 			{
-				continue;
+				// If we're adding a number 2, remove 3 and greater
+				if ($old_breadcrumb->get_identifier() >= $level)
+				{
+					continue;
+				}
+
+				// Add data
+				$new_breadcrumbs->add_data(array($old_breadcrumb->get_identifier() => $old_breadcrumb));
 			}
-			
-			// Add data
-			$new_breadcrumbs->add_data(array($old_breadcrumb->get_identifier() => $old_breadcrumb));
+		}
+		else
+		{
+			$level = 1;
+			foreach ($this->get_breadcrumbs() as $breadcrumb) $level = $breadcrumb->get_identifier();
 		}
 		
 		// Create a new breadcrumb
