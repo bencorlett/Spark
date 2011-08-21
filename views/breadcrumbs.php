@@ -23,7 +23,11 @@ namespace Spark;
 	<ul>
 		<?php foreach ($breadcrumbs as $breadcrumb): ?>
 			<li>
-				<?=\Html::anchor($breadcrumb->get_uri(), $breadcrumb->get_text())?>
+				<?php if ($breadcrumb->get_uri()): ?>
+					<?php echo \Html::anchor($breadcrumb->get_uri(), $breadcrumb->get_text()); ?>
+				<?php else: ?>
+					<?php echo html_tag('span', array(), $breadcrumb->get_text())?>
+				<?php endif ?>
 			</li>
 		<?php endforeach?>
 	</ul>

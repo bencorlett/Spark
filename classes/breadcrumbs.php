@@ -60,13 +60,13 @@ class Breadcrumbs extends \Object {
 	 * @param	int		Level
 	 * @param	string	Uri
 	 */
-	protected function _add($text, $level = false, $uri = null)
+	protected function _add($text, $level = null, $uri = null)
 	{
 		// Create new breadcrumbs
 		$old_breadcrumbs = $this->get_breadcrumbs();
 		$new_breadcrumbs = \Object::factory();
 		
-		if ($level !== false)
+		if ($level !== null)
 		{
 			// Loop through old breadcrumbs
 			// and add all breadcrumbs to the new
@@ -93,7 +93,7 @@ class Breadcrumbs extends \Object {
 		// Create a new breadcrumb
 		$new_breadcrumb = \Object::factory(array(
 			'text'		=> $text,
-			'uri'		=> $uri ? \Uri::create($uri) : \Uri::current(),
+			'uri'		=> $uri ? \Uri::create($uri) : ($uri === null ? \Uri::current() : false),
 		))->set_identifier($level);
 		
 		// Set the data
