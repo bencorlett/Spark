@@ -91,7 +91,7 @@ class Breadcrumbs extends \Object {
 		// Create a new breadcrumb
 		$new_breadcrumb = \Object::factory(array(
 			'text'		=> $text,
-			'uri'		=> $uri ? $uri : \Uri::current(),
+			'uri'		=> $uri ? \Uri::create($uri) : \Uri::current(),
 		))->set_identifier($level);
 		
 		// Set the data
