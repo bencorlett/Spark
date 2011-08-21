@@ -64,13 +64,6 @@ class Grid extends \Object {
 	protected $_rows;
 	
 	/**
-	 * The view name used for the grid
-	 * 
-	 * @var	string
-	 */
-	protected $_view_name = 'grid';
-	
-	/**
 	 * Page and sorting property var names,
 	 * used in GET urls when manipulating the
 	 * grid. These can be overriden if they conflict
@@ -197,8 +190,12 @@ class Grid extends \Object {
 		// Check we've got a query
 		if ( ! is_object($query)) throw new Exception('You must provide a query when initialising the grid');
 		
+		// Set properties
 		$this->set_identifier($identifier)
 			 ->set_query($query);
+		
+		// Load config
+		\Config::load('grid', true);
 	}
 	
 	/**
@@ -342,7 +339,7 @@ class Grid extends \Object {
 		$this->_prepare_grid();
 		
 		// Build the grid
-		$grid = \View::factory($this->_view_name)
+		$grid = \View::factory(\Config::get('grid.view.grid', 'grid'))
 					 ->set('grid', $this, false);
 		
 		// If we can't display a container just return

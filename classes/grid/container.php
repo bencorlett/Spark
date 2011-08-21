@@ -22,13 +22,6 @@ namespace Spark;
 class Grid_Container extends \Grid_Component {
 	
 	/**
-	 * The view name used for the container
-	 * 
-	 * @var	string
-	 */
-	protected $_view_name = 'grid/container';
-	
-	/**
 	 * The buttons for the grid
 	 * 
 	 * @var	Spark\Object
@@ -88,7 +81,7 @@ class Grid_Container extends \Grid_Component {
 	 */
 	public function build()
 	{
-		return \View::factory($this->_view_name)
+		return \View::factory(\Config::get('grid.view.container', 'grid/container'))
 					->set('container', $this, false);
 	}
 }

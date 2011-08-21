@@ -33,7 +33,7 @@ class Grid_Column_Filter_Number extends \Grid_Column_Filter_Abstract {
 	 */
 	public function render(\Grid_Column_Filter $filter)
 	{
-		$filter->set_html(\View::factory('grid/column/filter/number')
+		$filter->set_html(\View::factory(\Config::get('grid.view.column.filter.number', 'grid/column/filter/number'))
 							   ->set('filter', $filter, false));
 		
 		return $this;
