@@ -22,6 +22,20 @@ namespace Spark;
 class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract {
 	
 	/**
+	 * Get Checkbox Name
+	 * 
+	 * Gets the checkbox name
+	 * 
+	 * @access	protected
+	 * @param	Spark\Grid_Column_Cell	Cell
+	 * @return	string					Checkbox name
+	 */
+	public function get_checkbox_name(\Grid_Column_Cell $cell)
+	{
+		return ($name = $cell->get_column()->get_name()) ? $name : \Inflector::pluralize($cell->get_column()->get_identifier()) . '[]';
+	}
+	
+	/**
 	 * Render
 	 * 
 	 * Renders a cell and populates
@@ -36,13 +50,10 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract {
 		// Get the value
 		$value = $cell->get_original_value();
 		
-		// Get the name for the checkbox
-		$name = ($name = $cell->get_column()->get_name()) ? $name : $cell->get_column()->get_identifier() . '[]';
-		
 		// An array of checked items
 		$checked = ($checked = $cell->get_column()->get_checked() and $checked->count()) ? $checked->get_data() : array();
 		
-		$cell->set_rendered_value(\Form::checkbox($name,
+		$cell->set_rendered_value(\Form::checkbox($this->get_checkbox_name($cell),
 												  $value,
 												  array(
 													in_array($value, $checked) ? 'checked' : null,

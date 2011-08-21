@@ -159,6 +159,10 @@ class Grid_Column extends \Grid_Component {
 						$this->set_data('renderer', 'Grid_Column_Renderer_Checkbox');
 						break;
 					
+					case 'massaction':
+						$this->set_data('renderer', 'Grid_Column_Renderer_Massaction');
+						break;
+					
 					case 'number':
 						$this->set_data('renderer', 'Grid_Column_Renderer_Number');
 						break;

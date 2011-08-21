@@ -172,6 +172,10 @@ class Grid_Column_Filter extends \Grid_Component {
 						$this->set_data('filter', 'Grid_Column_Filter_Checkbox');
 						break;
 					
+					case 'massaction':
+						$this->set_data('filter', 'Grid_Column_Filter_Massaction');
+						break;
+					
 					case 'number':
 						$this->set_data('filter', 'Grid_Column_Filter_Number');
 						break;

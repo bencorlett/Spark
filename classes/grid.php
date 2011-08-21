@@ -43,6 +43,13 @@ class Grid extends \Object {
 	protected $_query;
 	
 	/**
+	 * Primary key of query object
+	 * 
+	 * @var	string
+	 */
+	protected $_primary_key;
+	
+	/**
 	 * Object containing columns for the grid
 	 * 
 	 * @var	Spark\Object
@@ -164,6 +171,14 @@ class Grid extends \Object {
 	 * @var	string
 	 */
 	protected $_massactions_index;
+	
+	/**
+	 * The name used for the
+	 * massactions
+	 * 
+	 * @var	string
+	 */
+	protected $_massactions_name;
 	
 	/**
 	 * Construct
@@ -560,10 +575,10 @@ class Grid extends \Object {
 	protected function _prepare_grid()
 	{
 		// Prepare elements
-		$this->_prepare_columns()
+		$this->_prepare_massactions()
+			 ->_prepare_columns()
 			 ->_prepare_query()
-			 ->_prepare_rows()
-			 ->_prepare_massactions();
+			 ->_prepare_rows();
 		
 		return $this;
 	}
@@ -689,6 +704,24 @@ class Grid extends \Object {
 	 */
 	protected function _prepare_massactions()
 	{
+		// Check for massactions
+		if ($this->get_massactions()->count())
+		{
+			// Create a massaction column
+			$massaction_column = \Grid_Column::factory('massactions', array(
+													'index'		=> $this->get_massactions_index(),
+													'type'		=> 'massaction',
+													'header'	=> 'Massactions',
+													'align'		=> 'center',
+													'width'		=> 30,
+											 ))
+											 ->set_grid($this)
+											 ->make_recursive();
+			
+			// Add the column
+			$this->get_columns()->set_data('massactions', $massaction_column);
+		}
+		
 		return $this;
 	}
 	
@@ -904,7 +937,50 @@ class Grid extends \Object {
 	 */
 	public function get_massactions_index()
 	{
-		return $this->_massactions_indiex;
+		// Default the massactions index
+		// to the primary key
+		if ( ! $this->_massactions_index)
+		{
+			$this->_massactions_index = $this->get_primary_key();
+		}
+		
+		return $this->_massactions_index;
+	}
+	
+	/**
+	 * Set Massactions Name
+	 * 
+	 * Sets the massactions name
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @param	string	Name
+	 * @return	Spark\Grid
+	 */
+	public function set_massactions_name($name)
+	{
+		$this->_massactions_name = (string) $name;
+		return $this;
+	}
+	
+	/**
+	 * Get Massactions Name
+	 * 
+	 * Gets the massactions name
+	 * for the grid
+	 * 
+	 * @access	public
+	 * @return	string	Massactions name
+	 */
+	public function get_massactions_name()
+	{
+		if ( ! $this->_massactions_name)
+		{
+			// Default to the plural version of the massactions index
+			$this->_massactions_name = \Inflector::pluralize($this->get_massactions_index()) . '[]';
+		}
+		
+		return $this->_massactions_name;
 	}
 	
 	/**
@@ -1168,5 +1244,44 @@ class Grid extends \Object {
 		ksort($this->_limit_options);
 		
 		return $this->_limit_options;
+	}
+	
+	/**
+	 * Set Primary Key
+	 * 
+	 * Sets the primary key of
+	 * the query object
+	 * 
+	 * @access	public
+	 * @param	string	Primary key
+	 * @return	Spark\Grid
+	 */
+	public function set_primary_key($key)
+	{
+		$this->_primary_key = (string) $key;
+		return $this;
+	}
+	
+	/**
+	 * Get Primary Key
+	 * 
+	 * Gets the primary key of
+	 * the grid
+	 * 
+	 * @access	public
+	 * @return	string	Primary key
+	 */
+	public function get_primary_key()
+	{
+		// If the user hasn't set
+		// the primary key
+		if ( ! $this->_primary_key)
+		{
+			// Set the primary key
+			$this->get_driver()
+				 ->set_primary_key();
+		}
+		
+		return $this->_primary_key;
 	}
 }

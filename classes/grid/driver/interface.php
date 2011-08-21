@@ -30,7 +30,7 @@ interface Grid_Driver_Interface {
 	 * and page
 	 * 
 	 * @access	public
-	 * @return	Spark\Grid_Driver_Abstract
+	 * @return	Spark\Grid_Driver_Interface
 	 */
 	public function prepare_query();
 	
@@ -42,7 +42,18 @@ interface Grid_Driver_Interface {
 	 * them in the grid
 	 * 
 	 * @access	public
-	 * @return	Spark\Object
+	 * @return	Spark\Grid_Driver_Interface
 	 */
 	public function build_rows();
+	
+	/**
+	 * Set Primary Key
+	 * 
+	 * Sets the primary key
+	 * of the query object
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Driver_Interface
+	 */
+	public function set_primary_key();
 }

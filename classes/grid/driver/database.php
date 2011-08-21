@@ -190,7 +190,7 @@ class Grid_driver_Database extends \Grid_Driver_Abstract {
 	 * off the query
 	 * 
 	 * @access	public
-	 * @return	Spark\Object
+	 * @return	Spark\Grid_Driver_Database
 	 */
 	public function build_rows()
 	{
@@ -322,5 +322,23 @@ class Grid_driver_Database extends \Grid_Driver_Abstract {
 			// add it to the rows object
 			$this->get_rows()->add_data($row);
 		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Set Primary Key
+	 * 
+	 * Sets the primary key
+	 * of the query object
+	 * 
+	 * @access	public
+	 * @return	Spark\Grid_Driver_Database
+	 */
+	public function set_primary_key()
+	{
+		$this->get_grid()
+			 ->set_primary_key('id');
+		return $this;
 	}
 }
