@@ -65,7 +65,7 @@ class Grid_Column extends \Grid_Component {
 	 * 
 	 * @access	public
 	 * @param	mixed
-	 * @return	Spark\Grid
+	 * @return	Spark\Grid_Column
 	 */
 	public function __construct($identifier = null, array $attributes = array())
 	{

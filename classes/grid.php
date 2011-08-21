@@ -150,6 +150,22 @@ class Grid extends \Object {
 	protected $_row_action;
 	
 	/**
+	 * The object containing
+	 * all massactions for the grid
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected $_massactions;
+	
+	/**
+	 * The index used for the
+	 * massactions
+	 * 
+	 * @var	string
+	 */
+	protected $_massactions_index;
+	
+	/**
 	 * Construct
 	 * 
 	 * Called when the class is constructed
@@ -218,7 +234,7 @@ class Grid extends \Object {
 	 * @param	array	Attributes
 	 * @return	Spark\Grid
 	 */
-	public function add_column($identifier = null, array $attributes = array())
+	public function add_column($identifier = null, Array $attributes = array())
 	{
 		// Sanitise the identifier
 		$identifier = \Str::alphanumeric($identifier, '_');
@@ -830,7 +846,7 @@ class Grid extends \Object {
 	 * @param	array	Attributes
 	 * @return	Spark\Grid
 	 */
-	public function add_button($identifier = null, array $attributes = array())
+	public function add_button($identifier = null, Array $attributes = array())
 	{
 		// Sanitise the identifier
 		$identifier = \Str::alphanumeric($identifier, '_');
@@ -838,6 +854,86 @@ class Grid extends \Object {
 		$this->set_uses_container(true)
 			 ->get_container()
 			 ->add_button($identifier, $attributes);
+		
+		return $this;
+	}
+	
+	/**
+	 * Get Massactions
+	 * 
+	 * Gets the object containing
+	 * massactions for the grid
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	public function get_massactions()
+	{
+		if ( ! $this->_massactions)
+		{
+			$this->_massactions = \Object::factory();
+		}
+		
+		return $this->_massactions;
+	}
+	
+	/**
+	 * Set Massactions Index
+	 * 
+	 * Sets the index for the
+	 * massactions to use
+	 * 
+	 * @access	public
+	 * @param	string	Index
+	 * @return	Spark\Grid
+	 */
+	public function set_massactions_index($index)
+	{
+		$this->_massactions_index = (string) $index;
+		return $this;
+	}
+	
+	/**
+	 * Get Massactions Index
+	 * 
+	 * Gets the index used for the
+	 * massactions to use
+	 * 
+	 * @access	public
+	 * @return	string	Index
+	 */
+	public function get_massactions_index()
+	{
+		return $this->_massactions_indiex;
+	}
+	
+	/**
+	 * Add Massaction
+	 * 
+	 * Adds a massaction to
+	 * the grid
+	 * 
+	 * @access	public
+	 * @param	string	Identifier
+	 * @param	array	Attributes
+	 * @return	Spark\Grid
+	 */
+	public function add_massaction($identifier = null, Array $attributes = array())
+	{
+		// Sanitise the identifier
+		$identifier = \Str::alphanumeric($identifier, '_');
+		
+		// Only add the massaction if it doesn't exist
+		if ( ! $this->get_massactions()->has_data($identifier))
+		{
+			// Set the massaction
+			$this->get_massactions()->set_data($identifier, \Grid_Massaction::factory($identifier, $attributes)
+																			->set_grid($this)
+																			->make_recursive());
+			
+			// Set we're using a container
+			if ( ! $this->get_uses_container()) $this->set_uses_container(true);
+		}
 		
 		return $this;
 	}
@@ -1044,7 +1140,7 @@ class Grid extends \Object {
 	 * @param	array	Limit options
 	 * @return	Spark\Grid
 	 */
-	public function set_limit_options(array $options)
+	public function set_limit_options(Array $options)
 	{
 		$this->_limit_options = $options;
 	}
