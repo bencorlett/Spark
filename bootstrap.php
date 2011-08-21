@@ -21,6 +21,8 @@ Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
+	// Alert
+	'Spark\\Alert'								=> __DIR__ . '/classes/alert.php',
 	
 	// Breadcrumbs
 	'Spark\\Breadcrumbs'						=> __DIR__ . '/classes/breadcrumbs.php',
