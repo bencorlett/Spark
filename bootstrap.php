@@ -21,6 +21,11 @@ Autoloader::add_core_namespace('Spark');
 
 Autoloader::add_classes(array(
 	
+	
+	// Breadcrumbs
+	'Spark\\Breadcrumbs'						=> __DIR__ . '/classes/breadcrumbs.php',
+	
+	
 	// Exception
 	'Spark\\Exception'							=> __DIR__ . '/classes/exception.php',
 	

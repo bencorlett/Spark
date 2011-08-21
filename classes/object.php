@@ -22,6 +22,13 @@ namespace Spark;
 class Object implements \ArrayAccess, \Countable, \Iterator {
 	
 	/**
+	 * Object instance for singleton access
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected static $_instance;
+	
+	/**
 	 * Object identifier
 	 * 
 	 * @var	array
@@ -131,6 +138,34 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 		
 		// Return the reflection class
 		return $class_instance;
+	}
+	
+	/**
+	 * Instance
+	 * 
+	 * Static method used to initialise
+	 * the class using the singleton pattern
+	 * 
+	 * @access	public
+	 * @param	mixed
+	 * @return	Spark\Object
+	 */
+	public static function instance()
+	{
+		if ( ! static::$_instance)
+		{
+			// Create a reflection class from the called class
+			$reflection_class = new \ReflectionClass(get_called_class());
+
+			// Create a new instance of the reflection class and
+			// parse the arguments given to this function to the
+			// new instance of that class
+			static::$_instance = $reflection_class->newInstanceArgs(func_get_args());
+		}
+		
+		// Return the reflection class
+		// instance
+		return static::$_instance;
 	}
 	
 	/**
