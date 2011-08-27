@@ -173,7 +173,7 @@
 			 * When the user types
 			 * a value in the pagination
 			 */
-			handler.find('table.controls input.page').keypress(function(e) {
+			handler.find('.pager input.page').keypress(function(e) {
 				
 				switch (e.keyCode) {
 					case 13:
@@ -187,7 +187,7 @@
 			 * Update pagination from
 			 * input value
 			 */
-			handler.find('table.controls input.page').bind('update', function() {
+			handler.find('.pager input.page').bind('update', function() {
 				
 				// Set the page
 				handler.data(settings.vars.page, $(this).val());
@@ -200,26 +200,26 @@
 			 * When user clicks previous in
 			 * the pagination
 			 */
-			handler.find('table.controls span.previous').click(function() {
+			handler.find('.pager .previous').click(function() {
 				
 				// Increase the value
-				handler.find('table.controls input.page').val(parseInt(handler.find('table.controls input.page').val()) - 1).trigger('update');
+				handler.find('.pager input.page').val(parseInt(handler.find('.pager input.page').val()) - 1).trigger('update');
 			});
 			
 			/**
 			 * When user clicks next in
 			 * the pagination
 			 */
-			handler.find('table.controls span.next').click(function() {
+			handler.find('.pager .next').click(function() {
 				
 				// Increase the value
-				handler.find('table.controls input.page').val(parseInt(handler.find('table.controls input.page').val()) + 1).trigger('update');
+				handler.find('.pager input.page').val(parseInt(handler.find('.pager input.page').val()) + 1).trigger('update');
 			});
 			
 			/**
 			 * When user changes the limit
 			 */
-			handler.find('table.controls .limit').change(function() {
+			handler.find('.pager .limit').change(function() {
 				
 				// Set the limit
 				handler.data(settings.vars.limit, $(this).val());
