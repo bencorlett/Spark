@@ -342,7 +342,7 @@ class Grid_Column_Cell extends \Grid_Component {
 		if ( ! $action) return false;
 		
 		// Otherwise return the action
-		return $action;
+		return \Uri::create($action);
 	}
 	
 	/**
