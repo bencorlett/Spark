@@ -169,7 +169,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 * @param	mixed
 	 * @return	Spark\Object
 	 */
-	final public static function instance()
+	public static function instance()
 	{
 		// No, you can't use \Object::instance(), that's
 		// just silly.
