@@ -22,6 +22,13 @@ namespace Spark;
 class Object implements \ArrayAccess, \Countable, \Iterator {
 	
 	/**
+	 * Object instance for singleton access
+	 * 
+	 * @var	Spark\Object
+	 */
+	protected static $_instances;
+	
+	/**
 	 * Object identifier
 	 * 
 	 * @var	array
@@ -131,6 +138,65 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 		
 		// Return the reflection class
 		return $class_instance;
+	}
+
+	/**
+	 * Get Instances
+	 * 
+	 * Gets instances that the object
+	 * is holding
+	 * 
+	 * @access	public
+	 * @return	Spark\Object
+	 */
+	final static protected function _get_instances()
+	{
+		if ( ! static::$_instances)
+		{
+			static::$_instances = static::factory();
+		}
+
+		return static::$_instances;
+	}
+	
+	/**
+	 * Instance
+	 * 
+	 * Static method used to initialise
+	 * the class using the singleton pattern
+	 * 
+	 * @access	public
+	 * @param	mixed
+	 * @return	Spark\Object
+	 */
+	final public static function instance()
+	{
+		// No, you can't use \Object::instance(), that's
+		// just silly.
+		if (get_called_class() === __CLASS__)
+		{
+			throw new Exception('static::%s() can only be called on a child class of %s, and not this class itself', __FUNCTION__, __CLASS__);
+		}
+
+		// Get the called class
+		$class = get_called_class();
+
+		if ( ! static::_get_instances()->has_data($class))
+		{
+			// Create a reflection class from the called class
+			$reflection_class = new \ReflectionClass(get_called_class());
+			
+			// Create a new instance of the reflection class and
+			// parse the arguments given to this function to the
+			// new instance of that class
+			$class_instance = $reflection_class->newInstanceArgs(func_get_args());
+
+			static::_get_instances()->set_data($class, $class_instance);
+		}
+
+		// Return the reflection class
+		// instance
+		return static::_get_instances()->get_data($class);
 	}
 	
 	/**
@@ -280,7 +346,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	/**
 	 * Has Data
 	 * 
-	 * Determines if the model has
+	 * Determines if the object has
 	 * data for the given key
 	 * 
 	 * If key is empty it will determine
@@ -528,7 +594,66 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 			}
 		}
 		
-		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_class($this), $method));
+		throw new Exception(\Str::f('Call to undefined method %s::%s()', __CLASS__, $method));
+	}
+	
+	/**
+	 * Set
+	 * 
+	 * Magic method to set a property
+	 * of the object
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 * @param	mixed	Value
+	 */
+	public function __set($key, $value)
+	{
+		$this->_data[$key] = $value;
+	}
+	
+	/**
+	 * Get
+	 * 
+	 * Magic method to get a property
+	 * of the object
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 * @return	mixed	Value
+	 */
+	public function __get($key)
+	{
+		return isset($this->_data[$key]) ? $this->_data[$key] : false;
+	}
+	
+	/**
+	 * Isset
+	 * 
+	 * Magic method to determine
+	 * if a property is set
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 * @return	bool	Isset
+	 */
+	public function __isset($key)
+	{
+		return isset($this->_data[$key]);
+	}
+	
+	/**
+	 * Unset
+	 * 
+	 * Magic method to unset
+	 * a property
+	 * 
+	 * @access	public
+	 * @param	string	Key
+	 */
+	public function __unset($key)
+	{
+		unset($this->_data[$key]);
 	}
 	
 	/**
