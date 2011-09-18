@@ -259,12 +259,36 @@ class Grid_Column extends \Grid_Component {
 			
 			// If we're the last column
 			if ($this->get_last()) $class .= ' last';
+
+			// Sort class
+			if ($sort_class = $this->get_sort_class()) $class .= ' ' . $sort_class;
 			
 			// Set the data
 			$this->set_data('class', $class);
 		}
 		
 		return $this->get_data('class');
+	}
+
+	/**
+	 * Get Sort Class
+	 * 
+	 * Gets the sort class
+	 * of the column
+	 * 
+	 * @access  public
+	 * @return  string  Sort class
+	 */
+	public function get_sort_class()
+	{
+		$class = '';
+
+		if (($direction = $this->is_active_sort()) !== false)
+		{
+			$class .= 'sort ' . $direction;
+		}
+
+		return $class ? $class : false;
 	}
 	
 	/**

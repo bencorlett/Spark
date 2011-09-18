@@ -834,6 +834,14 @@ class Grid extends \Object {
 	public function set_var_name_sort($sort)
 	{
 		$this->_var_name_sort = $sort;
+
+		// Convenience method to set sort and
+		// direction in one
+		if ($direction !== null)
+		{
+			$this->set_var_name_direction($direction);
+		}
+		
 		return $this;
 	}
 
@@ -861,9 +869,162 @@ class Grid extends \Object {
 	 * @access	public
 	 * @return	string	Var name filters
 	 */
-	public function set_var_name_filters($filters)
+	public function set_var_name_filters(Array $filters)
 	{
 		$this->_var_name_filters = $filters;
+		return $this;
+	}
+
+	/**
+	 * Get Default Limit
+	 * 
+	 * Gets the default limit
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name limit
+	 */
+	public function get_default_limit()
+	{
+		return $this->_default_limit;
+	}
+	
+	/**
+	 * Get Default Page
+	 * 
+	 * Gets the default page
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name page
+	 */
+	public function get_default_page()
+	{
+		return $this->_default_page;
+	}
+	
+	/**
+	 * Get Default Sort
+	 * 
+	 * Gets the default sort
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name sort
+	 */
+	public function get_default_sort()
+	{
+		return $this->_default_sort;
+	}
+	
+	/**
+	 * Get Default Direction
+	 * 
+	 * Gets the default direction
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name direction
+	 */
+	public function get_default_direction()
+	{
+		return $this->_default_direction;
+	}
+	
+	/**
+	 * Get Default Filters
+	 * 
+	 * Gets the default filters
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name filters
+	 */
+	public function get_default_filters()
+	{
+		return $this->_default_filters;
+	}
+
+	/**
+	 * Set Default Limit
+	 * 
+	 * Sets the default limit
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name limit
+	 */
+	public function set_default_limit($limit)
+	{
+		$this->_default_limit = $limit;
+		return $this;
+	}
+
+	/**
+	 * Set Default Page
+	 * 
+	 * Sets the default page
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name page
+	 */
+	public function set_default_page($page)
+	{
+		$this->_default_page = $page;
+		return $this;
+	}
+
+	/**
+	 * Set Default Sort
+	 * 
+	 * Sets the default sort
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name sort
+	 */
+	public function set_default_sort($sort, $direction = null)
+	{
+		$this->_default_sort = $sort;
+
+		// Convenience method to set sort and
+		// direction in one
+		if ($direction !== null)
+		{
+			$this->set_default_direction($direction);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Set Default Direction
+	 * 
+	 * Sets the default direction
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name direction
+	 */
+	public function set_default_direction($direction)
+	{
+		$this->_default_direction = $direction;
+		return $this;
+	}
+
+	/**
+	 * Set Default Filters
+	 * 
+	 * Sets the default filters
+	 * class property
+	 * 
+	 * @access	public
+	 * @return	string	Var name filters
+	 */
+	public function set_default_filters(Array $filters)
+	{
+		$this->_default_filters = $filters;
 		return $this;
 	}
 	
