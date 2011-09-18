@@ -21,6 +21,7 @@ return array(
 	'view'		=> array(
 		'grid'			=> 'grid',
 		'container'		=> 'grid/container',
+		'massactions'	=> 'grid/massactions',
 		'column'		=> array(
 			'filter'		=> array(
 				'number'		=> 'grid/column/filter/number',

@@ -29,6 +29,13 @@ class Grid_Container extends \Grid_Component {
 	protected $_buttons;
 	
 	/**
+	 * The massactions view
+	 * 
+	 * @var	View
+	 */
+	protected $_massactions_view;
+	
+	/**
 	 * Add Button
 	 * 
 	 * Adds a button
@@ -71,6 +78,31 @@ class Grid_Container extends \Grid_Component {
 	}
 	
 	/**
+	 * Get Massactions View
+	 * 
+	 * Gets the massactions view.
+	 * Returns false if there are
+	 * no massactions to generate the
+	 * view for
+	 * 
+	 * @access	public
+	 * @return	View	Massactions view
+	 */
+	public function get_massactions_view()
+	{
+		if ( ! $this->get_grid()->get_massactions()->count()) return false;
+		
+		if ( ! $this->_massactions_view)
+		{
+			$this->_massactions_view = \View::factory(\Config::get('grid.view.massactions', 'grid/massactions'))
+											->set_grid($this->get_grid(), false)
+											->set_massactions($this->get_grid()->get_massactions(), false);
+		}
+		
+		return $this->_massactions_view;
+	}
+	
+	/**
 	 * Build
 	 * 
 	 * Builds the grid container and returns the
@@ -82,6 +114,6 @@ class Grid_Container extends \Grid_Component {
 	public function build()
 	{
 		return \View::factory(\Config::get('grid.view.container', 'grid/container'))
-					->set('container', $this, false);
+					->set_container($this, false);
 	}
 }
