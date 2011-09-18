@@ -53,12 +53,9 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract {
 		// An array of checked items
 		$checked = ($checked = $cell->get_column()->get_checked() and $checked->count()) ? $checked->get_data() : array();
 		
-		$cell->set_rendered_value(\Form::checkbox($this->get_checkbox_name($cell),
-												  $value,
-												  array(
-													in_array($value, $checked) ? 'checked' : null,
-												  )
-		));
+		$cell->set_rendered_value(\Form::checkbox($this->get_checkbox_name($cell), $value, array(
+			in_array($value, $checked) ? 'checked' : null,
+		)));
 		
 		return $this;
 	}

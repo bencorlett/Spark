@@ -49,17 +49,10 @@ class Grid_Column_Renderer_Number extends \Grid_Column_Renderer_Abstract {
 	 */
 	public function render_header(\Grid_Column_Header $header)
 	{
-		$class = 'header';
-
-		if (($direction = $header->get_column()->is_active_sort()) !== false)
-		{
-			$class .= ' active ' . $direction;
-		}
-
 		// Standard header
 		$header->set_rendered_value(html_tag('span', array(
-			'class'			=> $class,
-			'column'		=> $header->get_column()->get_index(),
+			'class'  => 'header',
+			'column' => $header->get_column()->get_index(),
 		), $header->get_original_value()));
 		
 		return $this;
