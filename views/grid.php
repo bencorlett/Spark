@@ -28,16 +28,28 @@ namespace Spark;
 	$(document).ready(function() {
 		
 		$("#grid-<?php echo $grid->get_identifier()?>").sparkGrid({
-			identifier		: '<?php echo $grid->get_identifier(); ?>',
-			url				: '<?php echo $grid->get_url(); ?>',
-			vars			: {
-				limit			: '<?php echo $grid->get_var_name_limit(); ?>',
-				page			: '<?php echo $grid->get_var_name_page(); ?>',
-				sort			: '<?php echo $grid->get_var_name_sort(); ?>',
-				direction		: '<?php echo $grid->get_var_name_direction(); ?>',
-				filters			: '<?php echo $grid->get_var_name_filters(); ?>'
+			identifier			: '<?php echo $grid->get_identifier(); ?>',
+			url					: '<?php echo $grid->get_url(); ?>',
+			vars				: {
+				limit				: '<?php echo $grid->get_var_name_limit(); ?>',
+				page				: '<?php echo $grid->get_var_name_page(); ?>',
+				sort				: '<?php echo $grid->get_var_name_sort(); ?>',
+				direction			: '<?php echo $grid->get_var_name_direction(); ?>',
+				filters				: '<?php echo $grid->get_var_name_filters(); ?>'
 			},
-			ajax			: <?php echo (int) $grid->get_uses_ajax(); ?>
+			ajax				: <?php echo (int) $grid->get_uses_ajax(); ?>,
+			showOverlay			: true,
+			<?php
+			/**
+			 * See http://api.jquery.com/fadeIn/
+			 * for fadeIn speed options, eg:
+			 *    - 'fast'
+			 *    - 'slow'
+			 *    - 200
+			 *    - 100
+			 */
+			?>
+			fadeOverlaySpeed	: 100
 			<?php if (($params = $grid->get_current_params_json()) !== false): ?>
 				, currentParams: <?php echo $params; ?>
 			<?php endif ?>
@@ -45,6 +57,12 @@ namespace Spark;
 	});
 	
 	</script>
+
+	<?php
+	/**
+	 * The grid controls - pagination
+	 */
+	?>
 	<table class="controls">
 		<tbody>
 			<tr>
@@ -66,8 +84,26 @@ namespace Spark;
 			</tr>
 		</tbody>
 	</table>
+
+	<?php
+	/**
+	 * The grid itself
+	 */
+	?>
 	<table class="grid">
+
+		<?php
+		/**
+		 * The head of the table
+		 */
+		?>
 		<thead>
+			
+			<?php
+			/**
+			 * The headers for the grid
+			 */
+			?>
 			<tr class="headers">
 				<?php foreach ($grid->get_columns() as $column): ?>
 					<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
@@ -75,6 +111,12 @@ namespace Spark;
 					</th>
 				<?php endforeach ?>
 			</tr>
+
+			<?php
+			/**
+			 * The filters for the grid
+			 */
+			?>
 			<tr class="filters">
 				<?php foreach ($grid->get_columns() as $column): ?>
 					<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
@@ -83,6 +125,12 @@ namespace Spark;
 				<?php endforeach ?>
 			</tr>
 		</thead>
+
+		<?php
+		/**
+		 * The body of the table
+		 */
+		?>
 		<tbody>
 			<?php foreach ($grid->get_rows() as $row): ?>
 				<tr class="<?php echo $row->get_class(); ?>">
@@ -95,4 +143,15 @@ namespace Spark;
 			<?php endforeach ?>
 		</tbody>
 	</table>
+
+	<?php
+	/**
+	 * The overlay div that's shown when the grid is loading
+	 */
+	?>
+	<div class="overlay">
+		<div class="loading">
+			<h1>Loading</h1>
+		</div>
+	</div>
 </div>
