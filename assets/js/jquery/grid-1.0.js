@@ -36,17 +36,19 @@
 			 * @var	Object
 			 */
 			var settings = {
-				identifier		: 'grid',
-				url				: '',
-				vars			: {
-					limit			: 'limit',
-					page			: 'page',
-					sort			: 'sort',
-					direction		: 'direction',
-					filters			: 'filters',
+				identifier			: 'grid',
+				url					: '',
+				vars				: {
+					limit				: 'limit',
+					page				: 'page',
+					sort				: 'sort',
+					direction			: 'direction',
+					filters				: 'filters',
 				},
-				ajax			: true,
-				currentParams	: {}
+				ajax				: true,
+				currentParams		: {},
+				showOverlay			: true,
+				fadeOverlaySpeed	: 'fast',
 			};
 
 			/**
@@ -235,6 +237,13 @@
 			 * When the handler needs to update
 			 */
 			handler.bind('update', function() {
+
+				/**
+				 * Fade in overlay
+				 */
+				if (settings.showOverlay) {
+					handler.find('div.overlay').fadeIn(settings.fadeOverlaySpeed);
+				}
 				
 				/**
 				 * Update filter params
@@ -279,12 +288,23 @@
 				// to use ajax or not
 				if (settings.ajax) {
 					$.ajax({
-						url			: settings.url,
-						data		: {
+						url     : settings.url,
+						data    : {
 							grid_identifier	: settings.identifier
 						},
-						success		: function(data, textStatus, jqXHR) {
-							handler.replaceWith(data);
+						success : function(data, textStatus, jqXHR) {
+
+							if (settings.showOverlay) {
+								handler.find('div.overlay').fadeOut(settings.showOverlaySpeed, function() {
+									handler.replaceWith(data);
+								});
+							}
+							else {
+								handler.replaceWith(data);
+							}
+						},
+						error   : function(jqXHR, textStatus, errorThrown) {
+							handler.find('div.overlay').fadeOut('fast');
 						}
 					});
 				}
