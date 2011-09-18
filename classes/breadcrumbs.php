@@ -158,7 +158,7 @@ class Breadcrumbs extends \Object {
 	}
 	
 	/**
-	 * Builds
+	 * Build
 	 * 
 	 * Builds the Breadcrumbs
 	 * object as Html
@@ -169,7 +169,7 @@ class Breadcrumbs extends \Object {
 	protected function _build()
 	{
 		// If there are no breadcrumbs
-		// if ( ! $this->get_breadcrumbs()->count()) return null;
+		if ( ! $this->get_breadcrumbs()->count()) return null;
 		
 		// Load config
 		\Config::load('breadcrumbs', true);
