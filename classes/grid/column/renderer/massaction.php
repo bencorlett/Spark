@@ -21,23 +21,23 @@ namespace Spark;
 
 class Grid_Column_Renderer_Massaction extends \Grid_Column_Renderer_Checkbox {
 	
-	/**
-	 * Render
-	 * 
-	 * Renders a cell and populates
-	 * it's rendered value
-	 * 
-	 * @access	public
-	 * @param	Spark\Grid_Column_Cell	Cell
-	 * @return	Spark\Grid_Column_Renderer_Text
-	 */
-	public function arender(\Grid_Column_Cell $cell)
-	{
-		// echo $cell->get_grid()->get_primary_key();
-		// $cell->set_rendered_value($cell->get_original_value());
+	// /**
+	//  * Render
+	//  * 
+	//  * Renders a cell and populates
+	//  * it's rendered value
+	//  * 
+	//  * @access	public
+	//  * @param	Spark\Grid_Column_Cell	Cell
+	//  * @return	Spark\Grid_Column_Renderer_Text
+	//  */
+	// public function render(\Grid_Column_Cell $cell)
+	// {
+	// 	// echo $cell->get_grid()->get_primary_key();
+	// 	// $cell->set_rendered_value($cell->get_original_value());
 		
-		return $this;
-	}
+	// 	return $this;
+	// }
 	
 	/**
 	 * Render Header

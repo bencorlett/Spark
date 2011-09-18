@@ -57,6 +57,21 @@ class Grid_Column extends \Grid_Component {
 	 * @var	string
 	 */
 	protected $_rendered_header;
+
+	/**
+	 * Whether the current
+	 * column is the active sort
+	 * 
+	 * @var bool
+	 */
+	protected $_active_sort = null;
+
+	/**
+	 * Active sort direction
+	 * 
+	 * @var string
+	 */
+	protected $_active_sort_direction;
 	
 	/**
 	 * Construct
@@ -298,5 +313,38 @@ class Grid_Column extends \Grid_Component {
 		$this->set_data('style', trim($this->get_data('style')));
 		
 		return $this->get_data('style');
+	}
+
+	/**
+	 * Is Active Sort
+	 * 
+	 * Determines if the
+	 * column is the active
+	 * sort or not
+	 * 
+	 * @access  public
+	 * @return  string|false  Sort direction if active
+	 *                        false if not active
+	 */
+	public function is_active_sort()
+	{
+		if ($this->_active_sort === null)
+		{
+			$params = $this->get_grid()->get_params();
+
+			$this->_active_sort = ($this->get_identifier() == $params->{'get_'.$this->get_grid()->get_var_name_sort()}()) ? true : false;
+
+			if ($this->_active_sort === true)
+			{
+				$this->_active_sort_direction = $params->{'get_'.$this->get_grid()->get_var_name_direction()}();
+			}
+		}
+
+		if ($this->_active_sort === true)
+		{
+			return $this->_active_sort_direction;
+		}
+
+		return false;
 	}
 }
