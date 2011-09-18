@@ -285,7 +285,7 @@ class Grid_Column extends \Grid_Component {
 
 		if (($direction = $this->is_active_sort()) !== false)
 		{
-			$class .= 'active ' . $direction;
+			$class .= 'sort ' . $direction;
 		}
 
 		return $class ? $class : false;
