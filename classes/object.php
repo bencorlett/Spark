@@ -563,7 +563,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 				return isset($this->_data[$key]);
 		}
 		
-		throw new Exception(\Str::f('Call to undefined method %s::%s()', get_called_class(), $method));
+		throw new Exception(sprintf('Call to undefined method %s::%s()', get_called_class(), $method));
 	}
 	
 	/**
@@ -594,7 +594,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 			}
 		}
 		
-		throw new Exception(\Str::f('Call to undefined method %s::%s()', __CLASS__, $method));
+		throw new Exception(sprintf('Call to undefined method %s::%s()', __CLASS__, $method));
 	}
 	
 	/**
