@@ -18,7 +18,7 @@
  */
 namespace Spark;
 
-class Cron extends \Kohana\Orm {
+class Model_Cron extends \Kohana\Orm {
 	
 	/**
 	 * The table name this model uses

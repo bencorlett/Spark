@@ -36,7 +36,7 @@ Autoloader::add_classes(array(
 	'Spark\\Breadcrumbs'								=> __DIR__ . '/classes/breadcrumbs.php',
 	
 	// Cron
-	'Spark\\Cron'										=> __DIR__ . '/classes/cron.php',
+	'Spark\\Model_Cron'									=> __DIR__ . '/classes/cron.php',
 	
 	// Date
 	'Spark\\Date'										=> __DIR__ . '/classes/date.php',
