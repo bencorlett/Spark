@@ -96,6 +96,7 @@ class Cron extends \Kohana\Orm {
 		$jobs = static::factory()
 					  ->where('scheduled_for', '<', $now)
 					  ->where('completed', '=', 0)
+					  ->where('running', '=', 0)
 					  ->where('attempts', '<=', \Config::get('cron.threshold'))
 					  ->find_all();
 		
@@ -108,6 +109,7 @@ class Cron extends \Kohana\Orm {
 		{
 			// Up the attempts
 			$job->set_attempts($job->get_attempts() + 1)
+				->set_running(1)
 				->save();
 			
 			// Check attempts count
@@ -131,6 +133,7 @@ class Cron extends \Kohana\Orm {
 					// Update the cron
 					$job->set_executed_at(\Date::time()->format('mysql'))
 						->set_completed(1)
+						->set_running(0)
 						->save();
 				}
 			}
