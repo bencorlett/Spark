@@ -139,6 +139,8 @@ class Model_Cron extends \Kohana\Orm {
 			}
 			catch (\Exception $e)
 			{
+				$job->set_running(0)->save();
+
 				// Send error email
 				static::send_error_email($e);
 			}
