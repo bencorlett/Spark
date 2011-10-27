@@ -98,6 +98,7 @@ class Model_Cron extends \Kohana\Orm {
 					  ->where('completed', '=', 0)
 					  ->where('running', '=', 0)
 					  ->where('attempts', '<=', \Config::get('cron.threshold'))
+					  ->order_by('id', 'desc')
 					  ->find_all();
 		
 		// Loop through jobs
