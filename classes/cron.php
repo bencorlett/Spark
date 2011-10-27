@@ -67,7 +67,7 @@ class Model_Cron extends \Kohana\Orm {
 	public function get_data($fallback = null)
 	{
 		// Try get the data
-		if ($data = unserialize(parent::get_data())) return $data;
+		if ($data = unserialize($this->data)) return $data;
 		
 		// Otherwise return the fallback
 		return $fallback;
