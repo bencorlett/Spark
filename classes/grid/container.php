@@ -51,7 +51,7 @@ class Grid_Container extends \Grid_Component {
 		if ( ! $this->get_buttons()->has_data($identifier))
 		{
 			// Add a button to the buttons collection
-			$this->get_buttons()->set_data($identifier, \Grid_Button::factory($attributes)
+			$this->get_buttons()->set_data($identifier, \Grid_Button::forge($attributes)
 																	->make_recursive());
 		}
 		
@@ -71,7 +71,7 @@ class Grid_Container extends \Grid_Component {
 		// Lazy load the buttons
 		if ( ! $this->_buttons)
 		{
-			$this->_buttons = \Object::factory();
+			$this->_buttons = \Object::forge();
 		}
 		
 		return $this->_buttons;
@@ -94,7 +94,7 @@ class Grid_Container extends \Grid_Component {
 		
 		if ( ! $this->_massactions_view)
 		{
-			$this->_massactions_view = \View::factory(\Config::get('grid.view.massactions', 'grid/massactions'))
+			$this->_massactions_view = \View::forge(\Config::get('grid.view.massactions', 'grid/massactions'))
 											->set_grid($this->get_grid(), false)
 											->set_massactions($this->get_grid()->get_massactions(), false);
 		}
@@ -113,7 +113,7 @@ class Grid_Container extends \Grid_Component {
 	 */
 	public function build()
 	{
-		return \View::factory(\Config::get('grid.view.container', 'grid/container'))
+		return \View::forge(\Config::get('grid.view.container', 'grid/container'))
 					->set_container($this, false);
 	}
 }

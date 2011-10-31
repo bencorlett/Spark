@@ -120,7 +120,7 @@ class Grid_Column extends \Grid_Component {
 		// Lazy load the header
 		if ( ! $this->_header)
 		{
-			$this->_header = \Grid_Column_Header::factory()
+			$this->_header = \Grid_Column_Header::forge()
 												->set_grid($this->get_grid())
 												->set_column($this)
 												->set_data('header', $this->get_data('header'));
@@ -195,7 +195,7 @@ class Grid_Column extends \Grid_Component {
 			// Now we've got a renderer class name
 			// initiate the renderer
 			$renderer = $this->get_data('renderer');
-			$this->_renderer = $renderer::factory();
+			$this->_renderer = $renderer::forge();
 			
 			// Make sure the renderer is valid
 			if ( ! $this->_renderer instanceof \Grid_Column_Renderer_Abstract or ! $this->_renderer instanceof \Grid_Column_Renderer_Interface)
@@ -223,7 +223,7 @@ class Grid_Column extends \Grid_Component {
 			// The filter is it's own object, that way it can store
 			// the original values and rendered values etc all in
 			// it's own little space
-			$this->_filter = \Grid_Column_Filter::factory()
+			$this->_filter = \Grid_Column_Filter::forge()
 												->set_grid($this->get_grid())
 												->set_column($this)
 												->set_data('type', $this->get_data('type'))

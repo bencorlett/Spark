@@ -231,7 +231,7 @@ class Grid extends \Object {
 	public function get_columns()
 	{
 		// Get the columns
-		if ( ! $this->_columns) $this->_columns = \Object::factory();
+		if ( ! $this->_columns) $this->_columns = \Object::forge();
 		
 		return $this->_columns;
 	}
@@ -258,7 +258,7 @@ class Grid extends \Object {
 			if ( ! $this->get_columns()->count()) $attributes['first'] = true;
 			
 			// Set the column
-			$this->get_columns()->set_data($identifier, \Grid_Column::factory($identifier, $attributes)
+			$this->get_columns()->set_data($identifier, \Grid_Column::forge($identifier, $attributes)
 																	->set_grid($this)
 																	->make_recursive());
 			
@@ -339,7 +339,7 @@ class Grid extends \Object {
 		$this->_prepare_grid();
 		
 		// Build the grid
-		$grid = \View::factory(\Config::get('grid.view.grid', 'grid'))
+		$grid = \View::forge(\Config::get('grid.view.grid', 'grid'))
 					 ->set('grid', $this, false);
 		
 		// If we can't display a container just return
@@ -453,7 +453,7 @@ class Grid extends \Object {
 		// with the default drivers
 		if ( ! $this->_drivers)
 		{
-			$this->_drivers = \Object::factory(array(
+			$this->_drivers = \Object::forge(array(
 				'Orm\\Query'								=> 'Grid_Driver_Orm',
 				'Fuel\\Core\\Database_Query_Builder_Select'	=> 'Grid_Driver_Database',
 			));
@@ -483,7 +483,7 @@ class Grid extends \Object {
 				// We can either deal with a class or a subclass
 				if (get_class($this->get_query()) === $query_class or is_subclass_of(get_class($this->get_query()), $query_class))
 				{
-					$this->_driver = $driver_class::factory()
+					$this->_driver = $driver_class::forge()
 												  ->set_grid($this);
 					
 					// Make sure the driver is valid
@@ -515,7 +515,7 @@ class Grid extends \Object {
 		// If our driver wants the rows to build them
 		if ( ! $this->_rows)
 		{
-			$this->_rows = \Object::factory();
+			$this->_rows = \Object::forge();
 		}
 		
 		return $this->_rows;
@@ -554,7 +554,7 @@ class Grid extends \Object {
 	{
 		if ( ! $this->_container)
 		{
-			$this->_container = \Grid_Container::factory()
+			$this->_container = \Grid_Container::forge()
 											   ->set_grid($this);
 		}
 		
@@ -595,11 +595,11 @@ class Grid extends \Object {
 		if ( ! $this->_params)
 		{
 			// Get the cookie
-			$cookie = \Object::factory($_COOKIE);
+			$cookie = \Object::forge($_COOKIE);
 			
 			// Params fallback with default
 			// values
-			$params = \Object::factory(array(
+			$params = \Object::forge(array(
 				$this->_var_name_limit		=> $this->_default_limit,
 				$this->_var_name_page		=> $this->_default_page,
 				$this->_var_name_sort		=> $this->_default_sort,
@@ -705,7 +705,7 @@ class Grid extends \Object {
 		if ($this->get_massactions()->count())
 		{
 			// Create a massaction column
-			$massaction_column = \Grid_Column::factory('massactions', array(
+			$massaction_column = \Grid_Column::forge('massactions', array(
 													'index'		=> $this->get_massactions_index(),
 													'type'		=> 'massaction',
 													'header'	=> 'Massactions',
@@ -1062,7 +1062,7 @@ class Grid extends \Object {
 	{
 		if ( ! $this->_massactions)
 		{
-			$this->_massactions = \Object::factory();
+			$this->_massactions = \Object::forge();
 		}
 		
 		return $this->_massactions;
@@ -1161,7 +1161,7 @@ class Grid extends \Object {
 		if ( ! $this->get_massactions()->has_data($identifier))
 		{
 			// Set the massaction
-			$this->get_massactions()->set_data($identifier, \Grid_Massaction::factory($identifier, $attributes)
+			$this->get_massactions()->set_data($identifier, \Grid_Massaction::forge($identifier, $attributes)
 																			->set_grid($this)
 																			->make_recursive());
 			
@@ -1277,7 +1277,7 @@ class Grid extends \Object {
 	public function get_current_params_json()
 	{
 		// Get cookie data
-		$cookie = \Object::factory($_COOKIE);
+		$cookie = \Object::forge($_COOKIE);
 		
 		if (isset($cookie['grid-' . $this->get_identifier()]))
 		{

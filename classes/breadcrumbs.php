@@ -64,7 +64,7 @@ class Breadcrumbs extends \Object {
 	{
 		// Create new breadcrumbs
 		$old_breadcrumbs = $this->get_breadcrumbs();
-		$new_breadcrumbs = \Object::factory();
+		$new_breadcrumbs = \Object::forge();
 		
 		if ($level !== null)
 		{
@@ -91,7 +91,7 @@ class Breadcrumbs extends \Object {
 		}
 		
 		// Create a new breadcrumb
-		$new_breadcrumb = \Object::factory(array(
+		$new_breadcrumb = \Object::forge(array(
 			'text'		=> $text,
 			'uri'		=> $uri ? \Uri::create($uri) : ($uri === null ? \Uri::current() : false),
 		))->set_identifier($level);
@@ -118,7 +118,7 @@ class Breadcrumbs extends \Object {
 		{
 			if ( ! ($breadcrumbs = \Session::get('breadcrumbs', false)) instanceof \Object)
 			{
-				$breadcrumbs = \Object::factory();
+				$breadcrumbs = \Object::forge();
 			}
 			
 			$this->set_data('breadcrumbs', $breadcrumbs);
@@ -174,7 +174,7 @@ class Breadcrumbs extends \Object {
 		// Load config
 		\Config::load('breadcrumbs', true);
 		
-		$view = \View::factory(\Config::get('breadcrumbs.view'))
+		$view = \View::forge(\Config::get('breadcrumbs.view'))
 					 ->set('breadcrumbs', $this->get_breadcrumbs());
 		
 		return $view;

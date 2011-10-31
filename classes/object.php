@@ -104,7 +104,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	}
 	
 	/**
-	 * Factory
+	 * Forge
 	 * 
 	 * Static method used to initialise
 	 * the class. Allows method chaining.
@@ -118,7 +118,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 * 
 	 * 		Is the same as
 	 * 
-	 * 		$test = Test::factory('some_param', array('another'))
+	 * 		$test = Test::forge('some_param', array('another'))
 	 * 					// But now we can chain methods straight away
 	 * 					->render();
 	 * 
@@ -126,7 +126,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	 * @param	mixed
 	 * @return	Spark\Object
 	 */
-	public static function factory()
+	public static function forge()
 	{
 		// Create a reflection class from the called class
 		$reflection_class = new \ReflectionClass(get_called_class());
@@ -153,7 +153,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 	{
 		if ( ! static::$_instances)
 		{
-			static::$_instances = static::factory();
+			static::$_instances = static::forge();
 		}
 
 		return static::$_instances;
@@ -523,7 +523,7 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 		{
 			if (is_array($value))
 			{
-				$this->_data[$key] = \Object::factory($value)
+				$this->_data[$key] = \Object::forge($value)
 											->make_recursive();
 			}
 		}
@@ -584,12 +584,12 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 			switch (substr($method, 12))
 			{
 				case 'post':
-					return static::factory($_POST)
+					return static::forge($_POST)
 								 ->make_recursive();
 
 				case 'get':
 
-					return static::factory($_GET)
+					return static::forge($_GET)
 								 ->make_recursive();
 			}
 		}

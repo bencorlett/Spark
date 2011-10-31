@@ -44,7 +44,7 @@ class Grid_Row extends \Grid_Component {
 		// Lazy load cells
 		if ( ! $this->_cells)
 		{
-			$this->_cells = \Object::factory();
+			$this->_cells = \Object::forge();
 		}
 		
 		// Add the data
@@ -66,7 +66,7 @@ class Grid_Row extends \Grid_Component {
 		// Lazy load cells
 		if ( ! $this->_cells)
 		{
-			$this->_cells = \Object::factory();
+			$this->_cells = \Object::forge();
 		}
 		
 		// Return the cells

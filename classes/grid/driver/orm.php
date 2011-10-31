@@ -173,7 +173,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 		foreach ($this->get_query()->get() as $result)
 		{
 			// Create a row
-			$row = \Grid_Row::factory()
+			$row = \Grid_Row::forge()
 							->set_grid($this->get_grid());
 			
 			// Set the class of the row
@@ -214,7 +214,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 			foreach ($this->get_columns() as $column)
 			{
 				// Create a column cell
-				$cell = \Grid_Column_Cell::factory()
+				$cell = \Grid_Column_Cell::forge()
 										 ->set_grid($this->get_grid())
 										 ->set_column($column)
 										 ->set_row($row)

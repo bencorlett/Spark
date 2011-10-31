@@ -110,7 +110,7 @@ class Alert extends \Object {
 		\Config::load('alert', true);
 		
 		// Return view
-		return \View::factory(\Config::get('alert.view'))
+		return \View::forge(\Config::get('alert.view'))
 					->set('count', static::instance()->_get_total_count())
 					->set('notifications', static::instance()->_get_notifications(true));
 	}
