@@ -17,7 +17,7 @@
  * @link       http://www.github.com/bencorlett/spark
  */
 namespace Spark;
-class Alert extends Notifications {}
+
 class Notifications extends \Object {
 	
 	/** 
@@ -192,5 +192,5 @@ class Notifications extends \Object {
 		throw new Exception('Call to undefined method %s::%s()', get_called_class(), $method);
 	}
 }
-
+class Alert extends Notifications {}
 /* End of file classes/notifications.php */
