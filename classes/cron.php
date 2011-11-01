@@ -93,7 +93,7 @@ class Model_Cron extends \Kohana\Orm {
 		
 		// Get jobs that were shcheduled
 		// to run before now
-		$jobs = static::factory()
+		$jobs = \Kohana\Orm::factory('cron')
 					  ->where('scheduled_for', '<', $now)
 					  ->where('completed', '=', 0)
 					  ->where('running', '=', 0)
@@ -158,12 +158,14 @@ class Model_Cron extends \Kohana\Orm {
 	 */
 	public static function send_error_email(\Exception $e)
 	{
+		echo $e->getMessage();
+
 		// Send an email
-		$email = \Email::factory()
+		$email = \Email::forge()
 					   ->to(\Config::get('cron.to_address'))
 					   ->from(\Config::get('cron.from_address'), \Config::get('cron.from_name'))
 					   ->subject(sprintf('Error: \'%s\' in method %s()', $e->getMessage(), $e->getMessage()))
-					   ->html(nl2br($e->getTraceAsString()))
+					   ->body(nl2br($e->getTraceAsString()))
 					   ->send();
 	}
 	
@@ -318,7 +320,7 @@ class Model_Cron extends \Kohana\Orm {
 		\Config::load('cron', true);
 		
 		// Get model
-		$static = static::factory()
+		$static = \Kohana\Orm::factory('cron')
 						->where('completed', '=', 0)
 						->where('attempts', '<', \Config::get('cron.threshold'))
 						->where('slug', '=', $slug)
@@ -342,10 +344,10 @@ class Model_Cron extends \Kohana\Orm {
 	public static function garbage_collection($to_keep = 50)
 	{
 		// Work out the id of the last cron to keep
-		$jobs = array_reverse(static::factory()->order_by('id', 'desc')->where('completed', '=', 1)->limit($to_keep)->find_all()->as_array());
+		$jobs = array_reverse(\Kohana\Orm::factory('cron')->order_by('id', 'desc')->where('completed', '=', 1)->limit($to_keep)->find_all()->as_array());
 		
 		// Delete older cron jobs
-		if (count($jobs))foreach (static::factory()->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
+		if (count($jobs))foreach (\Kohana\Orm::factory('cron')->where('id', '<', $jobs[0]->get_id())->find_all() as $job) $job->delete();
 		
 		return true;
 	}
