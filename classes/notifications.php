@@ -17,7 +17,7 @@
  * @link       http://www.github.com/bencorlett/spark
  */
 namespace Spark;
-
+class Alert extends Notifications {}
 class Notifications extends \Object {
 	
 	/** 

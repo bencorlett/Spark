@@ -139,6 +139,20 @@ class Object implements \ArrayAccess, \Countable, \Iterator {
 		// Return the reflection class
 		return $class_instance;
 	}
+	
+	public static function forge()
+	{
+		// Create a reflection class from the called class
+		$reflection_class = new \ReflectionClass(get_called_class());
+		
+		// Create a new instance of the reflection class and
+		// parse the arguments given to this function to the
+		// new instance of that class
+		$class_instance = $reflection_class->newInstanceArgs(func_get_args());
+		
+		// Return the reflection class
+		return $class_instance;
+	}
 
 	/**
 	 * Get Instances
