@@ -108,7 +108,8 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 			// Get the count of rows to make sure that
 			// the offset is valid
 			$count = $this->get_query()->count();
-			
+			$this->set_count($count);
+
 			// Minus one because the first
 			// page has an offset of 0
 			$offset = ($page - 1) * $limit;
@@ -180,7 +181,7 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract {
 			$class = '';
 			if (++ $i == 1) $class = 'first';
 			$class .= ($i % 2 == 0) ? ' even' : ' odd';
-			if ($i == $this->get_query()->count()) $class .= ' last';
+			if ($i == $this->get_count()) $class .= ' last';
 			$row->set_class($class);
 			
 			// Process the row action of the grid
