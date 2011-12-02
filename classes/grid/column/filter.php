@@ -193,7 +193,7 @@ class Grid_Column_Filter extends \Grid_Component {
 			// Now we've got a filter class name
 			// initiate the filter
 			$filter = $this->get_data('filter');
-			$this->_filter = $filter::factory();
+			$this->_filter = $filter::forge();
 
 			// Make sure the filter is valid
 			if ( ! $this->_filter instanceof \Grid_Column_Filter_Abstract or ! $this->_filter instanceof \Grid_Column_Filter_Interface)
