@@ -351,9 +351,15 @@ class Grid extends \Object {
 			// stream a new response
 			if (\Input::is_ajax() and $this->should_override_response())
 			{
+				// This is needed because of the
+				// way all template output
+				// is added to the output buffer
+				ob_clean();
+
 				// Create and send a response
 				// with the grid as the contents
 				$response = new \Response($grid);
+				
 				$response->send(true);
 				
 				// Close down fuel
