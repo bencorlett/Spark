@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class View extends \Fuel\Core\View {
+class View extends \Fuel\Core\View
+{
 	
 	/**
 	 * Call

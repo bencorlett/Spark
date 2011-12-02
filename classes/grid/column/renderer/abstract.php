@@ -20,6 +20,7 @@
 namespace Spark;
 
 abstract class Grid_Column_Renderer_Abstract extends \Object
-implements \Grid_Column_Renderer_Interface {
+implements \Grid_Column_Renderer_Interface
+{
 	
 }

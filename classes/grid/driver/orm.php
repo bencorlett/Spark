@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_driver_Orm extends \Grid_Driver_Abstract {
+class Grid_driver_Orm extends \Grid_Driver_Abstract
+{
 	
 	/**
 	 * Prepare Query

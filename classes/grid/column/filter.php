@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Column_Filter extends \Grid_Component {
+class Grid_Column_Filter extends \Grid_Component
+{
 	
 	/**
 	 * Reference to the column

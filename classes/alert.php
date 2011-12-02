@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Alert extends \Object {
+class Alert extends \Object
+{
 	
 	/** 
 	 * Type constants

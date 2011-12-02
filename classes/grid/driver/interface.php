@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-interface Grid_Driver_Interface {
+interface Grid_Driver_Interface
+{
 	
 	/**
 	 * Prepare Query

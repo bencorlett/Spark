@@ -20,7 +20,8 @@
 namespace Spark;
 
 abstract class Grid_Driver_Abstract extends \Grid_Component
-implements \Grid_Driver_Interface {
+implements \Grid_Driver_Interface
+{
 	
 	/**
 	 * Get Query

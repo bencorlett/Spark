@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid extends \Object {
+class Grid extends \Object
+{
 	
 	/**
 	 * Object containing all available drivers

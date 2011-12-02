@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Row extends \Grid_Component {
+class Grid_Row extends \Grid_Component
+{
 	
 	/**
 	 * An object containing

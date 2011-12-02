@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract {
+class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract
+{
 	
 	/**
 	 * Get Checkbox Name

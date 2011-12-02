@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-interface Grid_Column_Filter_Interface {
+interface Grid_Column_Filter_Interface
+{
 	
 	/**
 	 * Render

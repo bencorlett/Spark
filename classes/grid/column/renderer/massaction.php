@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Column_Renderer_Massaction extends \Grid_Column_Renderer_Checkbox {
+class Grid_Column_Renderer_Massaction extends \Grid_Column_Renderer_Checkbox
+{
 	
 	// /**
 	//  * Render

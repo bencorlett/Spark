@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-interface Grid_Column_Renderer_Interface {
+interface Grid_Column_Renderer_Interface
+{
 	
 	/**
 	 * Render

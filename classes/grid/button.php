@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Button extends \Object {
+class Grid_Button extends \Object
+{
 	
 	/**
 	 * Build

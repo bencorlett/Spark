@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-abstract class Grid_Component extends \Object {
+abstract class Grid_Component extends \Object
+{
 	
 	/**
 	 * Reference to the grid this driver

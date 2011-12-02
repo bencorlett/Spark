@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Str extends \Fuel\Core\Str {
+class Str extends \Fuel\Core\Str
+{
 	
 	/**
 	 * F

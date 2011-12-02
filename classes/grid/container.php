@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Container extends \Grid_Component {
+class Grid_Container extends \Grid_Component
+{
 	
 	/**
 	 * The buttons for the grid

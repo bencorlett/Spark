@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Column_Renderer_Number extends \Grid_Column_Renderer_Abstract {
+class Grid_Column_Renderer_Number extends \Grid_Column_Renderer_Abstract
+{
 	
 	/**
 	 * Render

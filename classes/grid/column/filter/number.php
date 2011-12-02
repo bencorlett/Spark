@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Column_Filter_Number extends \Grid_Column_Filter_Abstract {
+class Grid_Column_Filter_Number extends \Grid_Column_Filter_Abstract
+{
 	
 	/**
 	 * Render

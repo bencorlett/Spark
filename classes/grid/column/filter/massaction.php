@@ -19,6 +19,7 @@
  */
 namespace Spark;
 
-class Grid_Column_Filter_Massaction extends \Grid_Column_Filter_Checkbox {
+class Grid_Column_Filter_Massaction extends \Grid_Column_Filter_Checkbox
+{
 	
 }

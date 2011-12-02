@@ -18,7 +18,8 @@
  */
 namespace Spark;
 
-class Breadcrumbs extends \Object {
+class Breadcrumbs extends \Object
+{
 	
 	/**
 	 * Add

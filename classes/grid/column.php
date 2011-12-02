@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Column extends \Grid_Component {
+class Grid_Column extends \Grid_Component
+{
 	
 	/**
 	 * The renderer for this column

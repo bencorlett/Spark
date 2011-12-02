@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_Massaction extends \Grid_Component {
+class Grid_Massaction extends \Grid_Component
+{
 	
 	/**
 	 * Construct

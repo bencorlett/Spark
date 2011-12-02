@@ -19,7 +19,8 @@
  */
 namespace Spark;
 
-class Grid_driver_Database extends \Grid_Driver_Abstract {
+class Grid_driver_Database extends \Grid_Driver_Abstract
+{
 	
 	/**
 	 * The results object - we'll cache as we call
