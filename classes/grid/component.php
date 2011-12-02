@@ -58,7 +58,7 @@ abstract class Grid_Component extends \Object
 	final public function get_grid()
 	{
 		// Make sure the grid has been set for this component
-		if ( ! $this->_grid instanceof \Grid) throw new \Exception(\Str::f('Cannot retrieve grid instance for %s', get_class($this)));
+		if ( ! $this->_grid instanceof \Grid) throw new Exception(\Str::f('Cannot retrieve grid instance for %s', get_class($this)));
 		
 		return $this->_grid;
 	}

@@ -109,7 +109,7 @@ class Grid_driver_Database extends \Grid_Driver_Abstract
 				// Else the value is not valid
 				else
 				{
-					throw new Exception('The value given to the driver to render is not a valid string or an instance of Spark\\Object');
+					throw new Grid_InvalidFormatException('The value given to the driver to render is not a valid string or an instance of Spark\\Object');
 				}
 			}
 		}

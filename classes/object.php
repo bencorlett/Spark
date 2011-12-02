@@ -21,7 +21,6 @@ namespace Spark;
 
 class Object implements \ArrayAccess, \Countable, \Iterator
 {
-	
 	/**
 	 * Object instance for singleton access
 	 * 

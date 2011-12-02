@@ -19,6 +19,10 @@
  */
 namespace Spark;
 
+class Grid_InvalidConfigurationException extends Exception {}
+class Grid_InvalidQueryException extends Exception {}
+class Grid_InvalidFormatException extends Exception {}
+
 class Grid extends \Object
 {
 	
@@ -186,10 +190,10 @@ class Grid extends \Object
 	public function __construct($identifier = null, $query = null)
 	{
 		// Check we've got an identifier
-		if ( ! $identifier) throw new Exception('An identifier must be provided when initialising the grid');
+		if ( ! $identifier) throw new Grid_InvalidConfigurationException('An identifier must be provided when initialising the grid');
 		
 		// Check we've got a query
-		if ( ! is_object($query)) throw new Exception('You must provide a query when initialising the grid');
+		if ( ! is_object($query)) throw new Grid_InvalidQueryException('You must provide a query when initialising the grid');
 		
 		// Set properties
 		$this->set_identifier($identifier)
@@ -494,7 +498,7 @@ class Grid extends \Object
 												  ->set_grid($this);
 					
 					// Make sure the driver is valid
-					if ( ! $this->_driver instanceof \Grid_Driver_Abstract) throw new Exception('Grid drivers must extend Spark\\Grid_Driver_Abstract');
+					if ( ! $this->_driver instanceof \Grid_Driver_Abstract) throw new Grid_InvalidConfigurationException('Grid drivers must extend Spark\\Grid_Driver_Abstract');
 					
 					break;
 				}

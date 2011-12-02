@@ -121,7 +121,7 @@ class Grid_Column_Header extends \Grid_Component
 		}
 		
 		// Let the person know
-		throw new Exception('The rendered value for a grid column header must be either a string, a number or an instance of View');
+		throw new Grid_InvalidFormatException('The rendered value for a grid column header must be either a string, a number or an instance of View');
 	}
 	
 	/**

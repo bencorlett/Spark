@@ -19,6 +19,8 @@
  */
 namespace Spark;
 
+class Grid_Column_InvalidRendererException extends Exception {}
+
 class Grid_Column extends \Grid_Component
 {
 	
@@ -86,7 +88,7 @@ class Grid_Column extends \Grid_Component
 	public function __construct($identifier = null, array $attributes = array())
 	{
 		// Validate the identifier
-		if ( ! $identifier) throw new Exception(\Str::f('An identifier must be provided when initialising a grid column'));
+		if ( ! $identifier) throw new Grid_InvalidConfigurationException(\Str::f('An identifier must be provided when initialising a grid column'));
 		
 		$this->set_identifier($identifier)
 			 ->set_data($attributes);
@@ -201,7 +203,7 @@ class Grid_Column extends \Grid_Component
 			// Make sure the renderer is valid
 			if ( ! $this->_renderer instanceof \Grid_Column_Renderer_Abstract or ! $this->_renderer instanceof \Grid_Column_Renderer_Interface)
 			{
-				throw new Exception('Grid renderers must extend Spark\\Grid_Column_Renderer_Abstract and inherit from Spark\\Grid_Column_Renderer_Interface');
+				throw new Grid_Column_InvalidRendererException('Grid renderers must extend Spark\\Grid_Column_Renderer_Abstract and inherit from Spark\\Grid_Column_Renderer_Interface');
 			}
 		}
 		

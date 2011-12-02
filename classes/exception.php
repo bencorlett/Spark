@@ -19,7 +19,7 @@
  */
 namespace Spark;
 
-final class Exception extends \Fuel\Core\Fuel_Exception
+class Exception extends \Fuel\Core\Fuel_Exception
 {
 	
 }

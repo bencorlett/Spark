@@ -37,7 +37,7 @@ class Grid_Button extends \Object
 		// We need a label and an action at the very least
 		if ( ! $this->has_label() or ( ! $this->has_action() and ! $this->has_onclick()))
 		{
-			throw new Exception('You must provide at least a label and an action (or substitute an onclick for an action) when adding a button to the grid');
+			throw new Grid_InvalidConfigurationException('You must provide at least a label and an action (or substitute an onclick for an action) when adding a button to the grid');
 		}
 		
 		// If we haven't been given

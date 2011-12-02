@@ -120,7 +120,7 @@ class Grid_Column_Filter extends \Grid_Component
 		}
 
 		// Let the person know
-		throw new Exception('The rendered html for a grid filter must be either a string, a number or an instance of View');
+		throw new Grid_InvalidFormatException('The rendered html for a grid filter must be either a string, a number or an instance of View');
 	}
 	
 	/**
@@ -199,7 +199,7 @@ class Grid_Column_Filter extends \Grid_Component
 			// Make sure the filter is valid
 			if ( ! $this->_filter instanceof \Grid_Column_Filter_Abstract or ! $this->_filter instanceof \Grid_Column_Filter_Interface)
 			{
-				throw new Exception('Grid filters must extend Spark\\Grid_Column_Filter_Abstract and inherit from Spark\\Grid_Column_Filte_Interface');
+				throw new Grid_InvalidFormatException('Grid filters must extend Spark\\Grid_Column_Filter_Abstract and inherit from Spark\\Grid_Column_Filter_Interface');
 			}
 		}
 
@@ -257,7 +257,7 @@ class Grid_Column_Filter extends \Grid_Component
 		// Make sure we have a valid type
 		if ( ! is_string($value) and ! is_numeric($value) and ! $value instanceof \Object)
 		{
-			throw new Exception('The user value provided to a grid column filter must be either a string, a number or an instance of Spark\\Object');
+			throw new Grid_InvalidFormatException('The user value provided to a grid column filter must be either a string, a number or an instance of Spark\\Object');
 		}
 		
 		$this->_user_value = $value;
@@ -295,7 +295,7 @@ class Grid_Column_Filter extends \Grid_Component
 		// Make sure we have a valid type
 		if ( ! is_string($value) and ! is_numeric($value) and ! $value instanceof \Object)
 		{
-			throw new Exception('The real value provided to a grid column filter must be either a string, a number or an instance of Spark\\Object');
+			throw new Grid_InvalidFormatException('The real value provided to a grid column filter must be either a string, a number or an instance of Spark\\Object');
 		}
 		
 		$this->_real_value = $value;

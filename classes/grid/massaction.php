@@ -34,7 +34,7 @@ class Grid_Massaction extends \Grid_Component
 	public function __construct($identifier = null, array $attributes = array())
 	{
 		// Validate the identifier
-		if ( ! $identifier) throw new Exception(\Str::f('An identifier must be provided when initialising a grid massaction'));
+		if ( ! $identifier) throw new Grid_InvalidConfigurationException(\Str::f('An identifier must be provided when initialising a grid massaction'));
 		
 		$this->set_identifier($identifier)
 			 ->set_data($attributes);
