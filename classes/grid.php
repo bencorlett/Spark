@@ -185,6 +185,14 @@ class Grid extends \Object
 	 * @var bool
 	 */
 	protected $_uses_filters = true;
+
+	/**
+	 * Whether or not the grid
+	 * uses controls
+	 * 
+	 * @var bool
+	 */
+	protected $_uses_controls = true;
 	
 	/**
 	 * Construct
