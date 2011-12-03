@@ -158,6 +158,19 @@ class Grid_Column_Header extends \Grid_Component
 	{
 		return $this->get_rendered_value();
 	}
+
+	/**
+	 * Get Class
+	 * 
+	 * Gets the class of the header
+	 * 
+	 * @access  public
+	 * @return  string  Class
+	 */
+	public function get_class()
+	{
+		return $this->get_column()->get_class() . ' header';
+	}
 	
 	/**
 	 * To String
