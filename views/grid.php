@@ -62,28 +62,33 @@ namespace Spark;
 	/**
 	 * The grid controls - pagination
 	 */
+	if ($grid->get_uses_controls()):
 	?>
-	<table class="controls">
-		<tbody>
-			<tr>
-				<td class="pager">
-					Page
-					<span class="previous">&laquo;</span>
-					<?php echo \Form::input(null, $grid->get_page(), array('class' => 'page', 'style' => 'width: 30px;')); ?>
-					<span class="next">&raquo;</span>
-					of <?php echo $grid->get_total_pages(); ?>
-					<span class="separator">|</span>
-					View <?php echo \Form::select(null, $grid->get_limit(), $grid->get_limit_options(), array('class' => 'limit')); ?> per page
-					<span class="separator">|</span>
-					Total <?php echo $grid->get_total_records(); ?> record<?php echo $grid->get_total_records() != 1 ? 's' : null; ?> found
-				</td>
-				<td class="filter-actions">
-					<?php echo \Form::button(null, 'Reset Filters', array('class' => 'filters-reset')); ?>
-					<?php echo \Form::button(null, 'Search', array('class' => 'filters-apply')); ?>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+		<table class="controls">
+			<tbody>
+				<tr>
+					<td class="pager">
+						Page
+						<span class="previous">&laquo;</span>
+						<?php echo \Form::input(null, $grid->get_page(), array('class' => 'page', 'style' => 'width: 30px;')); ?>
+						<span class="next">&raquo;</span>
+						of <?php echo $grid->get_total_pages(); ?>
+						<span class="separator">|</span>
+						View <?php echo \Form::select(null, $grid->get_limit(), $grid->get_limit_options(), array('class' => 'limit')); ?> per page
+						<span class="separator">|</span>
+						Total <?php echo $grid->get_total_records(); ?> record<?php echo $grid->get_total_records() != 1 ? 's' : null; ?> found
+					</td>
+
+					<?php if ($grid->get_uses_filters()): ?>
+						<td class="filter-actions">
+							<?php echo \Form::button(null, 'Reset Filters', array('class' => 'filters-reset')); ?>
+							<?php echo \Form::button(null, 'Search', array('class' => 'filters-apply')); ?>
+						</td>
+					<?php endif ?>
+				</tr>
+			</tbody>
+		</table>
+	<?php endif ?>
 
 	<?php
 	/**
@@ -116,14 +121,16 @@ namespace Spark;
 			/**
 			 * The filters for the grid
 			 */
+			if ($grid->get_uses_filters()): 
 			?>
-			<tr class="filters">
-				<?php foreach ($grid->get_columns() as $column): ?>
-					<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
-						<?php echo $column->get_filter(); ?>
-					</th>
-				<?php endforeach ?>
-			</tr>
+				<tr class="filters">
+					<?php foreach ($grid->get_columns() as $column): ?>
+						<th class="<?php echo $column->get_class(); ?>" style="<?php echo $column->get_style(); ?>">
+							<?php echo $column->get_filter(); ?>
+						</th>
+					<?php endforeach ?>
+				</tr>
+			<?php endif ?>
 		</thead>
 
 		<?php

@@ -177,6 +177,14 @@ class Grid extends \Object
 	 * @var	string
 	 */
 	protected $_massactions_name;
+
+	/**
+	 * Whether or not the grid
+	 * uses filters
+	 * 
+	 * @var bool
+	 */
+	protected $_uses_filters = true;
 	
 	/**
 	 * Construct
@@ -1452,5 +1460,76 @@ class Grid extends \Object
 		}
 		
 		return $this->_primary_key;
+	}
+
+	/**
+	 * Set Uses Filters
+	 * 
+	 * Sets the uses filters flag
+	 * 
+	 * @access  public
+	 * @param   bool   Uses filters
+	 * @return  Spark\Grid
+	 */
+	public function set_uses_filters($uses)
+	{
+		$this->_uses_filters = (bool) $uses;
+		return $this;
+	}
+
+	/**
+	 * Get Uses Filters
+	 * 
+	 * Gets the uses filters flag
+	 * 
+	 * @access  public
+	 * @return  bool   Uses filters
+	 */
+	public function get_uses_filters()
+	{
+		return $this->_uses_filters;
+	}
+
+	/**
+	 * Get Uses Controls
+	 * 
+	 * Gets the uses controls
+	 * flag
+	 * 
+	 * @access  public
+	 * @return  bool   Uses controls
+	 */
+	public function get_uses_controls()
+	{
+		return $this->_uses_controls;
+	}
+
+	/**
+	 * Set Is Basic Mode
+	 * 
+	 * Sets the grid in
+	 * basic mode, no filters / controls
+	 * 
+	 * @access  public
+	 * @param   bool   Is basic mode
+	 */
+	public function set_is_basic_mode($is_basic = true)
+	{
+		if ($is_basic === true)
+		{
+			$this->set_uses_controls(false)
+				 ->set_uses_filters(false);
+			
+			// Remove *all* pagination
+			$this->set_default_limit(999999);
+		}
+		else
+		{
+			$this->set_uses_controls(true)
+				 ->set_uses_filters(true)
+				 ->set_default_limit(reset($this->get_limit_options()));
+		}
+
+		return $this;
 	}
 }
