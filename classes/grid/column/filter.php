@@ -191,6 +191,19 @@ class Grid_Column_Filter extends \Grid_Component
 				}
 			}
 
+			// Default filter to the same class as
+			// the renderer if it exists
+			if ($this->get_data('filter') === 'Grid_Column_Filter_Text')
+			{
+				$column_renderer_class = get_class($this->get_column()->get_renderer());
+				$possible_filter_class = str_ireplace('Renderer', 'Filter', $column_renderer_class);
+
+				if (class_exists($possible_filter_class))
+				{
+					$this->set_data('filter', $possible_filter_class);
+				}
+			}
+
 			// Now we've got a filter class name
 			// initiate the filter
 			$filter = $this->get_data('filter');
