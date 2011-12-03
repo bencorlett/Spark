@@ -215,12 +215,29 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract
 			// to the row for each column
 			foreach ($this->get_columns() as $column)
 			{
+				// Work out the value of the cell, considering
+				// relationships
+				if (strpos($column->get_index(), '.') !== false)
+				{
+					$parts = explode('.', $column->get_index());
+					$value = $result;
+
+					foreach ($parts as $part)
+					{
+						$value = $value->{'get_'.$part}();
+					}
+				}
+				else
+				{
+					$value = $result->{'get_'.$column->get_index()}();
+				}
+
 				// Create a column cell
 				$cell = \Grid_Column_Cell::forge()
 										 ->set_grid($this->get_grid())
 										 ->set_column($column)
 										 ->set_row($row)
-										 ->set_original_value($result->{$column->get_index()});
+										 ->set_original_value($value);
 				
 				// Process cell actions
 				if ($action = $column->get_action())
