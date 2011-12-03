@@ -1499,6 +1499,22 @@ class Grid extends \Object
 	}
 
 	/**
+	 * Set Uses Controls
+	 * 
+	 * Sets the uses controls
+	 * flag
+	 * 
+	 * @access  public
+	 * @param   bool   Uses controls
+	 * @return  Spark\Grid
+	 */
+	public function set_uses_controls($uses)
+	{
+		$this->_uses_controls = (bool) $uses;
+		return $this;
+	}
+
+	/**
 	 * Get Uses Controls
 	 * 
 	 * Gets the uses controls
