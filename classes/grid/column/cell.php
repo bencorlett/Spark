@@ -195,7 +195,7 @@ class Grid_Column_Cell extends \Grid_Component
 	public function set_rendered_value($value)
 	{
 		// We can either accept a string, value, or an instance of View
-		if (is_string($value) or is_numeric($value) or $value instanceof \View)
+		if (is_null($value) or is_string($value) or is_numeric($value) or $value instanceof \View)
 		{
 			$this->_rendered_value = $value;
 			return $this;

@@ -113,7 +113,7 @@ class Grid_Column_Filter extends \Grid_Component
 	public function set_html($html)
 	{
 		// We can either accept a string, html, or an instance of View
-		if (is_string($html) or is_numeric($html) or $html instanceof \View)
+		if (is_null($html) or is_string($html) or is_numeric($html) or $html instanceof \View)
 		{
 			$this->_html = $html;
 			return $this;
