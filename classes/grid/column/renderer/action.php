@@ -94,7 +94,7 @@ class Grid_Column_Renderer_Action extends \Grid_Column_Renderer_Abstract
 	{
 		// Standard header
 		$header->set_rendered_value(html_tag('span', array(
-			'class'       => 'header',
+			'class'       => 'header-label',
 			'data-column' => $header->get_column()->get_index(),
 		), $header->get_original_value()));
 		

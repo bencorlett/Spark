@@ -78,7 +78,7 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract
 		));
 		
 		// Set the rendered value
-		$header->set_rendered_value(html_tag('span', array('class' => 'header-checkbox'), $checkbox));
+		$header->set_rendered_value(html_tag('span', array('class' => 'header-checkbox-label'), $checkbox));
 		
 		return $this;
 	}
