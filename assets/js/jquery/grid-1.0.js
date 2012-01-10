@@ -57,12 +57,28 @@
 			 * is triggered on
 			 */
 			var handler;
+
+			/**
+			 * The container of the handler,
+			 * the grid container
+			 */
+			var container;
+
+			/**
+			 * The massactions form object
+			 */
+			var massactionsForm;
 			
 			/**
 			 * Set the handler variable
 			 * to the trigger element
 			 */
 			handler = this;
+
+			/**
+			 * Cache the container
+			 */
+			container = handler.closest('.grid-container');
 			
 			if (options) {
 				$.extend(settings, options);
@@ -75,11 +91,50 @@
 			{
 				settings.currentParams[settings.vars.filters] = {};
 			}
+
+			/**
+			 * When the user selects all records
+			 */
+			handler.find(".massactions-select-button").click(function() {
+				
+				handler.find(".cell-checkbox-massactions")[$(this).hasClass('all') ? 'attr' : 'removeAttr']('checked', 'checked');
+			});
+
+			/**
+			 * When the user applies massactions
+			 */
+			handler.find(".massactions-submit").click(function() {
+
+				// Make sure we have records checked
+				if (handler.find(".cell-checkbox-massactions:checked").length == 0)
+				{
+					alert('No records checked!');
+				}
+				else
+				{
+					// Get massactions form
+					massactionsForm = handler.find(".massactions-form");
+
+					// Update the action of the form
+					massactionsForm.attr('action', handler.find(".massactions-select").val());
+
+					// Empty the form
+					massactionsForm.empty();
+					
+					// Loop through the records, and add to form
+					handler.find(".cell-checkbox-massactions:checked").each(function() {
+						massactionsForm.append('<input type="hidden" name="ids[]" value="' + $(this).val() + '"/>')
+					});
+
+					// Submit the form
+					massactionsForm.submit();
+				}
+			});
 			
 			/**
 			 * When the user resets filters
 			 */
-			handler.find("button.filters-reset").click(function() {
+			handler.find(".filters-reset").click(function() {
 				
 				// Reset form
 				handler.find('form.filters-form').remove();
@@ -98,7 +153,7 @@
 			/**
 			 * When the user applies filters
 			 */
-			handler.find("button.filters-apply").click(function() {
+			handler.find(".filters-apply").click(function() {
 				
 				// Reset the form
 				handler.trigger('reset-filters-form');
