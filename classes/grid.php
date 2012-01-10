@@ -676,14 +676,25 @@ class Grid extends \Object
 		// Get the array of columns
 		$columns = $this->get_columns()->get_data();
 
-		// Now let's sort the columns, so that massactions
-		// are first
-		uksort($columns, function($a, $b)
+		// Reorder columns
+		if (\Arr::get($columns, 'massactions'))
 		{
-			return $a == 'massactions' ? -1 : 0;
-		});
+			// Start a new array with massactions at the start
+			$new_columns = array(
+				'massactions' => \Arr::get($columns, 'massactions'),
+			);
 
-		$this->get_columns()->set_data($columns);
+			foreach ($columns as $name => $column)
+			{
+				// Skip masssactions
+				if ($name == 'massactions') continue;
+
+				$new_columns[$name] = $column;
+			}
+
+			$this->get_columns()
+				 ->set_data($new_columns);
+		}
 		
 		return $this;
 	}
