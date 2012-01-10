@@ -60,6 +60,13 @@ namespace Spark;
 
 	<?php
 	/**
+	 * The massactions view
+	 */
+	?>
+	<?=$grid->get_massactions_view()?>
+
+	<?php
+	/**
 	 * The grid controls - pagination
 	 */
 	if ($grid->get_uses_controls()):

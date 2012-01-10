@@ -33,7 +33,21 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract
 	 */
 	public function get_checkbox_name(\Grid_Column_Cell $cell)
 	{
-		return ($name = $cell->get_column()->get_name()) ? $name : \Inflector::pluralize($cell->get_column()->get_identifier()) . '[]';
+		return $this->get_cell_name_or_identifier($cell) . '[]';
+	}
+
+	/**
+	 * Get Cell Name Or Identifier
+	 * 
+	 * Gets the cell name or identifier
+	 * 
+	 * @access  public
+	 * @param   Spark\Grid_Column_Cell Cell
+	 * @return  string                 Name
+	 */
+	public function get_cell_name_or_identifier(\Grid_Column_Cell $cell)
+	{
+		return $cell->get_column()->get_name() ? $name : \Inflector::pluralize($cell->get_column()->get_identifier());
 	}
 	
 	/**
@@ -56,6 +70,7 @@ class Grid_Column_Renderer_Checkbox extends \Grid_Column_Renderer_Abstract
 		
 		$cell->set_rendered_value(\Form::checkbox($this->get_checkbox_name($cell), $value, array(
 			in_array($value, $checked) ? 'checked' : null,
+			'class' => 'cell-checkbox-'.$this->get_cell_name_or_identifier($cell),
 		)));
 		
 		return $this;

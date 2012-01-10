@@ -333,7 +333,8 @@ class Grid_driver_Orm extends \Grid_Driver_Abstract
 		try
 		{
 			$class = get_class($this->get_query()->get_one());
-			$key = reset($class::primary_key());
+			$keys  = $class::primary_key();
+			$key   = reset($keys);
 		}
 		catch (\Exception $e)
 		{

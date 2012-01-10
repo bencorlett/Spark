@@ -672,6 +672,18 @@ class Grid extends \Object
 				}
 			}
 		}
+
+		// Get the array of columns
+		$columns = $this->get_columns()->get_data();
+
+		// Now let's sort the columns, so that massactions
+		// are first
+		uksort($columns, function($a, $b)
+		{
+			return $a == 'massactions' ? -1 : 0;
+		});
+
+		$this->get_columns()->set_data($columns);
 		
 		return $this;
 	}
@@ -733,11 +745,12 @@ class Grid extends \Object
 		{
 			// Create a massaction column
 			$massaction_column = \Grid_Column::forge('massactions', array(
-													'index'		=> $this->get_massactions_index(),
-													'type'		=> 'massaction',
-													'header'	=> 'Massactions',
-													'align'		=> 'center',
-													'width'		=> 30,
+													'index'  => $this->get_massactions_index(),
+													'type'   => 'massaction',
+													'header' => 'Massactions',
+													'align'  => 'center',
+													'width'  => 30,
+													'sort'   => false,
 											 ))
 											 ->set_grid($this)
 											 ->make_recursive();
@@ -1555,5 +1568,42 @@ class Grid extends \Object
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Get Massactions View
+	 * 
+	 * Gets the massactions view.
+	 * Returns false if there are
+	 * no massactions to generate the
+	 * view for
+	 * 
+	 * @access	public
+	 * @return	View	Massactions view
+	 */
+	public function get_massactions_view()
+	{
+		// Get massactions
+		$massactions = $this->get_massactions();
+
+		if ( ! $massactions->count()) return false;
+		
+		if ( ! $this->_massactions_view)
+		{
+			// Loop through massactions and create
+			// dropdown values
+			$options = array();
+			foreach ($massactions as $massaction)
+			{
+				$options[\Uri::create($massaction->get_action('/'))] = $massaction->get_label();
+			}
+
+			$this->_massactions_view = \View::forge(\Config::get('grid.view.massactions', 'grid/massactions'))
+											->set_grid($this->get_grid(), false)
+											->set_massactions($massactions, false)
+											->set_options($options);
+		}
+		
+		return $this->_massactions_view;
 	}
 }
