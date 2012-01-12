@@ -27,10 +27,13 @@ Autoloader::add_classes(array(
 	// Breadcrumbs
 	'Spark\\Breadcrumbs' => __DIR__ . '/classes/breadcrumbs.php',
 	
+	// Cron
+	'Spark\\Cron'        => __DIR__ . '/classes/cron.php',
+	'Spark\\Cron_Driver' => __DIR__ . '/classes/cron/driver.php',
+	'Spark\\Cron_Orm'    => __DIR__ . '/classes/cron/orm.php',
 	
 	// Exceptions
-	'Spark\\Exception'     => __DIR__ . '/classes/exception.php',
-	
+	'Spark\\Exception' => __DIR__ . '/classes/exception.php',
 	
 	// Grid
 	'Spark\\Grid'             => __DIR__ . '/classes/grid.php',
@@ -70,7 +73,7 @@ Autoloader::add_classes(array(
 	
 	'Spark\\Grid_InvalidConfigurationException'   => __DIR__ . '/clases/grid.php',
 	'Spark\\Grid_InvalidQueryException'           => __DIR__ . '/classes/grid.php',
-	'Spark\\Grid_InvalidFormatException'     => __DIR__ . '/classes/grid.php',
+	'Spark\\Grid_InvalidFormatException'          => __DIR__ . '/classes/grid.php',
 	'Spark\\Grid_Column_InvalidRendererException' => __DIR__ . '/classes/grid/column.php',
 	
 	// Object
