@@ -756,12 +756,13 @@ class Grid extends \Object
 		{
 			// Create a massaction column
 			$massaction_column = \Grid_Column::forge('massactions', array(
-													'index'  => $this->get_massactions_index(),
-													'type'   => 'massaction',
-													'header' => 'Massactions',
-													'align'  => 'center',
-													'width'  => 30,
-													'sort'   => false,
+													'index'   => $this->get_massactions_index(),
+													'type'    => 'massaction',
+													'header'  => 'Massactions',
+													'align'   => 'center',
+													'width'   => 30,
+													'sort'    => false,
+													'onclick' => false,
 											 ))
 											 ->set_grid($this)
 											 ->make_recursive();

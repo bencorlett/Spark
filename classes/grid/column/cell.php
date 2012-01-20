@@ -359,7 +359,7 @@ class Grid_Column_Cell extends \Grid_Component
 	public function get_onclick()
 	{
 		// If there is no action
-		if ( ! $action = $this->get_action()) return false;
+		if ( ! $action = $this->get_action() or $this->get_column()->get_onclick() === false) return false;
 		
 		return 'window.location.href=\'' . $action . '\'';
 	}
